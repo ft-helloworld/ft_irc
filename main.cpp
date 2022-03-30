@@ -1,4 +1,6 @@
 #include "ft_irc.hpp"
+#include "ircserver.hpp"
+#include "ircsessionfactory.hpp"
 
 int main(int argc, char* argv[])
 {

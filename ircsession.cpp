@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 00:45:13 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 01:53:33 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void IRCSession::Process(const std::string& line)
 
 void    IRCSession::Reply(int statuscode, const std::string& line)
 {
-    Send(std::string(":") + HOSTNAME + " " + String::ItoCode(statuscode) + " " + line);
+    Send(":"HOSTNAME" " + String::ItoCode(statuscode) + " " + line);
 }
 
 void    IRCSession::SetNickname(const std::string& nickname) { _nickname = nickname; }

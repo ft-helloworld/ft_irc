@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:05:14 by yejsong           #+#    #+#             */
-/*   Updated: 2022/03/31 00:43:03 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 01:53:46 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ irc_exception::irc_exception(const irc_exception& o)
     : _message(o._message) {}
 
 irc_exception::irc_exception(int errcode, const std::string& message) throw()
-    : _message(std::string(":") + HOSTNAME + " " + String::ItoCode(errcode) + " " + message) {}
+    : _message(":"HOSTNAME" " + String::ItoCode(errcode) + " " + message) {}
 
 const char* irc_exception::what() const throw()
 {

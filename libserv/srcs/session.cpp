@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:32:11 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 00:37:27 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 02:00:44 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,9 @@ void    Session::OnWrite()
         Log::Vp("Session::OnWrite", "[%d/%s] 세션의 송신 버퍼가 비었습니다. 송신 IO 플래그를 해제합니다.", GetSocket(), GetRemoteAddress().c_str());
         if (_triggeredEvents & IOEvent_Write)
         {
-            _attachedChannel->SetEvent(GetSocket(), IOEvent_Write, IOFlag_Disable, this);
+            _attachedChannel->SetEvent(GetSocket(), IOEvent_Write, IOFlag_Remove, this);
             _triggeredEvents &= ~IOEvent_Write;
+            Log::Vp("Session::OnWrite", "[%d/%s] 세션의 송신 IO 플래그를 해제했습니다.", GetSocket(), GetRemoteAddress().c_str());
         }
     }
 }
@@ -164,7 +165,7 @@ void    Session::Send(const void* buf, size_t len)
     if (!(_triggeredEvents & IOEvent_Write))
     {
         _triggeredEvents |= IOEvent_Write;
-        _attachedChannel->SetEvent(GetSocket(), IOEvent_Write, IOFlag_Enable, this);
+        _attachedChannel->SetEvent(GetSocket(), IOEvent_Write, IOFlag_Add | IOFlag_Enable, this);
     }
 }
 

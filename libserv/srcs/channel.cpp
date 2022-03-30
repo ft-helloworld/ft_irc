@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:49:17 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 00:34:26 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 02:00:31 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,6 @@ void    Channel::Accept()
         Log::Ip("Channel::Accept", "%s 에서 연결이 들어왔습니다.", addr.c_str());
         SetNonBlock(clientfd);
         SetEvent(clientfd, IOEvent_Read, IOFlag_Add | IOFlag_Enable, session.Load());
-        SetEvent(clientfd, IOEvent_Write, IOFlag_Add, session.Load());
     }
     catch (std::exception& ex)
     {
