@@ -6,11 +6,12 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:05:14 by yejsong           #+#    #+#             */
-/*   Updated: 2022/03/30 22:08:40 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 00:43:03 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
+#include "irc_exception.hpp"
 
 irc_exception::~irc_exception() throw() {}
 

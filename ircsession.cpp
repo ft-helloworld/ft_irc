@@ -6,11 +6,18 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/03/30 22:21:30 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 00:45:13 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
+#include "ircserver.hpp"
+#include "ircsession.hpp"
+#include "irc_exception.hpp"
+#include <stdexcept>
+#include <cctype>
+#include <algorithm>
+#include <map>
 
 IRCSession::IRCSession(IRCServer* server, Channel* channel, int socketfd, int socketId, const std::string& addr)
     : Session(channel, socketfd, socketId, addr)

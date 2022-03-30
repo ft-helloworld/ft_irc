@@ -6,11 +6,14 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/03/30 22:05:51 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 00:47:38 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
+#include "ircserver.hpp"
+#include "irc_exception.hpp"
+#include "ircsession.hpp"
 
 IRCServer::IRCServer() {}
 IRCServer::~IRCServer() {}

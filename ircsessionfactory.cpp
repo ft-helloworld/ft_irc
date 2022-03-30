@@ -6,11 +6,14 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:04:11 by smun              #+#    #+#             */
-/*   Updated: 2022/03/30 21:27:13 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 00:46:44 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
+#include "ircsessionfactory.hpp"
+#include "ircserver.hpp"
+#include "ircsession.hpp"
 
 IRCSessionFactory::IRCSessionFactory() {}
 IRCSessionFactory::~IRCSessionFactory() {}

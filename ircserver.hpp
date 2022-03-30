@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_irc.hpp                                         :+:      :+:    :+:   */
+/*   ircserver.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/29 17:31:23 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 00:45:49 by smun             ###   ########.fr       */
+/*   Created: 2022/03/31 00:40:50 by smun              #+#    #+#             */
+/*   Updated: 2022/03/31 00:41:29 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_IRC_HPP
-#define FT_IRC_HPP
+#ifndef IRCSERVER_HPP
+#define IRCSERVER_HPP
 
-#include "std.hpp"
-#include "log.hpp"
-#include "channel.hpp"
-#include "string.hpp"
-#include "session.hpp"
-#include "sessionfactory.hpp"
-#include "numerics.hpp"
-#include <string>
+#include <iosfwd>
+#include <map>
 
-#define HOSTNAME "ft-helloworld"
+class IRCSession;
 
-//TODO
-// IRC서버, IRC채널(방), 개인메시지, 관리자 등등
+class IRCServer
+{
+private:
+    std::map<const std::string, int> _clients;
+
+    IRCServer(const IRCServer&);
+    IRCServer& operator= (const IRCServer&);
+
+public:
+    IRCServer();
+    ~IRCServer();
+
+    void    CheckNickname(IRCSession& session, const std::string& beforeNick, const std::string& afterNick);
+};
 
 #endif
