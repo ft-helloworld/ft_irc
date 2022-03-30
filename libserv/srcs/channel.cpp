@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:49:17 by smun              #+#    #+#             */
-/*   Updated: 2022/03/29 17:58:36 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/30 14:55:14 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@
 #include <cstdio>
 #include <cerrno>
 
-Channel::Channel(int port)
+Channel::Channel(int port, ISessionFactory* sessionFactory)
     : _listenPort(port)
     , _eventfd(-1)
     , _listenContext(NULL)
     , _killed(false)
     , _sessions()
+    , _sessionFactory(sessionFactory)
 {
 }
 
@@ -136,7 +137,15 @@ void    Channel::Accept()
         // 새로운 세션 인스턴스 생성.
         int socketId = ++socketIdCounter;
         const std::string& addr = inet_ntoa(remoteaddr.sin_addr);
-        SharedPtr<Session> session = SharedPtr<Session>(new Session(this, clientfd, socketId, addr));
+        SharedPtr<Session> session = SharedPtr<Session>(
+
+            // ISessionFactory 인터페이스를 구현한 팩토리를 사용해서, 세션을 새로이 생성합니다.
+            // Session 객체는 '세션'의 행동만을 담당하게 됩니다. (OSI 6계층)
+            // 데이터 처리 등, 애플리케이션 레벨(OSI 7계층) 에서 처리되는 로직은,
+            // 자식 클래스로 그 역할을 일부 이전시켜서 코드의 가독성을 높이고, Session 클래스의 과도한 책임을 덜기 위함입니다.
+            _sessionFactory->CreateSession(this, clientfd, socketId, addr)
+
+        );
         _sessions[socketId] = session;
         Log::Ip("Channel::Accept", "%s 에서 연결이 들어왔습니다.", addr.c_str());
         SetNonBlock(clientfd);

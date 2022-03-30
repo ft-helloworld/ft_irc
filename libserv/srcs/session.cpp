@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:32:11 by smun              #+#    #+#             */
-/*   Updated: 2022/03/30 14:42:52 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/30 15:08:08 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,49 +124,6 @@ void    Session::Close()
 void    Session::Process(const std::string& line)
 {
     Log::Ip("Session::Process", "[R/%s] %s", _remoteAddress.c_str(), line.c_str());
-
-    // 날아온 한 줄 처리
-    std::vector<const std::string> args;
-
-    // 한 줄에서 스페이스 문자로 구분
-    String::SplitArguments(args, line);
-    if (args.size() == 0)
-        return;
-
-    // 명령어 처리
-    if (args[0] == "HELLO")
-    {
-        try
-        {
-            if (args.size() < 2)
-                throw std::runtime_error("No parameter with HELLO.");
-            Send("HELLO Your name is " + args[1] + "!! Welcome to my server :)");
-        }
-        catch (const std::exception& ex)
-        {
-            Send(ex.what());
-        }
-    }
-    else if (args[0] == "MESSAGE")
-    {
-        try
-        {
-            if (args.size() < 3)
-                throw std::runtime_error("Lacked parameter with MESSAGE.");
-            int targetId = String::Stoi(args[1]);
-            std::string message = String::Join(args.begin() + 2, args.end());
-            Session& target = _attachedChannel->FindSession(targetId);
-            target.Send("MESSAGE " + message);
-        }
-        catch (const std::exception& ex)
-        {
-            Send(ex.what());
-        }
-    }
-    else
-    {
-        Send("Unknown command " + args[0]);
-    }
 }
 
 void    Session::Send(const std::string& line)

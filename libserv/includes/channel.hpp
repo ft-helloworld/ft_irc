@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:43:33 by smun              #+#    #+#             */
-/*   Updated: 2022/03/29 17:57:21 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/30 15:17:37 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <map>
 #include "shared_ptr.hpp"
+#include "sessionfactory.hpp"
 
 class Context;
 class Session;
@@ -71,8 +72,22 @@ private:
      * 따라서 이러한 모순을 해결하기 위해, 공유 포인터를 사용하여 Session 클래스가 필요할 때 올바르게 소멸자가 호출되며 삭제될 수 있도록 제어합니다.
      *
      * 세션 인스턴스의 소멸자가 중요한 이유는, 해당 소멸자에서 소켓의 close 메서드 호출 및 kqueue 이벤트 등록 해제가 이루어지기 때문입니다.
+     *
+     * 또한, 현재 하나의 kqueue와 하나의 단일 스레드에서 멀티플렉싱 처리를 하게끔 되어 있습니다.
+     * 이에 따라, 별도의 임계 구역을 설정하지 않으며, 스레드 안전성에 대한 고려를 하지 않습니다.
      */
     SessionMap  _sessions;
+
+    /**
+     * Session 클래스를 생성할 팩토리 클래스 입니다.
+     * 새로운 연결이 Accept 될 때, ISessionFactory의 CreateSession 함수를 호출하여
+     * 새로운 Session 객체를 생성합니다.
+     *
+     * Session 객체는 '세션'의 행동만을 담당하게 됩니다. (OSI 6계층)
+     * 데이터 처리 등, 애플리케이션 레벨(OSI 7계층) 에서 처리되는 로직은,
+     * 자식 클래스로 그 역할을 일부 이전시켜서 코드의 가독성을 높이고, Session 클래스의 과도한 책임을 덜기 위함입니다.
+     */
+    ISessionFactory* _sessionFactory;
 
     Channel();
     Channel(const Channel&);
@@ -125,7 +140,7 @@ public:
      *
      * @param port 연결을 수락할 포트 번호입니다.
      */
-    Channel(int port);
+    Channel(int port, ISessionFactory* sessionFactory);
 
     virtual ~Channel();
 
@@ -194,7 +209,6 @@ public:
      * @exception 세션을 발견하지 못하면 std::runtime_error 예외가 발생합니다.
      */
     Session&    FindSession(int sessionKey);
-    Session&    FindSession(const std::string& user);
 
     /**
      * @brief 소켓을 논블로킹 소켓으로 설정합니다. (과제 참조!)

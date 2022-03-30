@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:26:59 by smun              #+#    #+#             */
-/*   Updated: 2022/03/29 17:45:00 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/30 14:59:29 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ protected:
      *
      * @param line 읽어온 한 줄입니다.
      */
-    void    Process(const std::string& line);
+    virtual void    Process(const std::string& line);
 
 public:
     Session(Channel* channel, int socketfd, int socketId, const std::string& addr);
