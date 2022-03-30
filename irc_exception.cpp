@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   irc_exception.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:05:14 by yejsong           #+#    #+#             */
-/*   Updated: 2022/03/30 19:22:35 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/03/30 22:08:40 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ irc_exception::~irc_exception() throw() {}
 irc_exception::irc_exception(const irc_exception& o)
     : _message(o._message) {}
 
-irc_exception::irc_exception(const std::string& errcode, const std::string& message) throw()
-    : _message(std::string(":") + HOSTNAME + " " + errcode + " " + message) {}
+irc_exception::irc_exception(int errcode, const std::string& message) throw()
+    : _message(std::string(":") + HOSTNAME + " " + String::ItoCode(errcode) + " " + message) {}
 
 const char* irc_exception::what() const throw()
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_irc.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 17:31:23 by smun              #+#    #+#             */
-/*   Updated: 2022/03/30 20:17:12 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/03/30 22:16:42 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,16 @@
 #include "string.hpp"
 #include "session.hpp"
 #include "sessionfactory.hpp"
+#include "numerics.hpp"
 #include <string>
 #include <stdexcept>
+#include <cctype>
+#include <algorithm>
 #include <map>
 
 #define HOSTNAME "ft-helloworld"
+
+class IRCServer;
 
 /**
  * @brief IRC의 로직을 수행할 세션 클래스입니다.
@@ -45,7 +50,7 @@ public:
 
     virtual void Process(const std::string& line);
 
-    void    Reply(const std::string& statuscode, const std::string& line);
+    void    Reply(int statuscode, const std::string& line);
 
     void                SetNickname(const std::string& nickname);
     const std::string&  GetNickname() const;
@@ -57,6 +62,7 @@ class IRCServer
 {
 private:
     std::map<const std::string, int> _clients;
+
     IRCServer(const IRCServer&);
     IRCServer& operator= (const IRCServer&);
 
@@ -96,7 +102,7 @@ private:
 public:
     irc_exception(const irc_exception&);
     virtual ~irc_exception() throw();
-    irc_exception(const std::string& errcode, const std::string& message) throw();
+    irc_exception(int errcode, const std::string& message) throw();
 
     const char* what() const throw();
 };

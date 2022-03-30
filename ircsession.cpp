@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircsession.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/03/30 20:39:40 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/03/30 22:21:30 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ IRCSession::IRCSession(IRCServer* server, Channel* channel, int socketfd, int so
     {}
 
 IRCSession::~IRCSession() {}
+
+static int toUpper(char ch)
+{
+    return std::toupper(ch);
+}
 
 void IRCSession::Process(const std::string& line)
 {
@@ -39,23 +44,25 @@ void IRCSession::Process(const std::string& line)
     // 명령어 처리
     try
     {
-        if (args[0] == "NICK")
-        {
+        std::string cmd = args[0];
+        std::transform(cmd.begin(), cmd.end(), cmd.begin(), toUpper);
+        if (cmd == "NICK")
             _server->CheckNickname(*this, GetNickname(), args[1]);
-            throw irc_exception("433", args[1] + " :Nickname is already in use");
-        }
-        else if (args[0] == "USER")
+        else if (cmd == "USER")
         {
             if (args.size() < 5)
-                throw irc_exception("461", args[0] + " :Not enough parameters");
+                throw irc_exception(ERR_NEEDMOREPARAMS, cmd + " :Not enough parameters");
             const std::string& username = args[1];
             if (!GetUsername().empty())
-                throw irc_exception("462", ":Unauthorized command (already registered)");
+                throw irc_exception(ERR_ALREADYREGISTRED, ":Unauthorized command (already registered)");
             SetUsername(username);
-            Reply("001", username + " :Welcome to the Internet Relay Network " + GetNickname() + "!" + username + "@" + GetRemoteAddress());
+            Reply(RPL_WELCOME, username + " :Welcome to the Internet Relay Network " + GetNickname() + "!" + username + "@" + GetRemoteAddress());
         }
-        else
-            Send("Unknown command " + args[0]);
+        else // :bassoon.irc.ozinger.org 421 smun NNNNDD :Unknown command
+        {
+            throw irc_exception(ERR_UNKNOWNCOMMAND, GetNickname() + " " + cmd + " :Unknown command");
+        }
+
     }
     catch (const std::exception& ex)
     {
@@ -63,9 +70,9 @@ void IRCSession::Process(const std::string& line)
     }
 }
 
-void    IRCSession::Reply(const std::string& statuscode, const std::string& line)
+void    IRCSession::Reply(int statuscode, const std::string& line)
 {
-    Send(std::string(":") + HOSTNAME + " " + statuscode + " " + line);
+    Send(std::string(":") + HOSTNAME + " " + String::ItoCode(statuscode) + " " + line);
 }
 
 void    IRCSession::SetNickname(const std::string& nickname) { _nickname = nickname; }

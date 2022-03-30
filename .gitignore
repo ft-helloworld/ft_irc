@@ -32,3 +32,5 @@
 *.app
 
 ircserv
+
+.vscode/settings.json

@@ -1,6 +1,6 @@
 -> 클라이언트란 다른 서버가 아닌 서버에 접속하는 모든 것을 말합니다.
 서버. 각 클라이언트는 다른 클라이언트와 고유하게 구별됩니다.
-최대 길이가 9자인 닉네임. 
+최대 길이가 9자인 닉네임.
 nickname   =  ( letter / special ) *8( letter / digit / special / "-" )
 
 letter     =  %x41-5A / %x61-7A       ; A-Z / a-z
@@ -14,3 +14,17 @@ special    =  %x5B-60 / %x7B-7D
 
 ->You must be able to authenticate, set a nickname, a username, join a channel,
 send and receive private messages using your reference client.
+
+---
+
+- 서브젝트 요구 조건
+    - 인증 기능
+    - 닉네임 설정
+    - 유저네임 설정
+    - 채널 입장
+    - 개인 메시지 보내기 및 받기
+    - 채널에서 하나의 클라이언트가 메시지를 보내면, 채널 전체에게 메시지 전송
+    - 운영자(operators) 및 일반 유저가 각각 있어야 한다.
+    - 운영자 전용 명령어 구현.
+
+- USER, NICK 명령어가 각각 잘 수행되어야 서버에 접속시켜주는 flag 추가하기!!

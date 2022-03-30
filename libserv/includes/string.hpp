@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:37:44 by smun              #+#    #+#             */
-/*   Updated: 2022/03/30 20:22:57 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/03/30 22:06:51 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ public:
 
     static void SplitArguments(std::vector<const std::string>& args, const std::string& line);
     static int  Stoi(const std::string& str);
+    static const std::string ItoCode(int number);
     static std::string Join(
         std::vector<const std::string>::const_iterator begin,
         std::vector<const std::string>::const_iterator end);

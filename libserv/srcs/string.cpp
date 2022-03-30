@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:40:30 by smun              #+#    #+#             */
-/*   Updated: 2022/03/30 20:27:39 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/03/30 22:08:11 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <iostream>
 #include <stdexcept>
 #include <cctype>
+#include <cstring>
+#include <iomanip>
 
 void String::SplitArguments(std::vector<const std::string>& args, const std::string& line)
 {
@@ -34,6 +36,13 @@ int String::Stoi(const std::string& str)
     if (ss.fail())
         throw std::runtime_error("Not integer");
     return n;
+}
+
+const std::string String::ItoCode(int number)
+{
+    std::ostringstream ss;
+    ss << std::setw(3) << std::setfill('0') << number;
+    return ss.str();
 }
 
 std::string String::Join(
