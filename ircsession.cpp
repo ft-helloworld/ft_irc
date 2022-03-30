@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 01:53:33 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 02:06:46 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ IRCSession::IRCSession(IRCServer* server, Channel* channel, int socketfd, int so
     , _server(server)
     {}
 
-IRCSession::~IRCSession() {}
+IRCSession::~IRCSession()
+{
+    _server->UnregisterNickname(_nickname);
+}
 
 static int toUpper(char ch)
 {

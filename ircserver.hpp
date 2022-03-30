@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:40:50 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 00:41:29 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 02:06:08 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ public:
     ~IRCServer();
 
     void    CheckNickname(IRCSession& session, const std::string& beforeNick, const std::string& afterNick);
+    void    UnregisterNickname(const std::string& nick);
 };
 
 #endif

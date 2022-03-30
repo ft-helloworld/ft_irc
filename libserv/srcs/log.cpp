@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:43:03 by smun              #+#    #+#             */
-/*   Updated: 2022/03/29 13:24:44 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 02:09:20 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ const char* Log::GetPrefix(int level)
         case LogLevel_Verbose:
             return "\033[34m[VERBOSE]";
         case LogLevel_Debug:
-            return "\033[36m[DEBUG]";
+            return "\033[37m[DEBUG]";
         case LogLevel_Info:
-            return "\033[37m[INFO]";
+            return "\033[32m[INFO]";
         case LogLevel_Warning:
             return "\033[33m[WARNING]";
         case LogLevel_Error:
@@ -59,7 +59,7 @@ void    Log::Printfp(int level, const char* prefix, const char* format, va_list&
     std::cout << "] ";
     std::cout << std::setw(5 + 9) << std::left << GetPrefix(level);
     std::cout << " [";
-    std::cout << std::setw(22) << std::left << prefix;
+    std::cout << std::setw(24) << std::left << prefix;
     std::cout << "] ";
     std::vfprintf(stdout, format, va);
     std::fflush(stdout);
