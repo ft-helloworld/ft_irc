@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/24 12:21:35 by smun              #+#    #+#              #
-#    Updated: 2022/03/30 15:11:50 by smun             ###   ########.fr        #
+#    Updated: 2022/03/30 19:09:38 by yejsong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 RM = rm
 RMFLAGS = -f
 
-SRCS = main ircsession ircsessionfactory
+SRCS = main ircsession ircsessionfactory irc_exception
 INC = -I./libserv/includes -I./
 
 LIBSERV_SRCS = ./libserv/srcs/context ./libserv/srcs/channel ./libserv/srcs/log \

@@ -3,17 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ircsession.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/03/30 15:23:21 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/30 20:39:40 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
 
-IRCSession::IRCSession(Channel* channel, int socketfd, int socketId, const std::string& addr)
-    : Session(channel, socketfd, socketId, addr) {}
+IRCSession::IRCSession(IRCServer* server, Channel* channel, int socketfd, int socketId, const std::string& addr)
+    : Session(channel, socketfd, socketId, addr)
+    , _nickname()
+    , _username()
+    , _server(server)
+    {}
 
 IRCSession::~IRCSession() {}
 
@@ -35,20 +39,20 @@ void IRCSession::Process(const std::string& line)
     // 명령어 처리
     try
     {
-        if (args[0] == "HELLO")
+        if (args[0] == "NICK")
         {
-            if (args.size() < 2)
-                throw std::runtime_error("No parameter with HELLO.");
-            Send("HELLO Your name is " + args[1] + "!! Welcome to my server :)");
+            _server->CheckNickname(*this, GetNickname(), args[1]);
+            throw irc_exception("433", args[1] + " :Nickname is already in use");
         }
-        else if (args[0] == "MESSAGE")
+        else if (args[0] == "USER")
         {
-            if (args.size() < 3)
-                throw std::runtime_error("Lacked parameter with MESSAGE.");
-            int targetId = String::Stoi(args[1]);
-            std::string message = String::Join(args.begin() + 2, args.end());
-            Session& target = _attachedChannel->FindSession(targetId);
-            target.Send("MESSAGE " + message);
+            if (args.size() < 5)
+                throw irc_exception("461", args[0] + " :Not enough parameters");
+            const std::string& username = args[1];
+            if (!GetUsername().empty())
+                throw irc_exception("462", ":Unauthorized command (already registered)");
+            SetUsername(username);
+            Reply("001", username + " :Welcome to the Internet Relay Network " + GetNickname() + "!" + username + "@" + GetRemoteAddress());
         }
         else
             Send("Unknown command " + args[0]);
@@ -58,3 +62,14 @@ void IRCSession::Process(const std::string& line)
         Send(ex.what());
     }
 }
+
+void    IRCSession::Reply(const std::string& statuscode, const std::string& line)
+{
+    Send(std::string(":") + HOSTNAME + " " + statuscode + " " + line);
+}
+
+void    IRCSession::SetNickname(const std::string& nickname) { _nickname = nickname; }
+void    IRCSession::SetUsername(const std::string& username) { _username = username; }
+
+const std::string&  IRCSession::GetNickname() const { return _nickname; }
+const std::string&  IRCSession::GetUsername() const { return _username; }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:40:30 by smun              #+#    #+#             */
-/*   Updated: 2022/03/30 14:41:19 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/30 20:27:39 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <sstream>
 #include <iostream>
 #include <stdexcept>
+#include <cctype>
 
 void String::SplitArguments(std::vector<const std::string>& args, const std::string& line)
 {
@@ -48,4 +49,14 @@ std::string String::Join(
             oss << ' ';
     }
     return oss.str();
+}
+
+bool String::IsLetter(char ch) { return std::isalpha(ch); }
+bool String::IsDigit(char ch) { return std::isdigit(ch); }
+
+bool String::IsSpecial(char ch)
+{
+    const char* const specialChars = "[]\\`_^{|}";
+
+    return std::memchr(specialChars, ch, sizeof(specialChars));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:37:44 by smun              #+#    #+#             */
-/*   Updated: 2022/03/30 14:40:20 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/30 20:22:57 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ public:
     static std::string Join(
         std::vector<const std::string>::const_iterator begin,
         std::vector<const std::string>::const_iterator end);
+    static bool IsLetter(char ch);
+    static bool IsDigit(char ch);
+    static bool IsSpecial(char ch);
 };
 
 #endif
