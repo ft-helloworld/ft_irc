@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/03/30 15:13:31 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/30 15:23:21 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ void IRCSession::Process(const std::string& line)
     Session::Process(line);
 
     // 날아온 한 줄 처리
-    std::vector<const std::string> args;
 
     // 한 줄에서 스페이스 문자로 구분
+    std::vector<const std::string> args;
     String::SplitArguments(args, line);
+
+    // 빈 명령줄이라면 아무 것도 안함.
     if (args.size() == 0)
         return;
 
