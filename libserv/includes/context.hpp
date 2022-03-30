@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:09:45 by smun              #+#    #+#             */
-/*   Updated: 2022/03/29 17:45:57 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 00:31:26 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ protected:
      *
      */
     Channel* const  _attachedChannel;
+    bool            _closed;
 
 public:
     /**
@@ -54,6 +55,13 @@ public:
      * @return 현재 Context의 소켓 fd.
      */
     int     GetSocket() const;
+
+    /**
+     * @brief 현재 소켓 fd가 닫혔는지 여부입니다. listen소켓의 경우, 서버가 종료될 때 닫힘이 트리거되므로, 항상 false로 간주합니다.
+     *
+     * @return 현재 소켓 fd가 닫힌 여부입니다.
+     */
+    bool    IsClosed() const;
 };
 
 #endif

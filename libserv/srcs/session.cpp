@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:32:11 by smun              #+#    #+#             */
-/*   Updated: 2022/03/30 15:08:08 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 00:37:27 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,6 @@ Session::Session(Channel* channel, int socketfd, int socketId, const std::string
 
 Session::~Session()
 {
-    if (_triggeredEvents)
-        _attachedChannel->SetEvent(GetSocket(), _triggeredEvents, IOFlag_Remove, NULL);
-    _triggeredEvents = 0;
     Log::Vp("Session::~Session", "[%d/%s] 세션 인스턴스가 삭제됩니다.", GetSocket(), GetRemoteAddress().c_str());
 }
 
@@ -50,11 +47,21 @@ bool    Session::GetNextLine(ByteBuffer& buffer, std::string& line)
     const ByteBufferIterator end = buffer.end();
     ByteBufferIterator lineEnd;
 
+    // \r\n 형태의 개행을 검사하여 분리.
     lineEnd = std::search(begin, end, CRLF, &CRLF[CRLF_SIZE]);
     if (lineEnd != end)
     {
         line.assign(begin, lineEnd);
         buffer.erase(begin, lineEnd + CRLF_SIZE);
+        return true;
+    }
+
+    // \n 형태의 개행을 검사하여 분리.
+    lineEnd = std::search(begin, end, LF, &LF[LF_SIZE]);
+    if (lineEnd != end)
+    {
+        line.assign(begin, lineEnd);
+        buffer.erase(begin, lineEnd + LF_SIZE);
         return true;
     }
     return false;
@@ -102,8 +109,11 @@ void    Session::OnWrite()
     if (_sendBuffer.empty())
     {
         Log::Vp("Session::OnWrite", "[%d/%s] 세션의 송신 버퍼가 비었습니다. 송신 IO 플래그를 해제합니다.", GetSocket(), GetRemoteAddress().c_str());
-        _attachedChannel->SetEvent(GetSocket(), IOEvent_Write, IOFlag_Disable, this);
-        _triggeredEvents &= ~IOEvent_Write;
+        if (_triggeredEvents & IOEvent_Write)
+        {
+            _attachedChannel->SetEvent(GetSocket(), IOEvent_Write, IOFlag_Disable, this);
+            _triggeredEvents &= ~IOEvent_Write;
+        }
     }
 }
 
@@ -118,7 +128,17 @@ void    Session::TakeBuffer(size_t bytes)
 
 void    Session::Close()
 {
-    _attachedChannel->Close(this);
+    Log::Vp("Session::Close", "[%d/%s] 세션의 닫기 이벤트를 트리거 합니다.", GetSocket(), GetRemoteAddress().c_str());
+    if (!_closed)
+    {
+        if (_triggeredEvents)
+        {
+            _attachedChannel->SetEvent(GetSocket(), _triggeredEvents, IOFlag_Remove, NULL);
+            _triggeredEvents = 0;
+        }
+        _attachedChannel->SetEvent(GetSocket(), IOEvent_Close, IOFlag_Add | IOFlag_OneShot, this);
+        _closed = true;
+    }
 }
 
 void    Session::Process(const std::string& line)
@@ -136,6 +156,9 @@ void    Session::Send(const void* buf, size_t len)
 {
     const Byte* const bytebuf = reinterpret_cast<const Byte*>(buf);
 
+    // 소켓이 닫혔을 때는 송신 버퍼에 데이터를 작성하지 않음.
+    if (_closed)
+        return;
     _sendBuffer.insert(_sendBuffer.end(), bytebuf, bytebuf + len);
     _sendBuffer.insert(_sendBuffer.end(), CRLF, &CRLF[CRLF_SIZE]);
     if (!(_triggeredEvents & IOEvent_Write))

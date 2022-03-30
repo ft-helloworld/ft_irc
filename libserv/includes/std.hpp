@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 12:25:54 by smun              #+#    #+#             */
-/*   Updated: 2022/03/29 13:28:54 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 00:10:14 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@
 #define CRLF "\r\n"
 #define CRLF_SIZE sizeof(CRLF) - 1
 
-enum { IOEvent_Read = 1 << 0, IOEvent_Write = 1 << 1 };
-enum { IOFlag_Add = 1 << 0, IOFlag_Remove = 1 << 1, IOFlag_Enable = 1 << 2, IOFlag_Disable = 1 << 3 };
+#define LF "\n"
+#define LF_SIZE sizeof(LF) - 1
+
+enum { IOEvent_Read = 1 << 0, IOEvent_Write = 1 << 1, IOEvent_Close = 1 << 2 };
+enum { IOFlag_Add = 1 << 0, IOFlag_Remove = 1 << 1, IOFlag_Enable = 1 << 2, IOFlag_Disable = 1 << 3, IOFlag_OneShot = 1 << 4 };
 
 typedef unsigned char	Byte;
 

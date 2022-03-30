@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:18:07 by smun              #+#    #+#             */
-/*   Updated: 2022/03/29 17:45:49 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 00:31:43 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,9 @@ Context::~Context()
 int Context::GetSocket() const
 {
     return _socketfd;
+}
+
+bool Context::IsClosed() const
+{
+    return _closed;
 }

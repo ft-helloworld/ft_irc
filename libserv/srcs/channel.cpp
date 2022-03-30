@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:49:17 by smun              #+#    #+#             */
-/*   Updated: 2022/03/30 14:55:14 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 00:34:26 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void    Channel::BindAndListen()
 
 void    Channel::SetEvent(int fd, int events, int flags, Context* context)
 {
-    kevent64_s  ev[2];
+    kevent64_s  ev[3];
     int         eventNum = 0;
     int         eventFlags = 0;
 
@@ -105,12 +105,16 @@ void    Channel::SetEvent(int fd, int events, int flags, Context* context)
         eventFlags |= EV_ENABLE;
     if (flags & IOFlag_Disable)
         eventFlags |= EV_DISABLE;
+    if (flags & IOFlag_OneShot)
+        eventFlags |= EV_ONESHOT;
 
     // kqueue64를 위해 이벤트 등록 또는 삭제 구조체를 설정.
     if (events & IOEvent_Read)
          EV_SET64(&ev[eventNum++], fd, EVFILT_READ, eventFlags, 0, 0, reinterpret_cast<uint64_t>(context), 0, 0);
     if (events & IOEvent_Write)
          EV_SET64(&ev[eventNum++], fd, EVFILT_WRITE, eventFlags, 0, 0, reinterpret_cast<uint64_t>(context), 0, 0);
+    if (events & IOEvent_Close)
+         EV_SET64(&ev[eventNum++], fd, EVFILT_USER, eventFlags, NOTE_TRIGGER, 0, reinterpret_cast<uint64_t>(context), 0, 0);
 
     // 실제 kqueue에 이벤트를 등록 또는 삭제 요청.
     int evregist = kevent64(_eventfd, ev, eventNum, NULL, 0, 0, NULL);
@@ -200,8 +204,16 @@ void    Channel::Run()
             // 처리 시작.
             try
             {
+                // 닫기 처리
+                if (context->IsClosed())
+                {
+                    if (filter != EVFILT_USER)
+                        continue;
+                    Close(dynamic_cast<Session*>(context));
+                }
+
                 // 연결 수락
-                if (filter == EVFILT_READ && _listenContext == context)
+                else if (filter == EVFILT_READ && _listenContext == context)
                     Accept();
 
                 // 데이터 읽기

@@ -6,12 +6,12 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/24 12:21:35 by smun              #+#    #+#              #
-#    Updated: 2022/03/30 21:30:36 by smun             ###   ########.fr        #
+#    Updated: 2022/03/30 23:58:38 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
+CFLAGS = -Wall -Wextra -Werror -std=c++98 -g -fsanitize=address
 RM = rm
 RMFLAGS = -f
 
