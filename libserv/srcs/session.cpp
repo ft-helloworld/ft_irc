@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:32:11 by smun              #+#    #+#             */
-/*   Updated: 2022/03/29 19:20:20 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/30 14:42:52 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "channel.hpp"
 #include "session.hpp"
 #include "log.hpp"
+#include "string.hpp"
 #include <algorithm>
 #include <sys/socket.h>
 #include <cstring>
@@ -120,40 +121,6 @@ void    Session::Close()
     _attachedChannel->Close(this);
 }
 
-static void split_arguments(std::vector<const std::string>& args, const std::string& line)
-{
-    std::istringstream iss(line);
-    std::string s;
-    while (std::getline(iss, s, ' '))
-        if (!s.empty())
-            args.push_back(s);
-}
-
-static int    mini_stoi(const std::string& str)
-{
-    std::istringstream ss(str);
-    int n;
-    ss >> n;
-    if (ss.fail())
-        throw std::runtime_error("Not integer");
-    return n;
-}
-
-static std::string join_strings(
-    std::vector<const std::string>::const_iterator begin,
-    std::vector<const std::string>::const_iterator end)
-{
-    std::ostringstream oss;
-    while (begin != end)
-    {
-        oss << *begin;
-        ++begin;
-        if (begin != end)
-            oss << ' ';
-    }
-    return oss.str();
-}
-
 void    Session::Process(const std::string& line)
 {
     Log::Ip("Session::Process", "[R/%s] %s", _remoteAddress.c_str(), line.c_str());
@@ -162,7 +129,7 @@ void    Session::Process(const std::string& line)
     std::vector<const std::string> args;
 
     // 한 줄에서 스페이스 문자로 구분
-    split_arguments(args, line);
+    String::SplitArguments(args, line);
     if (args.size() == 0)
         return;
 
@@ -186,8 +153,8 @@ void    Session::Process(const std::string& line)
         {
             if (args.size() < 3)
                 throw std::runtime_error("Lacked parameter with MESSAGE.");
-            int targetId = mini_stoi(args[1]);
-            std::string message = join_strings(args.begin() + 2, args.end());
+            int targetId = String::Stoi(args[1]);
+            std::string message = String::Join(args.begin() + 2, args.end());
             Session& target = _attachedChannel->FindSession(targetId);
             target.Send("MESSAGE " + message);
         }

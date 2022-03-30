@@ -6,19 +6,20 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/24 12:21:35 by smun              #+#    #+#              #
-#    Updated: 2022/03/29 18:18:24 by smun             ###   ########.fr        #
+#    Updated: 2022/03/30 14:43:17 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 RM = rm
 RMFLAGS = -f
 
 SRCS = main
 INC = -I./libserv/includes -I./
 
-LIBSERV_SRCS = ./libserv/srcs/context ./libserv/srcs/channel ./libserv/srcs/log ./libserv/srcs/session
+LIBSERV_SRCS = ./libserv/srcs/context ./libserv/srcs/channel ./libserv/srcs/log \
+				./libserv/srcs/session ./libserv/srcs/string
 FINAL_SRCS = $(addsuffix .cpp, $(SRCS) $(LIBSERV_SRCS))
 FINAL_OBJS = $(FINAL_SRCS:.cpp=.o)
 
