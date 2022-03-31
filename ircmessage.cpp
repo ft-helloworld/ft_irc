@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 16:43:59 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 22:05:15 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 01:25:16 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ IRCMessage::IRCMessage(const IRCMessage& msg)
     : _prefix(msg._prefix)
     , _cmd(msg._cmd)
     , _params(msg._params)
-    , _trailing(msg._trailing) {}
+    , _trailing(msg._trailing){}
 
 IRCMessage::IRCMessage(const IRCCommand& cmd)
     : _prefix()
@@ -50,43 +50,6 @@ IRCMessage::IRCMessage(const std::string& prefix, const IRCCommand& cmd, const s
     , _params()
     , _trailing(trailing) {}
 
-void    IRCMessage::AddParam(const std::string& param)
-{
-    _params.push_back(param);
-}
-
-IRCMessage::ParamVectorConstIterator    IRCMessage::BeginParam() const { return _params.begin(); }
-IRCMessage::ParamVectorConstIterator    IRCMessage::EndParam() const { return _params.end(); }
-const std::string&                      IRCMessage::GetParam(ParamVector::size_type i) const { return _params[i]; }
-IRCMessage::ParamVector::size_type      IRCMessage::SizeParam() const { return _params.size(); }
-
-const std::string&  IRCMessage::GetCommand() const { return _cmd.command; }
-const std::string&  IRCMessage::GetTrailing() const { return _trailing; }
-const std::string&  IRCMessage::GetPrefix() const { return _prefix; }
-
-const std::string IRCMessage::GetMessage() const
-{
-    std::ostringstream oss;
-
-    // :prefix
-    if (!_prefix.empty())
-        oss << ":" << _prefix << " ";
-
-    // cmd
-    oss << _cmd.command;
-
-    // params
-    ParamVectorConstIterator it;
-    for (it = _params.begin(); it != _params.end(); ++it)
-        oss << " " << *it;
-
-    // :trailing
-    if (!_trailing.empty())
-        oss << " :" << _trailing;
-
-    return oss.str();
-}
-
 static int toUpper(char ch)
 {
     return std::toupper(ch);
@@ -105,33 +68,33 @@ IRCMessage IRCMessage::Parse(const std::string& line)
     if (it == args.end())
         return Empty;
 
-    // Prefix
+    // Prefix (맨 처음, :로 시작 하는 문자열. 선택이기에 없을 수도 있음.)
     if (it->front() == ':')
     {
         prefix = it->substr(1);
         ++it;
     }
 
-    // Command
+    // Command (명령 단어. 항상 대문자로 처리한다.)
     command = *(it++);
     std::transform(command.begin(), command.end(), command.begin(), toUpper);
 
 
-    // Params or Trailing
+    // Params or Trailing (파라미터 또는 꼬리표. 꼬리표는 공백을 포함하는 문자열을 처리하기 위한 트릭.)
     while (it != args.end())
     {
-        // Trailing and break loop
+        // :로 시작하는 문자열이 나오면, 파라미터가 끝나고, 꼬리표가 나오는 것으로 간주.
         if (it->front() == ':')
         {
             trailing = it->substr(1);
             break;
         }
 
-        // Param
+        // :로 시작하지 않았다면, 파라미터를 하나씩 읽어서 추가.
         params.push_back(*(it++));
     }
 
-    // Make IRCMessage
+    // 최종적으로 IRCMessage 인스턴스를 생성.
     IRCMessage msg = IRCMessage(prefix, command, trailing);
     for (it = params.begin(); it != params.end(); ++it)
         msg.AddParam(*it);
@@ -139,10 +102,4 @@ IRCMessage IRCMessage::Parse(const std::string& line)
     return msg;
 
     // [':' <prefix> <SPACE> ] <command> <params> <crlf>
-    // Parse prefix
-}
-
-bool    IRCMessage::IsEmpty() const
-{
-    return _cmd.command.empty();
 }

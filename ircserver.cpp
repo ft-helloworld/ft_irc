@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/03/31 22:04:08 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 02:04:26 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,23 @@ void    IRCServer::OnPassword(IRCSession& session, IRCMessage& msg)
     session.SetPassword(msg.GetParam(0));
 }
 
+void    IRCServer::OnQuit(IRCSession& session, IRCMessage& msg)
+{
+    std::string quitReason = msg.GetTrailing();
+    if (quitReason.empty())
+        quitReason = "접속 종료";
+
+    //TODO 채널에 접속중일 경우 알림
+    session.Disconnect(quitReason);
+}
+
 void    IRCServer::UnregisterNickname(const std::string& nick)
 {
     _clients.erase(nick);
     Log::Vp("IRCServer::CheckNickname", "닉네임 '%s' 가 서버에서 삭제되었습니다.", nick.c_str());
 }
 
-const std::string& IRCServer::GetPassword() const
+bool IRCServer::IsPasswordMatched(const std::string& password) const
 {
-    return _password;
+    return _password == password;
 }

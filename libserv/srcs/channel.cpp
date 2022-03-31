@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:49:17 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 02:00:31 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 01:55:17 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,16 +203,13 @@ void    Channel::Run()
             // 처리 시작.
             try
             {
-                // 닫기 처리
+                // 세션이 닫혔다면 READ 이벤트 처리 안함.
                 if (context->IsClosed())
-                {
-                    if (filter != EVFILT_USER)
+                    if (filter == EVFILT_READ)
                         continue;
-                    Close(dynamic_cast<Session*>(context));
-                }
 
                 // 연결 수락
-                else if (filter == EVFILT_READ && _listenContext == context)
+                if (filter == EVFILT_READ && _listenContext == context)
                     Accept();
 
                 // 데이터 읽기
@@ -222,6 +219,10 @@ void    Channel::Run()
                 // 데이터 쓰기
                 else if (filter == EVFILT_WRITE)
                     Write(dynamic_cast<Session*>(context));
+
+                // 세션 닫기
+                else if (filter == EVFILT_USER)
+                    Close(dynamic_cast<Session*>(context));
             }
 
             // 예외 처리

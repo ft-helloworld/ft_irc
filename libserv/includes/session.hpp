@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:26:59 by smun              #+#    #+#             */
-/*   Updated: 2022/03/30 14:59:29 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 02:05:03 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,12 @@ protected:
      */
     virtual void    Process(const std::string& line);
 
+    /**
+     * @brief 세션을 종료하고 싶을 때 호출합니다.
+     *
+     */
+    void    Close();
+
 public:
     Session(Channel* channel, int socketfd, int socketId, const std::string& addr);
 
@@ -120,12 +126,6 @@ public:
      *
      */
     void    OnWrite();
-
-    /**
-     * @brief 세션을 종료하고 싶을 때 호출합니다.
-     *
-     */
-    void    Close();
 
     /**
      * @brief 현재 세션의 고유 ID를 반환합니다.

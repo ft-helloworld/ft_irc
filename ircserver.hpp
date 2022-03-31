@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:40:50 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 21:46:53 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 01:44:30 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,11 @@ public:
     void    OnNickname(IRCSession& session, IRCMessage& msg);
     void    OnUsername(IRCSession& session, IRCMessage& msg);
     void    OnPassword(IRCSession& session, IRCMessage& msg);
+    void    OnQuit(IRCSession& session, IRCMessage& msg);
 
     void    UnregisterNickname(const std::string& nick);
     int     FindByNick(const std::string& nick) const;
-    const std::string& GetPassword() const;
+    bool    IsPasswordMatched(const std::string& password) const;
 };
 
 #endif

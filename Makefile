@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/24 12:21:35 by smun              #+#    #+#              #
-#    Updated: 2022/03/31 18:38:08 by smun             ###   ########.fr        #
+#    Updated: 2022/04/01 01:41:49 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ CFLAGS = -Wall -Wextra -Werror -std=c++98 -g -fsanitize=address
 RM = rm
 RMFLAGS = -f
 
-SRCS = main ircsession ircsessionfactory irc_exception ircserver ircstring ircmessage
+SRCS = main ircsession ircsessionfactory irc_exception ircserver ircstring \
+		ircmessage
 INC = -I./libserv/includes -I./
 
 LIBSERV_SRCS = ./libserv/srcs/context ./libserv/srcs/channel ./libserv/srcs/log \

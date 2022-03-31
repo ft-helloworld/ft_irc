@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:32:11 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 22:05:02 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 01:56:26 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ Session::Session(Channel* channel, int socketfd, int socketId, const std::string
 
 Session::~Session()
 {
+    if (_triggeredEvents)
+    {
+        _attachedChannel->SetEvent(GetSocket(), _triggeredEvents, IOFlag_Remove, NULL);
+        _triggeredEvents = 0;
+    }
     Log::Vp("Session::~Session", "[%d/%s] 세션 인스턴스가 삭제됩니다.", GetSocket(), GetRemoteAddress().c_str());
 }
 
@@ -132,10 +137,10 @@ void    Session::Close()
     Log::Vp("Session::Close", "[%d/%s] 세션의 닫기 이벤트를 트리거 합니다.", GetSocket(), GetRemoteAddress().c_str());
     if (!_closed)
     {
-        if (_triggeredEvents)
+        if (_triggeredEvents & IOEvent_Read)
         {
-            _attachedChannel->SetEvent(GetSocket(), _triggeredEvents, IOFlag_Remove, NULL);
-            _triggeredEvents = 0;
+            _attachedChannel->SetEvent(GetSocket(), IOEvent_Read, IOFlag_Remove, NULL);
+            _triggeredEvents &= ~IOEvent_Read;
         }
         _attachedChannel->SetEvent(GetSocket(), IOEvent_Close, IOFlag_Add | IOFlag_OneShot, this);
         _closed = true;

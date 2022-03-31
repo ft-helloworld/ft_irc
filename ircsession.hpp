@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:44:02 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 21:52:26 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 02:04:52 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ private:
     IRCSession();
     IRCSession(const IRCSession&);
     IRCSession& operator=(const IRCSession&);
+
 public:
     enum { FLAG_NICKNAME = 1 << 0, FLAG_USERNAME = 1 << 1 };
 
@@ -44,7 +45,7 @@ public:
     virtual void Process(const std::string& line);
 
     void    SendMessage(const IRCMessage& msg);
-    void    SendWelcome();
+    void    SendMOTD();
 
     void                SetNickname(const std::string& nickname);
     const std::string&  GetNickname() const;
@@ -58,6 +59,8 @@ public:
     void    RegisterStep(int flag);
     bool    HasRegisterFlag(int flag) const;
     bool    IsFullyRegistered() const;
+
+    void    Disconnect(const std::string& reason);
 };
 
 
