@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/01 02:16:05 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 02:21:00 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void    IRCServer::OnNickname(IRCSession& session, IRCMessage& msg)
 
 void    IRCServer::OnUsername(IRCSession& session, IRCMessage& msg)
 {
-    // USER 커맨드는 4개의 파라미터 필요. 부족하면 에러.
-    if (msg.SizeParam() < 4)
+    // USER 커맨드는 꼬리표 포함 총 4개의 파라미터 필요. 부족하면 에러.
+    if (msg.SizeParam() < 3 || msg.GetTrailing().empty())
         throw irc_exception(ERR_NEEDMOREPARAMS, "Not enough parameters");
 
     // 이미 USER, NICK 모두 등록되었다면 에러
@@ -104,6 +104,8 @@ void    IRCServer::OnQuit(IRCSession& session, IRCMessage& msg)
         quitReason = "접속 종료";
 
     //TODO 채널에 접속중일 경우 알림
+
+    // 해당 종료 사유를 이용해 접속 종료
     session.Disconnect(quitReason);
 }
 
