@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:40:30 by smun              #+#    #+#             */
-/*   Updated: 2022/03/30 22:08:11 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 18:26:26 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ bool String::IsDigit(char ch) { return std::isdigit(ch); }
 
 bool String::IsSpecial(char ch)
 {
-    const char* const specialChars = "[]\\`_^{|}";
+    const char* const specialChars = "[]\\`-^{|}";
 
     return std::memchr(specialChars, ch, sizeof(specialChars));
 }

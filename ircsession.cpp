@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 02:06:46 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 18:37:33 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "ircserver.hpp"
 #include "ircsession.hpp"
 #include "irc_exception.hpp"
+#include "ircmessage.hpp"
 #include <stdexcept>
 #include <cctype>
 #include <algorithm>
@@ -57,22 +58,13 @@ void IRCSession::Process(const std::string& line)
         std::string cmd = args[0];
         std::transform(cmd.begin(), cmd.end(), cmd.begin(), toUpper);
         if (cmd == "NICK")
-            _server->CheckNickname(*this, GetNickname(), args[1]);
+            _server->OnNickname(*this, GetNickname(), args[1]);
         else if (cmd == "USER")
-        {
-            if (args.size() < 5)
-                throw irc_exception(ERR_NEEDMOREPARAMS, cmd + " :Not enough parameters");
-            const std::string& username = args[1];
-            if (!GetUsername().empty())
-                throw irc_exception(ERR_ALREADYREGISTRED, ":Unauthorized command (already registered)");
-            SetUsername(username);
-            Reply(RPL_WELCOME, username + " :Welcome to the Internet Relay Network " + GetNickname() + "!" + username + "@" + GetRemoteAddress());
-        }
+            _server->OnUsername(*this);
         else // :bassoon.irc.ozinger.org 421 smun NNNNDD :Unknown command
         {
             throw irc_exception(ERR_UNKNOWNCOMMAND, GetNickname() + " " + cmd + " :Unknown command");
         }
-
     }
     catch (const std::exception& ex)
     {
@@ -80,9 +72,9 @@ void IRCSession::Process(const std::string& line)
     }
 }
 
-void    IRCSession::Reply(int statuscode, const std::string& line)
+void    IRCSession::SendMessage(const IRCMessage& msg)
 {
-    Send(":"HOSTNAME" " + String::ItoCode(statuscode) + " " + line);
+    Send(msg.GetMessage());
 }
 
 void    IRCSession::SetNickname(const std::string& nickname) { _nickname = nickname; }
@@ -90,3 +82,8 @@ void    IRCSession::SetUsername(const std::string& username) { _username = usern
 
 const std::string&  IRCSession::GetNickname() const { return _nickname; }
 const std::string&  IRCSession::GetUsername() const { return _username; }
+
+const std::string   IRCSession::GetPrefix() const
+{
+    return GetNickname() + "!" + GetUsername() + "@" + GetRemoteAddress();
+}

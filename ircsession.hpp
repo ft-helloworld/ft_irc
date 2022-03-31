@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:44:02 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 00:44:30 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 17:13:26 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <string>
 
 class IRCServer;
+class IRCMessage;
 
 /**
  * @brief IRC의 로직을 수행할 세션 클래스입니다.
@@ -37,12 +38,14 @@ public:
 
     virtual void Process(const std::string& line);
 
-    void    Reply(int statuscode, const std::string& line);
+    void    SendMessage(const IRCMessage& msg);
 
     void                SetNickname(const std::string& nickname);
     const std::string&  GetNickname() const;
     void                SetUsername(const std::string& username);
     const std::string&  GetUsername() const;
+
+    const std::string   GetPrefix() const;
 };
 
 
