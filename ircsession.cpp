@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/01 02:08:09 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 02:27:20 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,11 +134,14 @@ void    IRCSession::SendMessage(const IRCMessage& msg)
     // 다음, cmd 추가
     oss << msg.GetCommand();
 
-    // 숫자 응답일 경우, 등록되었다면 맨 앞 파라미터는 닉네임이 됨, 등록되지 않았다면 맨 앞 파라미터는 *이 됨.
+    // 숫자 응답일 경우,
     if (msg.IsNumeric())
     {
+        // USER 및 NICK이 모두 등록되었다면 맨 앞 파라미터는 닉네임이 됨
         if (IsFullyRegistered())
             oss << " " << GetNickname();
+
+        // 둘 중 하나라도 등록되지 않았다면 맨 앞 파라미터는 *이 됨.
         else
             oss << " " << "*";
     }
