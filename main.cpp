@@ -1,6 +1,7 @@
 #include "ft_irc.hpp"
 #include "ircserver.hpp"
 #include "ircsessionfactory.hpp"
+#include <stdexcept>
 
 int main(int argc, char* argv[])
 {
@@ -14,7 +15,7 @@ int main(int argc, char* argv[])
     {
         // TODO IRC서버 클래스 만들고, 세션에서 사용하게 하기?
 
-        IRCServer   server;
+        IRCServer   server(argv[2]);
         IRCSessionFactory sessionFactory(&server);
 
         // 입력받은 포트 번호를 정수로 변환하고, 변환할 수 없었다면 예외 발생!

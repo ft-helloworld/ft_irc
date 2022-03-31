@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 13:45:47 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 18:40:30 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 21:02:16 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,18 @@ public:
     typedef std::vector<std::string> ParamVector;
     typedef std::vector<std::string>::const_iterator ParamVectorConstIterator;
 
+private:
     const std::string   _prefix;
     const IRCCommand    _cmd;
     ParamVector         _params;
     const std::string   _trailing;
 
-private:
     IRCMessage& operator= (const IRCMessage&);
-    IRCMessage();
+
+    static const IRCMessage Empty;
 
 public:
+    IRCMessage();
     ~IRCMessage();
     IRCMessage(const IRCMessage& msg);
 
@@ -41,7 +43,19 @@ public:
     IRCMessage(const std::string& prefix, const IRCCommand& cmd, const std::string& trailing);
 
     void    AddParam(const std::string& param);
+
+    ParamVectorConstIterator    BeginParam() const;
+    ParamVectorConstIterator    EndParam() const;
+    ParamVector::size_type      SizeParam() const;
+    const std::string&          GetParam(ParamVector::size_type i) const;
+    const std::string&  GetCommand() const;
+    const std::string&  GetTrailing() const;
+    const std::string&  GetPrefix() const;
+    bool    IsEmpty() const;
+
     const std::string   GetMessage() const;
+
+    static IRCMessage Parse(const std::string& line);
 };
 
 #endif

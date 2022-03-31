@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:40:50 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 18:37:08 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 21:46:53 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,30 @@
 #include <map>
 
 class IRCSession;
+class IRCMessage;
 
 class IRCServer
 {
 private:
-    std::map<const std::string, int> _clients;
+    typedef std::map<const std::string, int> ClientMap;
+    const std::string _password;
+
+    ClientMap _clients;
 
     IRCServer(const IRCServer&);
     IRCServer& operator= (const IRCServer&);
 
 public:
-    IRCServer();
+    IRCServer(const std::string& password);
     ~IRCServer();
 
-    void    OnNickname(IRCSession& session, const std::string& beforeNick, const std::string& afterNick);
-    void    OnUsername(IRCSession& session);
+    void    OnNickname(IRCSession& session, IRCMessage& msg);
+    void    OnUsername(IRCSession& session, IRCMessage& msg);
+    void    OnPassword(IRCSession& session, IRCMessage& msg);
+
     void    UnregisterNickname(const std::string& nick);
+    int     FindByNick(const std::string& nick) const;
+    const std::string& GetPassword() const;
 };
 
 #endif

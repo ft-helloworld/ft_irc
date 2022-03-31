@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:37:44 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 17:26:08 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 20:49:59 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,13 @@ public:
 
     typedef std::vector<const std::string> StringVector;
 
-    static void SplitArguments(std::vector<const std::string>& args, const std::string& line);
+    static void SplitArguments(StringVector& args, const std::string& line);
     static int  Stoi(const std::string& str);
     static const std::string ItoCode(int number);
-    static std::string Join(
-        std::vector<const std::string>::const_iterator begin,
-        std::vector<const std::string>::const_iterator end);
     static bool IsLetter(char ch);
     static bool IsDigit(char ch);
     static bool IsSpecial(char ch);
+    static bool EqualIgnoreCase(const std::string& s1, const std::string& s2);
 };
 
 #endif

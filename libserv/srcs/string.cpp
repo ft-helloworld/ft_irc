@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:40:30 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 18:26:26 by smun             ###   ########.fr       */
+/*   Updated: 2022/03/31 21:53:14 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,8 @@ const std::string String::ItoCode(int number)
     return ss.str();
 }
 
-std::string String::Join(
-    std::vector<const std::string>::const_iterator begin,
-    std::vector<const std::string>::const_iterator end)
-{
-    std::ostringstream oss;
-    while (begin != end)
-    {
-        oss << *begin;
-        ++begin;
-        if (begin != end)
-            oss << ' ';
-    }
-    return oss.str();
-}
-
 bool String::IsLetter(char ch) { return std::isalpha(ch); }
+
 bool String::IsDigit(char ch) { return std::isdigit(ch); }
 
 bool String::IsSpecial(char ch)
@@ -68,4 +54,26 @@ bool String::IsSpecial(char ch)
     const char* const specialChars = "[]\\`-^{|}";
 
     return std::memchr(specialChars, ch, sizeof(specialChars));
+}
+
+static bool CompareChar(char ch1, char ch2)
+{
+    if (ch1 == ch2)
+        return true;
+    if (std::isalpha(ch1) && std::isalpha(ch2))
+        return std::tolower(ch1) == std::tolower(ch2);
+
+    // the characters {}| are considered to be the lower case equivalents of the characters []\, respectively.
+    if ((ch1 == '[' || ch1 == '{') && (ch2 == '[' || ch2 == '{'))
+        return true;
+    if ((ch1 == ']' || ch1 == '}') && (ch2 == ']' || ch2 == '}'))
+        return true;
+    if ((ch1 == '|' || ch1 == '\\') && (ch2 == '|' || ch2 == '\\'))
+        return true;
+    return false;
+}
+
+bool String::EqualIgnoreCase(const std::string& s1, const std::string& s2)
+{
+    return std::equal(s1.begin(), s1.end(), s2.begin(), CompareChar);
 }
