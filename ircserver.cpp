@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/01 02:21:00 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 02:41:20 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void    IRCServer::OnNickname(IRCSession& session, IRCMessage& msg)
 void    IRCServer::OnUsername(IRCSession& session, IRCMessage& msg)
 {
     // USER 커맨드는 꼬리표 포함 총 4개의 파라미터 필요. 부족하면 에러.
-    if (msg.SizeParam() < 3 || msg.GetTrailing().empty())
+    if ((msg.SizeParam() < 3 || msg.GetTrailing().empty()) && msg.SizeParam() < 4)
         throw irc_exception(ERR_NEEDMOREPARAMS, "Not enough parameters");
 
     // 이미 USER, NICK 모두 등록되었다면 에러
