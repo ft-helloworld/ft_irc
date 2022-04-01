@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 16:00:52 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 00:59:19 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 02:50:47 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ IRCChannel::~IRCChannel()
 {
 }
 
-void    IRCChannel::SendNames(IRCSession& session) const
+void    IRCChannel::SendNames(IRCSession& session, bool sendEndReply) const
 {
     // :c4r9s1.42seoul.kr 353 abcd @ #42Seoul :abcd @smun
     // :c4r9s1.42seoul.kr 366 abcd #42Seoul :End of /NAMES list.
@@ -70,7 +70,8 @@ void    IRCChannel::SendNames(IRCSession& session) const
     }
 
     // 종료 응답 전송
-    session.SendMessage(IRCNumericMessage(RPL_ENDOFNAMES, _name, "End of /NAMES list"));
+    if (sendEndReply)
+        session.SendMessage(IRCNumericMessage(RPL_ENDOFNAMES, _name, "End of /NAMES list"));
 }
 
 void    IRCChannel::Join(IRCSession& session)
@@ -101,11 +102,19 @@ void    IRCChannel::Part(IRCSession& session, const std::string& cmd)
     _participants.erase(&session);
 }
 
-void    IRCChannel::Send(const IRCMessage& msg) const
+void    IRCChannel::Send(const IRCMessage& msg, IRCSession* except) const
 {
     ParticipantMap::const_iterator  it;
 
-    Log::Vp("IRCChannel::Send", "IRC메시지 [%s]를 %llu 명에게 전송합니다.", msg.GetCommand().c_str(), _participants.size());
+    Log::Vp("IRCChannel::Send", "채널 '%s'에서 IRC메시지 [%s]를 %llu 명에게 전송합니다.", GetChannelName().c_str(),msg.GetCommand().c_str(), _participants.size());
+    size_t i = 0;
     for (it = _participants.begin(); it != _participants.end(); ++it)
-        it->first->SendMessage(msg);
+    {
+        if (except != it->first)
+        {
+            it->first->SendMessage(msg);
+            ++i;
+        }
+    }
+    Log::Vp("IRCChannel::Send", "채널 '%s'에서 IRC메시지 [%s]가 %llu 명에게 전송되었습니다.", GetChannelName().c_str(), msg.GetCommand().c_str(), i);
 }

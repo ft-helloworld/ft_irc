@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 18:25:46 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 18:33:33 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 02:18:08 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ static bool is_valid_chstring_char(char ch)
         default:
             return true;
     }
+}
+
+bool IRCString::IsChannelPrefix(char ch)
+{
+    return ch == '#' || ch == '&';
 }
 
 bool IRCString::IsValidChstring(const std::string& nick)

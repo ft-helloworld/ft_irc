@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 12:37:36 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 00:38:27 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 02:50:24 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ public:
      *
      * @param session 참가자들의 닉네임을 전송할 세션.
      */
-    void    SendNames(IRCSession& session) const;
+    void    SendNames(IRCSession& session, bool sendEndReply = true) const;
 
     /**
      * @brief 현재 채널에 세션을 참가시킵니다.
@@ -73,7 +73,7 @@ public:
      *
      * @param msg 전송할 메시지
      */
-    void    Send(const IRCMessage& msg) const;
+    void    Send(const IRCMessage& msg, IRCSession* except = NULL) const;
 
     // 여기는 안해도 될 지도..
     void    Mode(IRCSession& session, bool add, int flags, const std::string& target = "");

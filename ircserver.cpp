@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/02 00:38:16 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 02:58:34 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "ircsession.hpp"
 #include "ircstring.hpp"
 #include "ircmessage.hpp"
+#include "ircnumericmessage.hpp"
 #include <sstream>
 #include <string>
 
@@ -171,7 +172,7 @@ void    IRCServer::OnPart(IRCSession& session, IRCMessage& msg)
 
     // ERR_NOSUCHCHANNEL 채널명 규칙 잘못됨 (길이 초과/문자열 잘못됨)
     const std::string& chanName = msg.GetParam(0);
-    if (chanName.front() != '#' && chanName.front() != '&')
+    if (!IRCString::IsChannelPrefix(chanName.front()))
         throw irc_exception(ERR_NOSUCHCHANNEL, chanName, "Invalid channel name");
     if (!IRCString::IsValidChstring(chanName.substr(1)))
         throw irc_exception(ERR_NOSUCHCHANNEL, chanName, "No such channel");
@@ -204,11 +205,7 @@ void    IRCServer::OnNames(IRCSession& session, IRCMessage& msg)
     // 1. 조건에 맞으면 채널의 이름들 전송.
     // 따로 오류 응답은 없음.
 
-    if (msg.SizeParam() < 1)
-        return;
-    const std::string& chanNames = msg.GetParam(0);
-
-    if (chanNames == "*")
+    if (msg.SizeParam() == 0 || msg.GetParam(0) == "*")
     {
         ChannelMap::const_iterator it;
         for (it = _channels.begin(); it != _channels.end(); ++it)
@@ -216,19 +213,21 @@ void    IRCServer::OnNames(IRCSession& session, IRCMessage& msg)
             const IRCChannel* chan = it->second.Load();
             if (chan->HasFlag(IRCChannel::MODE_PRIV) || chan->HasFlag(IRCChannel::MODE_SECRET))
                 continue;
-            chan->SendNames(session);
+            chan->SendNames(session, false);
         }
+        session.SendMessage(IRCNumericMessage(RPL_ENDOFNAMES, "*", "End of /NAMES list"));
     }
     else
     {
-        std::istringstream iss(chanNames);
+        std::istringstream iss(msg.GetParam(0));
         std::string chanName;
-        while (std::getline(iss, chanName))
+        while (std::getline(iss, chanName, ','))
         {
             ChannelMap::const_iterator it = _channels.find(chanName);
             if (it == _channels.end())
-                continue;
-            it->second.Load()->SendNames(session);
+                session.SendMessage(IRCNumericMessage(ERR_NOSUCHNICK, chanName, "No such nick/channel"));
+            else
+                it->second.Load()->SendNames(session);
         }
     }
 }
@@ -240,13 +239,45 @@ void    IRCServer::OnPrivMsg(IRCSession& session, IRCMessage& msg)
     // ERR_NORECIPIENT 파라미터 없을 때
     if (msg.SizeParam() < 1)
         throw irc_exception(ERR_NORECIPIENT, "No recipient given (PRIVMSG)");
-    // ERR_NOTEXTTOSEND
-    // ERR_CANNOTSENDTOCHAN
-    // ERR_NOTOPLEVEL
-    // ERR_WILDTOPLEVEL
-    // ERR_TOOMANYTARGETS
-    // ERR_NOSUCHNICK
-    // RPL_AWAY
+    // ERR_NOTEXTTOSEND 보낼 메시지 없을 때
+    //if (msg.SizeParam() < 2)
+    //    throw irc_exception(ERR_NOTEXTTOSEND, "No text to send");
+
+    const std::string& recipient = msg.GetParam(0);
+    if (recipient.empty())
+        throw irc_exception(ERR_NORECIPIENT, "No recipient given (PRIVMSG)");
+    const std::string& message = msg.GetTrailing(); // TODO GetParam1부터 끝까지 모두 더한걸로 변경.
+    if (message.empty())
+        throw irc_exception(ERR_NOTEXTTOSEND, "No text to send");
+
+    // ERR_CANNOTSENDTOCHAN +n(noextmsg) 플래그가 채널에 있고, 보낸 유저가 채널에 없을 경우
+    //                      +m(moderated) 플래그가 채널에 있고, 보낸 유저가 chanop가 아니고, +v 모드가 없을 경우
+    // ERR_NOTOPLEVEL 구현 필요 없음
+    // ERR_WILDTOPLEVEL 구현 필요 없음
+    // ERR_TOOMANYTARGETS 구현 필요 없음
+    // ERR_NOSUCHNICK 해당 채널 또는 닉네임이 없을 때
+
+    if (IRCString::IsChannelPrefix(recipient.front()))
+    {
+        ChannelMap::const_iterator it = _channels.find(recipient);
+        if (it == _channels.end())
+            throw irc_exception(ERR_NOSUCHNICK, "No such channel");
+        IRCMessage sendmsg(session.GetPrefix(), "PRIVMSG", message);
+        sendmsg.AddParam(recipient);
+        it->second.Load()->Send(sendmsg, &session);
+        Log::Vp("IRCServer::OnPrivMsg", "유저 <%s>가 채널 '%s'에 %llu 바이트의 메시지를 보냈습니다.", session.GetHost().c_str(), recipient.c_str(), message.size());
+    }
+    else
+    {
+        // RPL_AWAY 잠수 메시지 보내 주는 기능. 구현 필요 없음
+        IRCSession* target = FindByNick(recipient);
+        if (target == NULL)
+            throw irc_exception(ERR_NOSUCHNICK, "No such channel");
+        IRCMessage sendmsg(session.GetPrefix(), "PRIVMSG", message);
+        sendmsg.AddParam(recipient);
+        target->SendMessage(sendmsg);
+        Log::Vp("IRCServer::OnPrivMsg", "유저 <%s>가 대상 '%s'에 %llu 바이트의 메시지를 보냈습니다.", session.GetHost().c_str(), recipient.c_str(), message.size());
+    }
 }
 
 void    IRCServer::UnregisterNickname(const std::string& nick)
