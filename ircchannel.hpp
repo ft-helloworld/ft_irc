@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 12:37:36 by smun              #+#    #+#             */
-/*   Updated: 2022/04/01 20:40:37 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 00:38:27 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ public:
 
     inline bool HasFlag(int flags) const { return (_flags & flags) == flags; }
     inline const std::string& GetChannelName() const { return _name; }
-    inline bool IsEmpty() const { return _participants.size(); }
+    inline bool IsEmpty() const { return _participants.size() == 0; }
 };
 
 #endif

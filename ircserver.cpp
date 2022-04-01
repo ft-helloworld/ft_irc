@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/01 20:59:35 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 00:38:16 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,6 @@ void    IRCServer::OnQuit(IRCSession& session, IRCMessage& msg)
     if (quitReason.empty())
         quitReason = "접속 종료";
 
-    //TODO 채널에 접속중일 경우 알림
-
     // 해당 종료 사유를 이용해 접속 종료
     session.Close(quitReason);
 }
@@ -178,6 +176,11 @@ void    IRCServer::OnPart(IRCSession& session, IRCMessage& msg)
     if (!IRCString::IsValidChstring(chanName.substr(1)))
         throw irc_exception(ERR_NOSUCHCHANNEL, chanName, "No such channel");
 
+    LeaveChannel(session, chanName, "PART");
+}
+
+void    IRCServer::LeaveChannel(IRCSession& session, const std::string& chanName, const std::string& cmd)
+{
     ChannelMap::iterator chanIt = _channels.find(chanName);
     if (chanIt == _channels.end())
         throw irc_exception(ERR_NOSUCHCHANNEL, chanName, "No such channel");
@@ -187,8 +190,8 @@ void    IRCServer::OnPart(IRCSession& session, IRCMessage& msg)
         throw irc_exception(ERR_NOTONCHANNEL, chanName, "You're not on that channel");
 
     // 1. 채널이 있으면 거기서 퇴장
-    chanIt->second.Load()->Part(session, "PART");
-    Log::Vp("IRCServer::OnPart", "유저 <%s> 가 채널 '%s'에서 퇴장합니다.", session.GetHost().c_str(), chanName.c_str());
+    chanIt->second.Load()->Part(session, cmd);
+    Log::Vp("IRCServer::LeaveChannel", "유저 <%s> 가 채널 '%s'에서 %s 명령으로 퇴장합니다.", session.GetHost().c_str(), chanName.c_str(), cmd.c_str());
 
     CheckChannelExpire(chanIt->second.Load());
 }
@@ -262,6 +265,6 @@ void    IRCServer::CheckChannelExpire(IRCChannel* channel)
     if (!channel->IsEmpty())
         return;
 
-    Log::Vp("IRCServer::OnPart", "채널 '%s'가 비었습니다. 채널을 삭제합니다.", channel->GetChannelName().c_str());
+    Log::Vp("IRCServer::CheckChannelExpire", "채널 '%s'가 비었습니다. 채널을 삭제합니다.", channel->GetChannelName().c_str());
     _channels.erase(channel->GetChannelName());
 }

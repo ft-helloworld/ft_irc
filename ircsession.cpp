@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/01 20:57:35 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 00:36:14 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <algorithm>
 #include <map>
 #include <sstream>
+#include <vector>
 
 IRCSession::IRCSession(IRCServer* server, Channel* channel, int socketfd, int socketId, const std::string& addr)
     : Session(channel, socketfd, socketId, addr)
@@ -137,7 +138,17 @@ void    IRCSession::Close(const std::string& reason)
     // 서버에서 닉네임 등록 해제
     _server->UnregisterNickname(_nickname);
 
-    // TODO 입장된 채널들에 퇴장 전송 (QUIT 명령)
+    // 참여중인 채널에서 모두 퇴장
+    std::vector<const std::string> channels(_channels.begin(), _channels.end());
+    std::vector<const std::string>::iterator it;
+    for (it = channels.begin(); it != channels.end(); ++it)
+    {
+        try
+        {
+            _server->LeaveChannel(*this, *it, "QUIT");
+        }
+        catch (const irc_exception&) {} // ignore
+    }
 
     // 실제 세션 종료 처리
     Session::Close();
