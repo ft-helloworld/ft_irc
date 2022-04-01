@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/01 15:31:09 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 20:57:35 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ IRCSession::IRCSession(IRCServer* server, Channel* channel, int socketfd, int so
     , _registerFlag(0)
     , _password()
     , _closeReason()
+    , _channels()
     {}
 
 IRCSession::~IRCSession()
@@ -43,6 +44,9 @@ void IRCSession::Process(const std::string& line)
     // 명령어 처리
     try
     {
+        if (line.length() > MAX_MESSAGE_LEN - CRLF_SIZE)
+            throw std::runtime_error("exceed message len");
+
         IRCMessage msg = IRCMessage::Parse(line);
         if (msg.IsEmpty())
             return;
@@ -55,8 +59,16 @@ void IRCSession::Process(const std::string& line)
             _server->OnPassword(*this, msg);
         else if (cmd == "QUIT")
             _server->OnQuit(*this, msg);
+        else if (cmd == "JOIN")
+            _server->OnJoin(*this, msg);
+        else if (cmd == "PART")
+            _server->OnPart(*this, msg);
+        else if (cmd == "NAMES")
+            _server->OnNames(*this, msg);
+        else if (cmd == "PRIVMSG")
+            _server->OnPrivMsg(*this, msg);
         else // :bassoon.irc.ozinger.org 421 smun WRONGCMD :Unknown command
-            throw irc_exception(ERR_UNKNOWNCOMMAND, "Unknown command", cmd);
+            throw irc_exception(ERR_UNKNOWNCOMMAND, cmd, "Unknown command");
     }
     catch (const irc_exception& rex)
     {
@@ -77,11 +89,36 @@ const std::string&  IRCSession::GetNickname() const { return _nickname; }
 const std::string&  IRCSession::GetUsername() const { return _username; }
 const std::string&  IRCSession::GetPassword() const { return _password; }
 
+const std::string&  IRCSession::GetCloseReason() const { return _closeReason; }
+size_t              IRCSession::GetJoinedChannelNum() const { return _channels.size(); }
+
+bool    IRCSession::AddChannel(const std::string& name)
+{
+    return _channels.insert(name).second;
+}
+
+bool    IRCSession::RemoveChannel(const std::string& name)
+{
+    return _channels.erase(name) > 0;
+}
+
+bool    IRCSession::IsJoinedChannel(const std::string& name)
+{
+    return _channels.find(name) != _channels.end();
+}
+
 const std::string   IRCSession::GetPrefix() const
 {
     if (!IsFullyRegistered())
         return "unknown@" + GetRemoteAddress();
     return GetNickname() + "!" + GetUsername() + "@" + GetRemoteAddress();
+}
+
+const std::string   IRCSession::GetHost() const
+{
+    if (!IsFullyRegistered())
+        return "unknown@" + GetRemoteAddress();
+    return GetNickname() + "@" + GetRemoteAddress();
 }
 
 void    IRCSession::Close()
@@ -92,7 +129,7 @@ void    IRCSession::Close()
 void    IRCSession::Close(const std::string& reason)
 {
     // 나중에 입장된 채널들에 퇴장 알림 전송을 위해 종료 사유 저장
-    _closeReason = "Closing link: ("+GetPrefix()+") ["+reason+"]";
+    _closeReason = "Closing link: ("+GetHost()+") ["+reason+"]";
 
     // 자기 자신에게 종료 메시지 먼저 전송
     SendMessage(IRCMessage("ERROR", _closeReason));

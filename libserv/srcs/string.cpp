@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:40:30 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 21:53:14 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 20:02:42 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,26 +54,4 @@ bool String::IsSpecial(char ch)
     const char* const specialChars = "[]\\`-^{|}";
 
     return std::memchr(specialChars, ch, sizeof(specialChars));
-}
-
-static bool CompareChar(char ch1, char ch2)
-{
-    if (ch1 == ch2)
-        return true;
-    if (std::isalpha(ch1) && std::isalpha(ch2))
-        return std::tolower(ch1) == std::tolower(ch2);
-
-    // the characters {}| are considered to be the lower case equivalents of the characters []\, respectively.
-    if ((ch1 == '[' || ch1 == '{') && (ch2 == '[' || ch2 == '{'))
-        return true;
-    if ((ch1 == ']' || ch1 == '}') && (ch2 == ']' || ch2 == '}'))
-        return true;
-    if ((ch1 == '|' || ch1 == '\\') && (ch2 == '|' || ch2 == '\\'))
-        return true;
-    return false;
-}
-
-bool String::EqualIgnoreCase(const std::string& s1, const std::string& s2)
-{
-    return std::equal(s1.begin(), s1.end(), s2.begin(), CompareChar);
 }

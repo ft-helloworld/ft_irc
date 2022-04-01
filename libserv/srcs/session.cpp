@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:32:11 by smun              #+#    #+#             */
-/*   Updated: 2022/04/01 01:56:26 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 16:41:37 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void    Session::Send(const void* buf, size_t len)
     // 소켓이 닫혔을 때는 송신 버퍼에 데이터를 작성하지 않음.
     if (_closed)
         return;
-    _sendBuffer.insert(_sendBuffer.end(), bytebuf, bytebuf + len);
+    _sendBuffer.insert(_sendBuffer.end(), bytebuf, bytebuf + std::min<size_t>(MAX_MESSAGE_LEN - CRLF_SIZE, len));
     _sendBuffer.insert(_sendBuffer.end(), CRLF, &CRLF[CRLF_SIZE]);
     if (!(_triggeredEvents & IOEvent_Write))
     {

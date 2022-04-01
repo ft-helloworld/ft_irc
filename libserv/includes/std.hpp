@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 12:25:54 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 00:10:14 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 16:40:07 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 // data buffer
 #define TCP_MTU (1500 - 20 - 20)
+
+#define MAX_MESSAGE_LEN 512
 
 // line sperator (http/irc)
 #define CRLF "\r\n"
