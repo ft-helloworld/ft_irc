@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 16:43:59 by smun              #+#    #+#             */
-/*   Updated: 2022/04/01 01:25:16 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 15:37:47 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ IRCMessage IRCMessage::Parse(const std::string& line)
     std::string trailing;
 
     String::SplitArguments(args, line);
-    std::vector<const std::string>::const_iterator it = args.begin();
+    std::vector<const std::string>::iterator it = args.begin();
     if (it == args.end())
         return Empty;
 
@@ -86,7 +86,12 @@ IRCMessage IRCMessage::Parse(const std::string& line)
         // :로 시작하는 문자열이 나오면, 파라미터가 끝나고, 꼬리표가 나오는 것으로 간주.
         if (it->front() == ':')
         {
-            trailing = it->substr(1);
+            std::ostringstream oss;
+
+            oss << (it++)->substr(1);
+            while (it != args.end())
+                oss << " " << *(it++);
+            trailing = oss.str();
             break;
         }
 

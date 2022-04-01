@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:26:59 by smun              #+#    #+#             */
-/*   Updated: 2022/04/01 02:05:03 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 15:17:31 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ protected:
      * @brief 세션을 종료하고 싶을 때 호출합니다.
      *
      */
-    void    Close();
+    virtual void    Close();
 
 public:
     Session(Channel* channel, int socketfd, int socketId, const std::string& addr);

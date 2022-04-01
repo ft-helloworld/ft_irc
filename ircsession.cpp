@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/01 02:27:20 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 15:31:09 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ IRCSession::IRCSession(IRCServer* server, Channel* channel, int socketfd, int so
     , _server(server)
     , _registerFlag(0)
     , _password()
+    , _closeReason()
     {}
 
 IRCSession::~IRCSession()
 {
-    _server->UnregisterNickname(_nickname);
 }
 
 void IRCSession::Process(const std::string& line)
@@ -65,7 +65,7 @@ void IRCSession::Process(const std::string& line)
     catch (const std::exception& ex)
     {
         //std::exception 발생 시 오류 전송 후 세션 종료
-        Disconnect(ex.what());
+        Close(ex.what());
     }
 }
 
@@ -84,10 +84,26 @@ const std::string   IRCSession::GetPrefix() const
     return GetNickname() + "!" + GetUsername() + "@" + GetRemoteAddress();
 }
 
-void    IRCSession::Disconnect(const std::string& reason)
+void    IRCSession::Close()
 {
-    SendMessage(IRCMessage("ERROR", "Closing link: ("+GetPrefix()+") ["+reason+"]"));
-    Close();
+    Close("네트워크 오류");
+}
+
+void    IRCSession::Close(const std::string& reason)
+{
+    // 나중에 입장된 채널들에 퇴장 알림 전송을 위해 종료 사유 저장
+    _closeReason = "Closing link: ("+GetPrefix()+") ["+reason+"]";
+
+    // 자기 자신에게 종료 메시지 먼저 전송
+    SendMessage(IRCMessage("ERROR", _closeReason));
+
+    // 서버에서 닉네임 등록 해제
+    _server->UnregisterNickname(_nickname);
+
+    // TODO 입장된 채널들에 퇴장 전송 (QUIT 명령)
+
+    // 실제 세션 종료 처리
+    Session::Close();
 }
 
 void    IRCSession::SendMOTD()

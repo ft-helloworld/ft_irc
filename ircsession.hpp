@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:44:02 by smun              #+#    #+#             */
-/*   Updated: 2022/04/01 02:04:52 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 15:19:32 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ private:
     IRCServer*  _server;
     int         _registerFlag;
     std::string _password;
+    std::string _closeReason;
 
     IRCSession();
     IRCSession(const IRCSession&);
@@ -60,7 +61,8 @@ public:
     bool    HasRegisterFlag(int flag) const;
     bool    IsFullyRegistered() const;
 
-    void    Disconnect(const std::string& reason);
+    virtual void    Close();
+    void            Close(const std::string& reason);
 };
 
 
