@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 17:34:55 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 18:28:37 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,8 @@ void    IRCSession::Close(const std::string& reason)
     _server->UnregisterNickname(_nickname);
 
     // 참여중인 채널에서 모두 퇴장
+
+    SendMessageToNeighbor(IRCMessage(GetMask(), "QUIT", _closeReason), this);
     std::vector<const std::string> channels(_channels.begin(), _channels.end());
     std::vector<const std::string>::iterator it;
     for (it = channels.begin(); it != channels.end(); ++it)

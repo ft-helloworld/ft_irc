@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/02 17:50:37 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 18:22:29 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ void    IRCServer::OnNickname(IRCSession& session, IRCMessage& msg)
 
 void    IRCServer::OnUsername(IRCSession& session, IRCMessage& msg)
 {
-    // USER 커맨드는 꼬리표 포함 총 4개의 파라미터 필요. 부족하면 에러.
-    if ((msg.SizeParam() < 3 || msg.GetTrailing().empty()) && msg.SizeParam() < 4)
+    // USER 커맨드는 총 4개의 파라미터 필요. 부족하면 에러.
+    if (msg.SizeParam() < 4)
         throw irc_exception(ERR_NEEDMOREPARAMS, "USER", "Not enough parameters");
 
     // 이미 USER, NICK 모두 등록되었다면 에러
@@ -117,7 +117,7 @@ void    IRCServer::OnPassword(IRCSession& session, IRCMessage& msg)
 void    IRCServer::OnQuit(IRCSession& session, IRCMessage& msg)
 {
     // 꼬리표에서 접속 종료 사유를 클라이언트로부터 얻음.
-    std::string quitReason = msg.GetTrailing();
+    std::string quitReason = msg.GetParam(0);
     if (quitReason.empty())
         quitReason = "접속 종료";
 

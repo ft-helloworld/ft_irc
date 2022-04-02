@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 16:00:52 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 17:14:16 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 18:27:43 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,7 @@ void    IRCChannel::Part(IRCSession& session, const std::string& cmd)
     // :smun!smun@0::1 JOIN :#42
     // :smun!smun@0::1 QUIT :Quit:
     Log::Vp("IRCChannel::Part", "%s 유저가 %s 채널에서 퇴장합니다.", session.GetMask().c_str(), GetChannelName().c_str());
-    if (cmd == "QUIT")
-        Send(IRCMessage(session.GetMask(), cmd, session.GetCloseReason()));
-    else if (cmd == "PART")
+    if (cmd == "PART")
         Send(IRCMessage(session.GetMask(), cmd, GetChannelName()));
     _participants.erase(&session);
 }
