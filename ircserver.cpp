@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/02 19:28:31 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 19:33:13 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void    IRCServer::OnPassword(IRCSession& session, IRCMessage& msg)
 void    IRCServer::OnQuit(IRCSession& session, IRCMessage& msg)
 {
     // 꼬리표에서 접속 종료 사유를 클라이언트로부터 얻음.
-    std::string quitReason = msg.GetParam(0);
+    std::string quitReason = msg.GetParams(0);
     if (quitReason.empty())
         quitReason = "접속 종료";
 
