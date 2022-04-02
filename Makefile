@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/24 12:21:35 by smun              #+#    #+#              #
-#    Updated: 2022/04/01 20:59:52 by smun             ###   ########.fr        #
+#    Updated: 2022/04/02 20:48:01 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,11 @@ RMFLAGS = -f
 
 SRCS = main ircsession ircsessionfactory irc_exception ircserver ircstring \
 		ircmessage ircnumericmessage irccomparer ircchannel
-INC = -I./libserv/includes -I./
+INC = -I./libserv/includes -I./includes
 
 LIBSERV_SRCS = ./libserv/srcs/context ./libserv/srcs/channel ./libserv/srcs/log \
 				./libserv/srcs/session ./libserv/srcs/string
-FINAL_SRCS = $(addsuffix .cpp, $(SRCS) $(LIBSERV_SRCS))
+FINAL_SRCS = $(addsuffix .cpp, $(addprefix srcs/, $(SRCS)) $(LIBSERV_SRCS))
 FINAL_OBJS = $(FINAL_SRCS:.cpp=.o)
 
 NAME = ircserv
