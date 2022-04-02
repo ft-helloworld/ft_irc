@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserver.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/01 15:20:38 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 20:43:52 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void    IRCServer::OnQuit(IRCSession& session, IRCMessage& msg)
     //TODO 채널에 접속중일 경우 알림
 
     // 해당 종료 사유를 이용해 접속 종료
-    session.Close(quitReason);
+    session.Close("Quit: " + quitReason);
 }
 
 void    IRCServer::UnregisterNickname(const std::string& nick)
