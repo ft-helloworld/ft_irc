@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircsession.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 00:36:14 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 14:17:48 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void    IRCSession::Close(const std::string& reason)
     _closeReason = "Closing link: ("+GetHost()+") ["+reason+"]";
 
     // 자기 자신에게 종료 메시지 먼저 전송
-    SendMessage(IRCMessage("ERROR", _closeReason));
+    SendMessage(IRCMessage("", "ERROR", _closeReason));
 
     // 서버에서 닉네임 등록 해제
     _server->UnregisterNickname(_nickname);
@@ -213,11 +213,15 @@ void    IRCSession::SendMessage(const IRCMessage& msg)
     // 다음, 각 param 추가.
     IRCMessage::ParamVectorConstIterator it;
     for (it = msg.BeginParam(); it != msg.EndParam(); ++it)
-        oss << " " << *it;
-
-    // 맨 마지막, :trailing 형태로 추가
-    if (!msg.GetTrailing().empty())
-        oss << " :" << msg.GetTrailing();
+    {
+        if (it->find_first_of(" :") != std::string::npos)
+        {
+            oss << " :" << *it;
+            break;
+        }
+        else
+            oss << " " << *it;
+    }
 
     // 만들어진 최종 메시지를 전송.
     Send(oss.str());

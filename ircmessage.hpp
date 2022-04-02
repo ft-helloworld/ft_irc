@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircmessage.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 13:45:47 by smun              #+#    #+#             */
-/*   Updated: 2022/04/01 21:00:52 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 14:17:44 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ private:
     const std::string   _prefix;
     const IRCCommand    _cmd;
     ParamVector         _params;
-    const std::string   _trailing;
 
     IRCMessage& operator= (const IRCMessage&);
 
@@ -39,11 +38,11 @@ public:
     IRCMessage(const IRCMessage& msg);
 
     IRCMessage(const IRCCommand& cmd);
-    IRCMessage(const IRCCommand& cmd, const std::string& trailing);
-    IRCMessage(const std::string& prefix, const IRCCommand& cmd, const std::string& trailing);
+    IRCMessage(const std::string& prefix, const IRCCommand& cmd);
+    IRCMessage(const std::string& prefix, const IRCCommand& cmd, const std::string& txt);
 
     inline const std::string&          GetCommand() const  { return _cmd.command; }
-    inline const std::string&          GetTrailing() const { return _trailing; }
+    inline const std::string&          GetTrailing() const { return _params.back(); }
     inline const std::string&          GetPrefix() const   { return _prefix; }
 
     inline void                        AddParam(const std::string& param) { _params.push_back(param); }
