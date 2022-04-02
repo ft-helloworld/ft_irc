@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 13:45:47 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 14:37:18 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 15:53:49 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ public:
 
     IRCMessage(const IRCCommand& cmd);
     IRCMessage(const std::string& prefix, const IRCCommand& cmd);
-    IRCMessage(const std::string& prefix, const IRCCommand& cmd, const std::string& txt);
+    IRCMessage(const std::string& prefix, const IRCCommand& cmd, const std::string& p1);
+    IRCMessage(const std::string& prefix, const IRCCommand& cmd, const std::string& p1, const std::string& p2);
+    IRCMessage(const std::string& prefix, const IRCCommand& cmd, const std::string& p1, const std::string& p2, const std::string& p3);
 
     inline const std::string&          GetCommand() const  { return _cmd.command; }
     inline const std::string&          GetTrailing() const { return _params.back(); }

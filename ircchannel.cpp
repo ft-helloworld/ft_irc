@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 16:00:52 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 02:50:47 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 17:14:16 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ void    IRCChannel::Join(IRCSession& session)
         _participants[&session] = IRCChannel::MODE_OP;
     else
         _participants[&session] = 0;
-    Log::Vp("IRCChannel::Part", "%s 유저가 %s 채널에 입장합니다.", session.GetPrefix().c_str(), GetChannelName().c_str());
-    Send(IRCMessage(session.GetPrefix(), "JOIN", GetChannelName()));
+    Log::Vp("IRCChannel::Part", "%s 유저가 %s 채널에 입장합니다.", session.GetMask().c_str(), GetChannelName().c_str());
+    Send(IRCMessage(session.GetMask(), "JOIN", GetChannelName()));
 }
 
 void    IRCChannel::Part(IRCSession& session, const std::string& cmd)
@@ -94,11 +94,11 @@ void    IRCChannel::Part(IRCSession& session, const std::string& cmd)
     // :smun!smun@0::1 PART :#42
     // :smun!smun@0::1 JOIN :#42
     // :smun!smun@0::1 QUIT :Quit:
-    Log::Vp("IRCChannel::Part", "%s 유저가 %s 채널에서 퇴장합니다.", session.GetPrefix().c_str(), GetChannelName().c_str());
+    Log::Vp("IRCChannel::Part", "%s 유저가 %s 채널에서 퇴장합니다.", session.GetMask().c_str(), GetChannelName().c_str());
     if (cmd == "QUIT")
-        Send(IRCMessage(session.GetPrefix(), cmd, session.GetCloseReason()));
+        Send(IRCMessage(session.GetMask(), cmd, session.GetCloseReason()));
     else if (cmd == "PART")
-        Send(IRCMessage(session.GetPrefix(), cmd, GetChannelName()));
+        Send(IRCMessage(session.GetMask(), cmd, GetChannelName()));
     _participants.erase(&session);
 }
 
@@ -117,4 +117,13 @@ void    IRCChannel::Send(const IRCMessage& msg, IRCSession* except) const
         }
     }
     Log::Vp("IRCChannel::Send", "채널 '%s'에서 IRC메시지 [%s]가 %llu 명에게 전송되었습니다.", GetChannelName().c_str(), msg.GetCommand().c_str(), i);
+}
+
+void    IRCChannel::GatherParticipants(std::set<IRCSession*>& targets, IRCSession* except)
+{
+    ParticipantMap::const_iterator  it;
+
+    for (it = _participants.begin(); it != _participants.end(); ++it)
+        if (except != it->first)
+            targets.insert(it->first);
 }

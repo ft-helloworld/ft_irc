@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 16:43:59 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 14:55:45 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 15:54:57 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,31 @@ IRCMessage::IRCMessage(const std::string& prefix, const IRCCommand& cmd)
     , _cmd(cmd)
     , _params() {}
 
-IRCMessage::IRCMessage(const std::string& prefix, const IRCCommand& cmd, const std::string& txt)
+IRCMessage::IRCMessage(const std::string& prefix, const IRCCommand& cmd, const std::string& p1)
     : _prefix(prefix)
     , _cmd(cmd)
     , _params()
 {
-    _params.push_back(txt);
+    _params.push_back(p1);
+}
+
+IRCMessage::IRCMessage(const std::string& prefix, const IRCCommand& cmd, const std::string& p1, const std::string& p2)
+    : _prefix(prefix)
+    , _cmd(cmd)
+    , _params()
+{
+    _params.push_back(p1);
+    _params.push_back(p2);
+}
+
+IRCMessage::IRCMessage(const std::string& prefix, const IRCCommand& cmd, const std::string& p1, const std::string& p2, const std::string& p3)
+    : _prefix(prefix)
+    , _cmd(cmd)
+    , _params()
+{
+    _params.push_back(p1);
+    _params.push_back(p2);
+    _params.push_back(p3);
 }
 
 static int toUpper(char ch)

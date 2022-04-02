@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:44:02 by smun              #+#    #+#             */
-/*   Updated: 2022/04/01 20:28:23 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 16:54:28 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ public:
     virtual void Process(const std::string& line);
 
     void    SendMessage(const IRCMessage& msg);
+    void    SendMessageToNeighbor(const IRCMessage& msg, IRCSession* except);
     void    SendMOTD();
 
     void                SetNickname(const std::string& nickname);
@@ -59,8 +60,8 @@ public:
     void                SetPassword(const std::string& password);
     const std::string&  GetPassword() const;
 
-    const std::string   GetPrefix() const;
-    const std::string   GetHost() const;
+    const std::string   GetMask() const;
+    const std::string   GetEmail() const;
     const std::string&  GetCloseReason() const;
 
     void    RegisterStep(int flag);

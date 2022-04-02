@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircsession.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 14:17:48 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/02 17:34:55 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <map>
 #include <sstream>
 #include <vector>
+#include <set>
 
 IRCSession::IRCSession(IRCServer* server, Channel* channel, int socketfd, int socketId, const std::string& addr)
     : Session(channel, socketfd, socketId, addr)
@@ -108,18 +109,18 @@ bool    IRCSession::IsJoinedChannel(const std::string& name)
     return _channels.find(name) != _channels.end();
 }
 
-const std::string   IRCSession::GetPrefix() const
+const std::string   IRCSession::GetMask() const
 {
     if (!IsFullyRegistered())
         return "unknown@" + GetRemoteAddress();
-    return GetNickname() + "!" + GetUsername() + "@" + GetRemoteAddress();
+    return GetNickname() + "!" + GetEmail();
 }
 
-const std::string   IRCSession::GetHost() const
+const std::string   IRCSession::GetEmail() const
 {
     if (!IsFullyRegistered())
         return "unknown@" + GetRemoteAddress();
-    return GetNickname() + "@" + GetRemoteAddress();
+    return GetUsername() + "@" + GetRemoteAddress();
 }
 
 void    IRCSession::Close()
@@ -130,7 +131,7 @@ void    IRCSession::Close()
 void    IRCSession::Close(const std::string& reason)
 {
     // 나중에 입장된 채널들에 퇴장 알림 전송을 위해 종료 사유 저장
-    _closeReason = "Closing link: ("+GetHost()+") ["+reason+"]";
+    _closeReason = "Closing link: ("+GetEmail()+") ["+reason+"]";
 
     // 자기 자신에게 종료 메시지 먼저 전송
     SendMessage(IRCMessage("", "ERROR", _closeReason));
@@ -225,4 +226,18 @@ void    IRCSession::SendMessage(const IRCMessage& msg)
 
     // 만들어진 최종 메시지를 전송.
     Send(oss.str());
+}
+
+void    IRCSession::SendMessageToNeighbor(const IRCMessage& msg, IRCSession* except)
+{
+    std::set<IRCSession*> neighbors;
+
+    std::vector<const std::string>::iterator it;
+    std::vector<const std::string> channels(_channels.begin(), _channels.end());
+    for (it = channels.begin(); it != channels.end(); ++it)
+        _server->GatherNeighbors(neighbors, _channels.begin(), _channels.end(), except);
+
+    std::set<IRCSession*>::iterator nit = neighbors.begin();
+    for (; nit != neighbors.end(); ++nit)
+        (*nit)->SendMessage(msg);
 }

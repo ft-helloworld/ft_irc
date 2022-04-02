@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircstring.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 18:25:46 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 13:31:31 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/02 16:15:24 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <algorithm>
 #include <string>
 #include <cstddef>
+#include <sstream>
 
 IRCString::~IRCString() {}
 
@@ -64,4 +65,13 @@ bool IRCString::IsValidChstring(const std::string& nick)
     // <any 8bit code except SPACE, BELL, NUL, CR, LF and comma (',')>
     return std::find_if_not(nick.begin(), nick.end(), &is_valid_chstring_char) == nick.end();
     //채널명은 최대 200자의 문자열('&' 또는 '#'자로 시작)입니다. 첫 번째 문자가 '&' 또는 '#'이라는 조건과는 별도로 채널 이름에 대한 유일한 제한은 공백('), 컨트롤 G(^G 또는 ASCII 7), 쉼표('프로토콜에 의해 목록 항목 구분자로 사용됨)를 포함할 수 없다는 것입니다.
+}
+
+void    IRCString::SplitTargets(std::set<const std::string>& targets, const std::string& str)
+{
+    std::istringstream iss(str);
+
+    std::string elem;
+    while (std::getline(iss, elem, ','))
+        targets.insert(elem);
 }

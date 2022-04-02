@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 12:37:36 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 02:50:24 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 17:53:07 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <set>
 
 class IRCSession;
 class IRCMessage;
@@ -72,10 +73,21 @@ public:
      * @brief 현재 채널에 참여중인 참가자들에게 메시지를 모두 전송합니다.
      *
      * @param msg 전송할 메시지
+     * @param except 채널의 참가자들 중 except에 해당하는 세션은 제외하고 전송합니다.
+     * 일반적으로 자기 자신을 제외한 나머지 세션들에게 메시지를 보내기 위해 사용합니다.
      */
     void    Send(const IRCMessage& msg, IRCSession* except = NULL) const;
 
+    /**
+     * @brief 참가자들의 세션의 포인터를 매개변수로 주어진 std::set에 insert 합니다.
+     *
+     * @param targets 참가자 세션의 포인터들이 저장될 std::set
+     * @param except insert 생략할 세션 포인터. 일반적으로 자기 자신을 제외하고 나머지 세션들을 찾아 추가하기 위해 사용.
+     */
+    void    GatherParticipants(std::set<IRCSession*>& targets, IRCSession* except = NULL);
+
     // 여기는 안해도 될 지도..
+    void    SendTopic(IRCSession& session);
     void    Mode(IRCSession& session, bool add, int flags, const std::string& target = "");
     void    Kick(IRCSession& session, const std::string& target);
 

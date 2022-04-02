@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:40:50 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 00:22:24 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 17:27:23 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <iosfwd>
 #include <map>
+#include <set>
 #include "string.hpp"
 #include "ircchannel.hpp"
 #include "irccomparer.hpp"
@@ -59,6 +60,20 @@ public:
     bool    IsPasswordMatched(const std::string& password) const;
 
     IRCSession* FindByNick(const std::string& nick) const;
+
+    template<typename ChannelNameIterator>
+    void    GatherNeighbors(std::set<IRCSession*>& neighbors, ChannelNameIterator first, ChannelNameIterator last, IRCSession* except = NULL)
+    {
+        for (; first != last; ++first)
+        {
+            ChannelMap::iterator chanIt = _channels.find(*first);
+            if (chanIt == _channels.end())
+                continue;
+            IRCChannel* channel = chanIt->second.Load();
+            channel->GatherParticipants(neighbors, except);
+        }
+    }
+
 };
 
 #endif
