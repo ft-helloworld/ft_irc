@@ -6,7 +6,7 @@
 /*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 18:25:46 by smun              #+#    #+#             */
-/*   Updated: 2022/04/01 14:09:56 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/02 13:31:31 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ static bool is_valid_chstring_char(char ch)
         default:
             return true;
     }
+}
+
+bool IRCString::IsChannelPrefix(char ch)
+{
+    return ch == '#' || ch == '&';
 }
 
 bool IRCString::IsValidChstring(const std::string& nick)

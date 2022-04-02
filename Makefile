@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/24 12:21:35 by smun              #+#    #+#              #
-#    Updated: 2022/04/01 01:41:49 by smun             ###   ########.fr        #
+#    Updated: 2022/04/01 20:59:52 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ RM = rm
 RMFLAGS = -f
 
 SRCS = main ircsession ircsessionfactory irc_exception ircserver ircstring \
-		ircmessage
+		ircmessage ircnumericmessage irccomparer ircchannel
 INC = -I./libserv/includes -I./
 
 LIBSERV_SRCS = ./libserv/srcs/context ./libserv/srcs/channel ./libserv/srcs/log \

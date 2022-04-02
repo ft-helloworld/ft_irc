@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_irc.hpp                                         :+:      :+:    :+:   */
+/*   irccomparer.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/29 17:31:23 by smun              #+#    #+#             */
-/*   Updated: 2022/04/01 19:53:12 by smun             ###   ########.fr       */
+/*   Created: 2022/04/01 19:56:32 by smun              #+#    #+#             */
+/*   Updated: 2022/04/01 20:05:31 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_IRC_HPP
-#define FT_IRC_HPP
+#ifndef IRCCOMPARER_HPP
+#define IRCCOMPARER_HPP
 
-#include "std.hpp"
-#include "log.hpp"
-#include "channel.hpp"
-#include "string.hpp"
-#include "session.hpp"
-#include "sessionfactory.hpp"
-#include "numerics.hpp"
 #include <string>
+#include <algorithm>
 
-#define HOSTNAME    "ft-helloworld"
-#define ERROR       "ERROR"
-#define MAX_CHANNEL 20
+struct IRCComparer
+{
+    static bool CompareChar(char ch1, char ch2);
 
-//TODO
-// IRC서버, IRC채널(방), 개인메시지, 관리자 등등
+    inline bool operator()(const std::string& s1, const std::string& s2) const
+    {
+        return std::lexicographical_compare(s1.begin(), s1.end(), s2.begin(), s2.end(), CompareChar);
+    }
+};
 
 #endif

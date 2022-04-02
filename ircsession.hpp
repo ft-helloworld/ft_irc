@@ -6,14 +6,16 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:44:02 by smun              #+#    #+#             */
-/*   Updated: 2022/04/01 15:19:32 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 20:28:23 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef IRCSESSION_HPP
 #define IRCSESSION_HPP
 
+#include "irccomparer.hpp"
 #include <string>
+#include <set>
 
 class IRCServer;
 class IRCMessage;
@@ -32,6 +34,8 @@ private:
     int         _registerFlag;
     std::string _password;
     std::string _closeReason;
+
+    std::set<const std::string, IRCComparer> _channels;
 
     IRCSession();
     IRCSession(const IRCSession&);
@@ -56,6 +60,8 @@ public:
     const std::string&  GetPassword() const;
 
     const std::string   GetPrefix() const;
+    const std::string   GetHost() const;
+    const std::string&  GetCloseReason() const;
 
     void    RegisterStep(int flag);
     bool    HasRegisterFlag(int flag) const;
@@ -63,6 +69,11 @@ public:
 
     virtual void    Close();
     void            Close(const std::string& reason);
+
+    bool    AddChannel(const std::string& name);
+    bool    RemoveChannel(const std::string& name);
+    bool    IsJoinedChannel(const std::string& name);
+    size_t  GetJoinedChannelNum() const;
 };
 
 

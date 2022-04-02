@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:05:14 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/01 01:35:04 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 19:33:13 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,20 @@ irc_exception::irc_exception(const IRCCommand& cmd, const std::string& trailing)
 {
 }
 
-irc_exception::irc_exception(const IRCCommand& cmd, const std::string& trailing, const std::string& param1) throw()
+irc_exception::irc_exception(const IRCCommand& cmd, const std::string& param1, const std::string& trailing) throw()
     : _message(HOSTNAME, cmd, trailing)
 {
     _message.AddParam(param1);
 }
 
-irc_exception::irc_exception(const IRCCommand& cmd, const std::string& trailing, const std::string& param1, const std::string& param2) throw()
+irc_exception::irc_exception(const IRCCommand& cmd, const std::string& param1, const std::string& param2, const std::string& trailing) throw()
     : _message(HOSTNAME, cmd, trailing)
 {
     _message.AddParam(param1);
     _message.AddParam(param2);
 }
 
-irc_exception::irc_exception(const IRCCommand& cmd, const std::string& trailing, const std::string& param1, const std::string& param2, const std::string& param3) throw()
+irc_exception::irc_exception(const IRCCommand& cmd, const std::string& param1, const std::string& param2, const std::string& param3, const std::string& trailing) throw()
     : _message(HOSTNAME, cmd, trailing)
 {
     _message.AddParam(param1);
@@ -56,7 +56,7 @@ irc_exception::irc_exception(const IRCCommand& cmd, const std::string& trailing,
     _message.AddParam(param3);
 }
 
-irc_exception::irc_exception(const IRCCommand& cmd, const std::string& trailing, const std::string& param1, const std::string& param2, const std::string& param3, const std::string& param4) throw()
+irc_exception::irc_exception(const IRCCommand& cmd, const std::string& param1, const std::string& param2, const std::string& param3, const std::string& param4, const std::string& trailing) throw()
     : _message(HOSTNAME, cmd, trailing)
 {
     _message.AddParam(param1);

@@ -6,7 +6,7 @@
 /*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:40:30 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 13:26:38 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/02 13:31:28 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ bool String::IsSpecial(char ch)
 
 	return std::memchr(specialChars, ch, sizeof(specialChars));
 }
+<<<<<<< HEAD
 
 static bool CompareChar(char ch1, char ch2)
 {
@@ -91,3 +92,5 @@ bool String::EqualIgnoreCase(const std::string& s1, const std::string& s2)
 {
 	return std::equal(s1.begin(), s1.end(), s2.begin(), CompareChar);
 }
+=======
+>>>>>>> d3cbfa83d898d099687889157c3aab7f27612579

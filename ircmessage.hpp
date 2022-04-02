@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 13:45:47 by smun              #+#    #+#             */
-/*   Updated: 2022/04/01 01:30:31 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 21:00:52 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ private:
 
 public:
     IRCMessage();
-    ~IRCMessage();
+    virtual ~IRCMessage();
     IRCMessage(const IRCMessage& msg);
 
     IRCMessage(const IRCCommand& cmd);

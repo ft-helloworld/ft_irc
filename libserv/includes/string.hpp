@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:37:44 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 20:49:59 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/01 20:02:47 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ public:
     static bool IsLetter(char ch);
     static bool IsDigit(char ch);
     static bool IsSpecial(char ch);
-    static bool EqualIgnoreCase(const std::string& s1, const std::string& s2);
 };
 
 #endif
