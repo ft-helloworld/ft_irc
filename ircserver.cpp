@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/02 15:01:09 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 15:29:50 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,8 +238,8 @@ void    IRCServer::OnPrivMsg(IRCSession& session, IRCMessage& msg)
     if (msg.SizeParam() < 1)
         throw irc_exception(ERR_NORECIPIENT, "No recipient given (PRIVMSG)");
     // ERR_NOTEXTTOSEND 보낼 메시지 없을 때
-    //if (msg.SizeParam() < 2)
-    //    throw irc_exception(ERR_NOTEXTTOSEND, "No text to send");
+    if (msg.SizeParam() < 2)
+        throw irc_exception(ERR_NOTEXTTOSEND, "No text to send");
 
     const std::string& recipient = msg.GetParam(0);
     if (recipient.empty())
