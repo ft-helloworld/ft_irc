@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 18:28:37 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 19:28:15 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void IRCSession::Process(const std::string& line)
             _server->OnPart(*this, msg);
         else if (cmd == "NAMES")
             _server->OnNames(*this, msg);
-        else if (cmd == "PRIVMSG")
-            _server->OnPrivMsg(*this, msg);
+        else if (cmd == "PRIVMSG" || cmd == "NOTICE")
+            _server->OnPrivMsg(*this, msg, cmd);
         else // :bassoon.irc.ozinger.org 421 smun WRONGCMD :Unknown command
             throw irc_exception(ERR_UNKNOWNCOMMAND, cmd, "Unknown command");
     }

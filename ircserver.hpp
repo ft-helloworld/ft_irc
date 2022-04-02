@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:40:50 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 17:27:23 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 19:27:42 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ public:
     void    OnJoin(IRCSession& session, IRCMessage& msg);
     void    OnPart(IRCSession& session, IRCMessage& msg);
     void    OnNames(IRCSession& session, IRCMessage& msg);
-    void    OnPrivMsg(IRCSession& session, IRCMessage& msg);
+    void    OnPrivMsg(IRCSession& session, IRCMessage& msg, const std::string& cmd);
 
     void    UnregisterNickname(const std::string& nick);
     void    LeaveChannel(IRCSession& session, const std::string& chanName, const std::string& cmd);

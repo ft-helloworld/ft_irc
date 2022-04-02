@@ -1,8 +1,8 @@
 - 서브젝트 요구 조건
     - 인증 기능 ✅
-    - 닉네임 설정
+    - 닉네임 설정 ✅
        - 첫 설정 ✅
-       - 접속 중간에 닉네임 변경 (서버 전체에 알려줘야함) :: 채널 여러개 입장 -> 닉네임 변경 알림 1번 | 채널 입장 x상태-> 닉네임 변경 알림 x
+       - 접속 중간에 닉네임 변경 (서버 전체에 알려줘야함) :: 채널 여러개 입장 -> 닉네임 변경 알림 1번 | 채널 입장 x상태-> 닉네임 변경 알림 x ✅
     - 유저네임 설정 ✅
     - 채널 입장/퇴장 ✅
        - JOIN (입장 명령어) ✅
@@ -14,6 +14,34 @@
     - 운영자 전용 명령어 구현.
        - MODE 명령어 (임명)
        - KILL message :: <닉네임> <코멘트>  (쫓아낼 때 사용)
+
+- 서브젝트 요구 조건 불확실 (RFC문서)
+    - 연결 유지 관련
+      - PING, PONG 명령
+        - 일정 시간 내 응답이 오지 않으면 강제 접속 종료
+        - 클라이언트의 PING 요청에 대한 응답
+    - 클라이언트 정보 관련
+      - WHOIS 명령
+        - 대상의 정보를 얻는 명령 (아래 응답 순서 참고)
+    - 채팅 관련
+      - NOTICE 명령
+        - PRIVMSG와 용법이 같으나, 자동 응답을 하지 않음.
+      - AWAY 명령
+        - 클라이언트가 보내는 AWAY 메시지를 그대로 전송.
+    - 채널 관련
+      - TOPIC 명령
+        - 채널의 주제를 설정하는 명령
+      - LIST 명령
+        - 공개 채널의 목록을 띄우는 명령
+    - 서버 정보 관련
+      - INFO 명령
+        - 서버 정보를 출력하는 명령 [RPL_INFO, RPL_ENDOFINFO]
+      - ADMIN 명령
+        - 서버의 관리자 정보를 출력하는 명령 [RPL_ADMINME, RPL_ADMINLOC1, RPL_ADMINLOC2, RPL_ADMINEMAIL]
+
+- 보너스 요구 조건
+    - 파일 전송 (DCC 프로토콜은 PRIVMSG 명령을 통해 전달되므로... 서버가 더 할 게 없음!) ✅
+    - 봇 구현
 
 - USER, NICK 명령어가 각각 잘 수행되어야 서버에 접속시켜주는 flag 추가하기!! ✅
 
@@ -80,3 +108,40 @@ NOTES:
    <special>    ::= '-' | '[' | ']' | '\' | '`' | '^' | '{' | '}'
    <nonwhite>   ::= <any 8bit code except SPACE (0x20), NUL (0x0), CR
                      (0xd), and LF (0xa)>
+
+---
+
+<발견시>
+
+:scarlet.irc.ozinger.org 311 aaabbbccc aaabbbccc aaabbbccc 121.135.181.44 * :aaa
+:scarlet.irc.ozinger.org 378 aaabbbccc aaabbbccc :is connecting from aaabbbccc@121.135.181.44 121.135.181.44
+:scarlet.irc.ozinger.org 312 aaabbbccc aaabbbccc scarlet.irc.ozinger.org :Ozinger IRC Network
+:scarlet.irc.ozinger.org 379 aaabbbccc aaabbbccc :is using modes +
+:scarlet.irc.ozinger.org 318 aaabbbccc aaabbbccc :End of /WHOIS list.
+
+311, 378, 312, 379, 318
+RPL_WHOISUSER, RPL_WHOISHOST, RPL_WHOISSERVER, ?, RPL_ENDOFWHOIS
+
+
+<미발견시>
+
+:scarlet.irc.ozinger.org 401 aaabbbccc asdfc :No such nick/channel
+:scarlet.irc.ozinger.org 318 aaabbbccc asdfc :End of /WHOIS list.
+
+401
+ERR_NOSUCHNICK
+
+---
+
+:scarlet.irc.ozinger.org 256 aaabbbccc :Administrative info for scarlet.irc.ozinger.org
+:scarlet.irc.ozinger.org 257 aaabbbccc :Name     - Junehyeon Bae
+:scarlet.irc.ozinger.org 258 aaabbbccc :Nickname - devunt
+:scarlet.irc.ozinger.org 259 aaabbbccc :E-Mail   - devunt@gmail.com
+
+---
+
+:bassoon.irc.ozinger.org 371 aaabbbccc :Thanks To:
+:bassoon.irc.ozinger.org 371 aaabbbccc :   searchirc.com   irc-junkie.org  Brik           fraggeln
+:bassoon.irc.ozinger.org 371 aaabbbccc :
+:bassoon.irc.ozinger.org 371 aaabbbccc : Best experienced with: An IRC client
+:bassoon.irc.ozinger.org 374 aaabbbccc :End of /INFO list

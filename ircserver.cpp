@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/02 18:22:29 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/02 19:28:31 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,20 +278,20 @@ void    IRCServer::OnNames(IRCSession& session, IRCMessage& msg)
     }
 }
 
-void    IRCServer::OnPrivMsg(IRCSession& session, IRCMessage& msg)
+void    IRCServer::OnPrivMsg(IRCSession& session, IRCMessage& msg, const std::string& cmd)
 {
     // ERR_NORECIPIENT 파라미터 없을 때
     if (msg.SizeParam() < 1)
-        throw irc_exception(ERR_NORECIPIENT, "PRIVMSG", "No recipient given");
+        throw irc_exception(ERR_NORECIPIENT, cmd, "No recipient given");
     // ERR_NOTEXTTOSEND 보낼 메시지 없을 때
     if (msg.SizeParam() < 2)
-        throw irc_exception(ERR_NOTEXTTOSEND, "PRIVMSG", "No text to send");
+        throw irc_exception(ERR_NOTEXTTOSEND, cmd, "No text to send");
 
     if (msg.GetParam(0).empty())
-        throw irc_exception(ERR_NORECIPIENT, "PRIVMSG", "No recipient given");
+        throw irc_exception(ERR_NORECIPIENT, cmd, "No recipient given");
     const std::string& message = msg.GetParams(1);
     if (message.empty())
-        throw irc_exception(ERR_NOTEXTTOSEND, "PRIVMSG", "No text to send");
+        throw irc_exception(ERR_NOTEXTTOSEND, cmd, "No text to send");
 
     // ERR_CANNOTSENDTOCHAN +n(noextmsg) 플래그가 채널에 있고, 보낸 유저가 채널에 없을 경우
     //                      +m(moderated) 플래그가 채널에 있고, 보낸 유저가 chanop가 아니고, +v 모드가 없을 경우
@@ -316,7 +316,7 @@ void    IRCServer::OnPrivMsg(IRCSession& session, IRCMessage& msg)
                 session.SendMessage(IRCNumericMessage(ERR_NOSUCHNICK, recipient, "No such channel"));
                 continue;
             }
-            IRCMessage sendmsg(session.GetMask(), "PRIVMSG", recipient, message);
+            IRCMessage sendmsg(session.GetMask(), cmd, recipient, message);
             it->second.Load()->Send(sendmsg, &session);
             Log::Vp("IRCServer::OnPrivMsg", "유저 <%s>가 채널 '%s'에 %llu 바이트의 메시지를 보냈습니다.", session.GetEmail().c_str(), recipient.c_str(), message.size());
         }
@@ -329,8 +329,7 @@ void    IRCServer::OnPrivMsg(IRCSession& session, IRCMessage& msg)
                 session.SendMessage(IRCNumericMessage(ERR_NOSUCHNICK, recipient, "No such user"));
                 continue;
             }
-            IRCMessage sendmsg(session.GetMask(), "PRIVMSG", recipient, message);
-            sendmsg.AddParam(message);
+            IRCMessage sendmsg(session.GetMask(), cmd, recipient, message);
             target->SendMessage(sendmsg);
             Log::Vp("IRCServer::OnPrivMsg", "유저 <%s>가 대상 '%s'에 %llu 바이트의 메시지를 보냈습니다.", session.GetEmail().c_str(), recipient.c_str(), message.size());
         }
