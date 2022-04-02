@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:40:30 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 14:29:59 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/02 14:47:53 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,11 @@ void String::SplitArguments(std::vector<const std::string>& args, const std::str
 			args.push_back(s);
 		}
 	}
-	str = line.substr(line.find(str) + 1);
-	args.push_back(str);
+	if (!str.empty())
+	{
+		str = line.substr(line.find(str) + 1);
+		args.push_back(str);
+	}
 }
 
 int String::Stoi(const std::string& str)

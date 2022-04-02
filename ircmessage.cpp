@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircmessage.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 16:43:59 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 14:17:19 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/02 14:55:45 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,6 @@ IRCMessage IRCMessage::Parse(const std::string& line)
     command = *(it++);
     std::transform(command.begin(), command.end(), command.begin(), toUpper);
 
-    // Params or Trailing (파라미터 또는 꼬리표. 꼬리표는 공백을 포함하는 문자열을 처리하기 위한 트릭.)
-    // while (it != args.end())
-    // {
-    //     // :로 시작하는 문자열이 나오면, 파라미터가 끝나고, 꼬리표가 나오는 것으로 간주.
-    //     if (it->front() == ':')
-    //     {
-    //         (it++)->substr(1);
-    //         break;
-    //     }
-    //     // :로 시작하지 않았다면, 파라미터를 하나씩 읽어서 추가.
-    //     params.push_back(*(it++));
-    // }
-
     // 최종적으로 IRCMessage 인스턴스를 생성.
     IRCMessage msg = IRCMessage(prefix, command);
     // for (it = params.begin(); it != params.end(); ++it)
@@ -99,4 +86,19 @@ IRCMessage IRCMessage::Parse(const std::string& line)
     return msg;
 
     // [':' <prefix> <SPACE> ] <command> <params> <crlf>
+}
+
+const std::string  IRCMessage::GetParams(ParamVector::size_type begin, ParamVector::size_type end)
+{
+    const ParamVector::const_iterator beginPos = _params.begin() + begin;
+
+    std::ostringstream oss;
+    ParamVector::const_iterator it;
+    for (it = beginPos; it != _params.begin() + end && it != _params.end(); ++it)
+    {
+        if (it != beginPos)
+            oss << " ";
+        oss << *it;
+    }
+    return oss.str();
 }
