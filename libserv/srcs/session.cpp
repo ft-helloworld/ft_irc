@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:32:11 by smun              #+#    #+#             */
-/*   Updated: 2022/04/04 18:03:44 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/04 20:47:26 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ Session::Session(Channel* channel, int socketfd, int socketId, const std::string
     , _remoteAddress(addr)
     , _recvBuffer()
     , _sendBuffer()
-    , _triggeredEvents(0)
+    , _triggeredEvents(IOEvent_Read)
 {
     Log::Vp("Session::Session", "[%d/%s] 세션 인스턴스를 생성합니다.", GetSocket(), GetRemoteAddress().c_str());
 }
@@ -114,15 +114,12 @@ void    Session::OnWrite()
             return;
         Log::Dp("Session::OnWrite", "[%d/%s] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:%d", GetSocket(), GetRemoteAddress().c_str(), errno);
 
-        // 이미 Session::Close 함수에서 처리가 완료되었다면, 더 이상 또 처리할 필요 없음.
         if (!_closed)
-            Close();
-
-        // 대신, 여기에 들어왔다는 것은 Write이벤트를 정상적으로 수행할 수 없다는 의미이므로,
-        // Write이벤트를 해제시켜서 더 이상 이벤트를 받지 못하게 해야함.
-        else
-            DisableWriteEvent();
-        return;
+        {
+            //Close();
+            return;
+        }
+        bytes = _sendBuffer.size(); // 버퍼에서 전부 꺼내기
     }
     TakeBuffer(static_cast<size_t>(bytes));
     if (_sendBuffer.empty())
@@ -160,6 +157,7 @@ void    Session::Close()
         {
             _attachedChannel->SetEvent(GetSocket(), IOEvent_Read, IOFlag_Remove, NULL);
             _triggeredEvents &= ~IOEvent_Read;
+            Log::Vp("Session::Close", "[%d/%s] 세션의 읽기 이벤트를 제거합니다.", GetSocket(), GetRemoteAddress().c_str());
         }
         _attachedChannel->SetEvent(GetSocket(), IOEvent_Close, IOFlag_Add | IOFlag_OneShot, this);
         _closed = true;

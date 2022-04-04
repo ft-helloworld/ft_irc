@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:49:17 by smun              #+#    #+#             */
-/*   Updated: 2022/04/04 18:04:17 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/04 20:43:09 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,6 @@ void    Channel::Close(Session* session)
     Log::Vp("Channel::Close", "[%d/%s] 세션을 채널에서 해제합니다.", session->GetSocket(), session->GetRemoteAddress().c_str());
     Log::Ip("Channel::Close", "%s 와 연결이 끊겼습니다.", session->GetRemoteAddress().c_str());
     _sessions.erase(session->GetSocketId());
-    throw EventBreakStatus(EventBreakStatus::Closed);
 }
 
 void    Channel::Run()
@@ -196,6 +195,11 @@ void    Channel::Run()
     {
         // kqueue에서, 쌓여 있을 IO가능(ready) 이벤트를 모두 가져옴.
         int numbers = kevent64(_eventfd, NULL, 0, events, MaxEvents, 0, NULL);
+        if (numbers < 0)
+        {
+            Log::Vp("Channel::Run", "kevent64 error", errno);
+            continue;
+        }
         Log::Vp("Channel::Run", "kevent64에서 이벤트가 %d개 발생했습니다.", numbers);
         for (int i = 0; i < numbers; i++)
         {
@@ -206,13 +210,6 @@ void    Channel::Run()
             // 처리 시작.
             try
             {
-                // 세션이 닫혔다면 READ 이벤트 처리 안함.
-                if (context->IsClosed() && filter == EVFILT_READ)
-                {
-                    SetEvent(context->GetSocket(), IOEvent_Read, IOFlag_Remove, context);
-                    continue;
-                }
-
                 // 연결 수락
                 if (filter == EVFILT_READ && _listenContext == context)
                     Accept();
@@ -229,17 +226,6 @@ void    Channel::Run()
                 else if (filter == EVFILT_USER)
                     Close(dynamic_cast<Session*>(context));
             }
-
-            // 더 이상 이벤트를 수행할 수 없는 예외
-            catch (const EventBreakStatus& eventSt)
-            {
-                if (eventSt.status == EventBreakStatus::Closed)
-                {
-                    Log::Dp("Channel::Run", "Close 이벤트가 발생하여 현재 소켓의 이벤트 처리를 중단합니다.");
-                    break;
-                }
-            }
-
             // 예외 처리
             catch (const std::exception& ex)
             {

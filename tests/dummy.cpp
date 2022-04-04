@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 13:59:10 by smun              #+#    #+#             */
-/*   Updated: 2022/04/04 16:06:41 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/04 20:50:14 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,11 @@ struct TestContext
 static void _send_packet(int sock, const std::string& line)
 {
     ssize_t ret = send(sock, line.c_str(), line.length(), 0);
+    if (ret < 0)
+        std::perror("");
     ssize_t ret2 = send(sock, CRLF, CRLF_SIZE, 0);
+    if (ret2 < 0)
+        std::perror("");
 }
 
 static const std::string _recv_packet(std::vector<char>& recvBuffer, int sock)
@@ -78,11 +82,19 @@ static void* _run(void* pctx)
     while (true)
     {
         sock = socket(AF_INET, SOCK_STREAM, 0);
+        if (sock < 0)
+        {
+            std::perror("can't create socket");
+            continue;
+        }
         int ret = connect(sock, addr, sizeof(*addr));
         if (ret < 0)
         {
             if (errno == ECONNRESET)
+            {
+                printf("connection failed.. retry\n");
                 continue;
+            }
             std:perror("can't connect to host.");
             return NULL;
         }
@@ -102,8 +114,8 @@ static void* _run(void* pctx)
     try
     {
         _send_packet(sock, std::string("PASS ") + ctx->password);
-        _send_packet(sock, std::string("NICK testbot") + std::to_string(threadId));
-        _send_packet(sock, std::string("USER testbot") + std::to_string(threadId) + " 0 * :bot test");
+        _send_packet(sock, std::string("NICK tbot") + std::to_string(threadId));
+        _send_packet(sock, std::string("USER tbot") + std::to_string(threadId) + " 0 * :bot test");
         _send_packet(sock, "JOIN #42,#42Seoul,#fourtytwo,#안녕,#42서울");
         while (true)
         {
@@ -122,11 +134,9 @@ static void* _run(void* pctx)
     return NULL;
 }
 
-static void _empty_sig_handler(int){}
-
 int main(int argc, char* argv[])
 {
-    signal(SIGPIPE, _empty_sig_handler);
+    signal(SIGPIPE, SIG_IGN);
 
     TestContext ctx;
 

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:18:07 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 00:31:43 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/04 20:40:23 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 Context::Context(Channel* channel, int fd)
     : _socketfd(fd)
     , _attachedChannel(channel)
+    , _closed(false)
 {
 }
 

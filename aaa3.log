@@ -1,0 +1,1419 @@
+[2022-04-04 20:34:24] [34m[VERBOSE] [Session::Session        ] [5/127.0.0.1] 세션 인스턴스를 생성합니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::SharedPtr    ] 공유 포인터가 생성되었습니다. (남은 참조 카운트:1)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::operator=    ] 공유 포인터가 대입되었습니다. (남은 참조 카운트:2)[0m
+[2022-04-04 20:34:24] [32m[INFO]    [Channel::Accept         ] 127.0.0.1 에서 연결이 들어왔습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::~SharedPtr   ] 공유 포인터가 삭제되었습니다. 참조 카운트를 1 낮춥니다. (남은 참조 카운트:1)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [Session::AppendBuffer   ] [5/127.0.0.1] 세션의 수신 버퍼에 287 바이트를 더했습니다. (현재 총 바이트: 287)[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PASS password[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] NICK tbot1[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::CheckNickname] 닉네임 '' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::CheckNickname] 닉네임 'tbot1' 가 서버에 등록되었습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::CheckNickname] 현재 세션에서 FLAG_NICKNAME 플래그가 설정되었습니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] USER tbot1 0 * :bot test[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::CheckNickname] 현재 세션에서 FLAG_USERNAME 플래그가 설정되었습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCSession::RegisterStep] USER, NICK 명령을 모두 받았습니다. 패스워드 체크 루틴을 실행합니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCSession::RegisterStep] 패스워드가 일치합니다. 세션이 인증되었습니다. 환영 메시지를 전송합니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 001 tbot1 :Welcome to the [Hello, World!] IRC Network tbot1!tbot1@127.0.0.1[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 002 tbot1 :Your host is ft-helloworld, running version ft_irc[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 003 tbot1 :This server was created on 42Seoul[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 004 tbot1 ft-helloworld ft_irc(smun,seungyel,yejsong)-C++98-macOS o [0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 005 tbot1 PREFIX=(ov)@+ CHANTYPES=#& CASEMAPPING=strict-rfc1459 :are supported by this server[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 375 tbot1 :- ft-helloworld Message of day - [0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 372 tbot1 :[Hello, World!] IRC 서버에 오신 것을 환영합니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 372 tbot1 :서버 호스트 이름은 ft-helloworld 입니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 372 tbot1 :현재 서버는 [smun, seungyel, yejsong]의 ft_irc 에서 실행되고 있습니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 376 tbot1 :End of /MOTD command[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] JOIN #42,#42Seoul,#fourtytwo,#안녕,#42서울[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::SharedPtr    ] 공유 포인터가 생성되었습니다. (남은 참조 카운트:1)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::SharedPtr    ] 공유 포인터가 복사되었습니다. (남은 참조 카운트:2)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::SharedPtr    ] 공유 포인터가 복사되었습니다. (남은 참조 카운트:3)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::~SharedPtr   ] 공유 포인터가 삭제되었습니다. 참조 카운트를 1 낮춥니다. (남은 참조 카운트:2)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::~SharedPtr   ] 공유 포인터가 삭제되었습니다. 참조 카운트를 1 낮춥니다. (남은 참조 카운트:1)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnJoin       ] 새로운 채널 '#42'가 유저 <tbot1@127.0.0.1> 에 의해 생성됩니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Part        ] tbot1!tbot1@127.0.0.1 유저가 #42 채널에 입장합니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [JOIN]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :tbot1!tbot1@127.0.0.1 JOIN #42[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [JOIN]가 1 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnJoin       ] 유저 <tbot1@127.0.0.1> 가 채널 '#42'에 참여합니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 353 tbot1 = #42 :@tbot1 [0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 366 tbot1 #42 :End of /NAMES list[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::SharedPtr    ] 공유 포인터가 생성되었습니다. (남은 참조 카운트:1)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::SharedPtr    ] 공유 포인터가 복사되었습니다. (남은 참조 카운트:2)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::SharedPtr    ] 공유 포인터가 복사되었습니다. (남은 참조 카운트:3)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::~SharedPtr   ] 공유 포인터가 삭제되었습니다. 참조 카운트를 1 낮춥니다. (남은 참조 카운트:2)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::~SharedPtr   ] 공유 포인터가 삭제되었습니다. 참조 카운트를 1 낮춥니다. (남은 참조 카운트:1)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnJoin       ] 새로운 채널 '#42Seoul'가 유저 <tbot1@127.0.0.1> 에 의해 생성됩니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Part        ] tbot1!tbot1@127.0.0.1 유저가 #42Seoul 채널에 입장합니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [JOIN]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :tbot1!tbot1@127.0.0.1 JOIN #42Seoul[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [JOIN]가 1 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnJoin       ] 유저 <tbot1@127.0.0.1> 가 채널 '#42Seoul'에 참여합니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 353 tbot1 = #42Seoul :@tbot1 [0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 366 tbot1 #42Seoul :End of /NAMES list[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::SharedPtr    ] 공유 포인터가 생성되었습니다. (남은 참조 카운트:1)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::SharedPtr    ] 공유 포인터가 복사되었습니다. (남은 참조 카운트:2)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::SharedPtr    ] 공유 포인터가 복사되었습니다. (남은 참조 카운트:3)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::~SharedPtr   ] 공유 포인터가 삭제되었습니다. 참조 카운트를 1 낮춥니다. (남은 참조 카운트:2)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::~SharedPtr   ] 공유 포인터가 삭제되었습니다. 참조 카운트를 1 낮춥니다. (남은 참조 카운트:1)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnJoin       ] 새로운 채널 '#42서울'가 유저 <tbot1@127.0.0.1> 에 의해 생성됩니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Part        ] tbot1!tbot1@127.0.0.1 유저가 #42서울 채널에 입장합니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [JOIN]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :tbot1!tbot1@127.0.0.1 JOIN #42서울[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [JOIN]가 1 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnJoin       ] 유저 <tbot1@127.0.0.1> 가 채널 '#42서울'에 참여합니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 353 tbot1 = #42서울 :@tbot1 [0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 366 tbot1 #42서울 :End of /NAMES list[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::SharedPtr    ] 공유 포인터가 생성되었습니다. (남은 참조 카운트:1)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::SharedPtr    ] 공유 포인터가 복사되었습니다. (남은 참조 카운트:2)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::SharedPtr    ] 공유 포인터가 복사되었습니다. (남은 참조 카운트:3)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::~SharedPtr   ] 공유 포인터가 삭제되었습니다. 참조 카운트를 1 낮춥니다. (남은 참조 카운트:2)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::~SharedPtr   ] 공유 포인터가 삭제되었습니다. 참조 카운트를 1 낮춥니다. (남은 참조 카운트:1)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnJoin       ] 새로운 채널 '#fourtytwo'가 유저 <tbot1@127.0.0.1> 에 의해 생성됩니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Part        ] tbot1!tbot1@127.0.0.1 유저가 #fourtytwo 채널에 입장합니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [JOIN]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :tbot1!tbot1@127.0.0.1 JOIN #fourtytwo[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [JOIN]가 1 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnJoin       ] 유저 <tbot1@127.0.0.1> 가 채널 '#fourtytwo'에 참여합니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 353 tbot1 = #fourtytwo :@tbot1 [0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 366 tbot1 #fourtytwo :End of /NAMES list[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::SharedPtr    ] 공유 포인터가 생성되었습니다. (남은 참조 카운트:1)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::SharedPtr    ] 공유 포인터가 복사되었습니다. (남은 참조 카운트:2)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::SharedPtr    ] 공유 포인터가 복사되었습니다. (남은 참조 카운트:3)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::~SharedPtr   ] 공유 포인터가 삭제되었습니다. 참조 카운트를 1 낮춥니다. (남은 참조 카운트:2)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [SharedPtr::~SharedPtr   ] 공유 포인터가 삭제되었습니다. 참조 카운트를 1 낮춥니다. (남은 참조 카운트:1)[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnJoin       ] 새로운 채널 '#안녕'가 유저 <tbot1@127.0.0.1> 에 의해 생성됩니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Part        ] tbot1!tbot1@127.0.0.1 유저가 #안녕 채널에 입장합니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [JOIN]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :tbot1!tbot1@127.0.0.1 JOIN #안녕[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [JOIN]가 1 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnJoin       ] 유저 <tbot1@127.0.0.1> 가 채널 '#안녕'에 참여합니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 353 tbot1 = #안녕 :@tbot1 [0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] :ft-helloworld 366 tbot1 #안녕 :End of /NAMES list[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42 :Chat-0[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42'에 6 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42Seoul :Chat-1[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42Seoul'에 6 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #fourtytwo :Chat-2[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#fourtytwo'에 6 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #안녕 :Chat-3[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#안녕'에 6 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42서울 :Chat-4[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42서울'에 6 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:24] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42,#42Seoul,#fourtytwo,#안녕,#42서울 :Chat-5[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42'에 6 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42Seoul'에 6 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42서울'에 6 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#fourtytwo'에 6 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:24] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#안녕'에 6 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::AppendBuffer   ] [5/127.0.0.1] 세션의 수신 버퍼에 188 바이트를 더했습니다. (현재 총 바이트: 188)[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42 :Chat-6[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42'에 6 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42Seoul :Chat-7[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42Seoul'에 6 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #fourtytwo :Chat-8[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#fourtytwo'에 6 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #안녕 :Chat-9[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#안녕'에 6 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42서울 :Chat-10[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42서울'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42,#42Seoul,#fourtytwo,#안녕,#42서울 :Chat-11[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42Seoul'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42서울'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#fourtytwo'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#안녕'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::AppendBuffer   ] [5/127.0.0.1] 세션의 수신 버퍼에 192 바이트를 더했습니다. (현재 총 바이트: 192)[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42 :Chat-12[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42Seoul :Chat-13[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42Seoul'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #fourtytwo :Chat-14[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#fourtytwo'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #안녕 :Chat-15[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#안녕'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42서울 :Chat-16[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42서울'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42,#42Seoul,#fourtytwo,#안녕,#42서울 :Chat-17[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42Seoul'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42서울'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#fourtytwo'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#안녕'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::AppendBuffer   ] [5/127.0.0.1] 세션의 수신 버퍼에 192 바이트를 더했습니다. (현재 총 바이트: 192)[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42 :Chat-18[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42Seoul :Chat-19[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42Seoul'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #fourtytwo :Chat-20[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#fourtytwo'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #안녕 :Chat-21[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#안녕'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42서울 :Chat-22[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42서울'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42,#42Seoul,#fourtytwo,#안녕,#42서울 :Chat-23[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42Seoul'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42서울'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#fourtytwo'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#안녕'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::AppendBuffer   ] [5/127.0.0.1] 세션의 수신 버퍼에 192 바이트를 더했습니다. (현재 총 바이트: 192)[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42 :Chat-24[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42Seoul :Chat-25[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42Seoul'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #fourtytwo :Chat-26[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#fourtytwo'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #안녕 :Chat-27[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#안녕'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42서울 :Chat-28[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42서울'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Process        ] [R/127.0.0.1] PRIVMSG #42,#42Seoul,#fourtytwo,#안녕,#42서울 :Chat-29[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42Seoul'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42Seoul'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#42서울'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#42서울'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#fourtytwo'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#fourtytwo'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]를 1 명에게 전송합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Send        ] 채널 '#안녕'에서 IRC메시지 [PRIVMSG]가 0 명에게 전송되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::OnPrivMsg    ] 유저 <tbot1@127.0.0.1>가 채널 '#안녕'에 7 바이트의 메시지를 보냈습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Part        ] tbot1!tbot1@127.0.0.1 유저가 #42 채널에서 퇴장합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::LeaveChannel ] 유저 <tbot1@127.0.0.1> 가 채널 '#42'에서 QUIT 명령으로 퇴장합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::CheckChannelExpire] 채널 '#42'가 비었습니다. 채널을 삭제합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [SharedPtr::~SharedPtr   ] 공유 포인터가 삭제되었습니다. 내부 포인터의 삭제를 시작합니다. (남은 참조 카운트:0)[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Part        ] tbot1!tbot1@127.0.0.1 유저가 #42Seoul 채널에서 퇴장합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::LeaveChannel ] 유저 <tbot1@127.0.0.1> 가 채널 '#42Seoul'에서 QUIT 명령으로 퇴장합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::CheckChannelExpire] 채널 '#42Seoul'가 비었습니다. 채널을 삭제합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [SharedPtr::~SharedPtr   ] 공유 포인터가 삭제되었습니다. 내부 포인터의 삭제를 시작합니다. (남은 참조 카운트:0)[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Part        ] tbot1!tbot1@127.0.0.1 유저가 #42서울 채널에서 퇴장합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::LeaveChannel ] 유저 <tbot1@127.0.0.1> 가 채널 '#42서울'에서 QUIT 명령으로 퇴장합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::CheckChannelExpire] 채널 '#42서울'가 비었습니다. 채널을 삭제합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [SharedPtr::~SharedPtr   ] 공유 포인터가 삭제되었습니다. 내부 포인터의 삭제를 시작합니다. (남은 참조 카운트:0)[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Part        ] tbot1!tbot1@127.0.0.1 유저가 #fourtytwo 채널에서 퇴장합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::LeaveChannel ] 유저 <tbot1@127.0.0.1> 가 채널 '#fourtytwo'에서 QUIT 명령으로 퇴장합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::CheckChannelExpire] 채널 '#fourtytwo'가 비었습니다. 채널을 삭제합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [SharedPtr::~SharedPtr   ] 공유 포인터가 삭제되었습니다. 내부 포인터의 삭제를 시작합니다. (남은 참조 카운트:0)[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCChannel::Part        ] tbot1!tbot1@127.0.0.1 유저가 #안녕 채널에서 퇴장합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::LeaveChannel ] 유저 <tbot1@127.0.0.1> 가 채널 '#안녕'에서 QUIT 명령으로 퇴장합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::CheckChannelExpire] 채널 '#안녕'가 비었습니다. 채널을 삭제합니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [SharedPtr::~SharedPtr   ] 공유 포인터가 삭제되었습니다. 내부 포인터의 삭제를 시작합니다. (남은 참조 카운트:0)[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [IRCServer::UnregisterNickname] 닉네임 'tbot1' 가 서버에서 삭제되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Session::Close          ] [5/127.0.0.1] 세션의 닫기 이벤트가 이미 트리거되었습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Run            ] kevent64에서 이벤트가 1개 발생했습니다.[0m
+[2022-04-04 20:34:25] [34m[VERBOSE] [Channel::Read           ] [5/127.0.0.1] 읽기 이벤트가 발생되었습니다.[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::OnRead         ] [5/127.0.0.1] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:32[0m
+[2022-04-04 20:34:25] [37m[DEBUG]   [Session::Send           ] [S/127.0.0.1] ERROR :Closing link: (tbot1@127.0.0.1) [Network Error][0m

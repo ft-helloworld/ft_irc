@@ -4,8 +4,6 @@
 #include <stdexcept>
 #include <signal.h>
 
-static void _empty_sighandler(int) {}
-
 int main(int argc, char* argv[])
 {
     if (argc < 3)
@@ -14,7 +12,7 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    signal(SIGPIPE, _empty_sighandler);
+    signal(SIGPIPE, SIG_IGN);
 
     try
     {
