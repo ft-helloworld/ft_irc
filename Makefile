@@ -6,12 +6,12 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/24 12:21:35 by smun              #+#    #+#              #
-#    Updated: 2022/04/02 20:48:01 by smun             ###   ########.fr        #
+#    Updated: 2022/04/03 16:19:40 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -g -fsanitize=address
+CXX = c++
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -g -fsanitize=address
 RM = rm
 RMFLAGS = -f
 
@@ -29,16 +29,16 @@ NAME = ircserv
 all: $(NAME)
 
 %.o: %.cpp
-	$(CC) $(CFLAGS) $(INC) -c $< -o $@
+	$(CXX) $(CPPFLAGS) $(INC) -c $< -o $@
 
 $(NAME): $(FINAL_OBJS)
-ifneq ($(CC), c++)
-	@echo "\033[33mWarning: \033[31mYour compiler is currently not c++. (current: "$(CC)")\033[0m"
+ifneq ($(CXX), c++)
+	@echo "\033[33mWarning: \033[31mYour compiler is currently not c++. (current: "$(CXX)")\033[0m"
 endif
-ifneq ($(CFLAGS), -Wall -Wextra -Werror -std=c++98)
-	@echo "\033[33mWarning: \033[31mYour compiler flags is not adequate. (current: "$(CFLAGS)")\033[0m"
+ifneq ($(CPPFLAGS), -Wall -Wextra -Werror -std=c++98)
+	@echo "\033[33mWarning: \033[31mYour compiler flags is not adequate. (current: "$(CPPFLAGS)")\033[0m"
 endif
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CXX) $(CPPFLAGS) -o $@ $^
 
 clean:
 	$(RM) $(RMFLAGS) $(FINAL_OBJS)

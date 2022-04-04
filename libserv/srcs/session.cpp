@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:32:11 by smun              #+#    #+#             */
-/*   Updated: 2022/04/01 16:41:37 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/03 16:36:49 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,12 @@ void    Session::OnRead()
     std::string line;
     while (GetNextLine(_recvBuffer, line))
         Process(line);
+
+    if (_recvBuffer.size() > MAX_MESSAGE_LEN)
+    {
+        Log::Fp("Session::OnRead", "Exceed recv buffer size %d (from %s)", MAX_MESSAGE_LEN, GetRemoteAddress().c_str());
+        Close();
+    }
 }
 
 void    Session::AppendBuffer(Byte* buffer, size_t bytes)

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 19:28:15 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/03 15:59:47 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "ircserver.hpp"
 #include "ircsession.hpp"
 #include "irc_exception.hpp"
+#include "ircnumericmessage.hpp"
 #include "ircmessage.hpp"
 #include <stdexcept>
 #include <cctype>
@@ -159,11 +160,16 @@ void    IRCSession::Close(const std::string& reason)
 
 void    IRCSession::SendMOTD()
 {
-    SendMessage(IRCMessage(HOSTNAME, RPL_MOTDSTART, "- "HOSTNAME" Message of day - "));
-    SendMessage(IRCMessage(HOSTNAME, RPL_MOTD, "[Hello, World!] IRC 서버에 오신 것을 환영합니다."));
-    SendMessage(IRCMessage(HOSTNAME, RPL_MOTD, "서버 호스트 이름은 "HOSTNAME" 입니다."));
-    SendMessage(IRCMessage(HOSTNAME, RPL_MOTD, "현재 서버는 [smun, seungyel, yejsong]의 ft_irc 에서 실행되고 있습니다."));
-    SendMessage(IRCMessage(HOSTNAME, RPL_ENDOFMOTD, "End of /MOTD command"));
+    SendMessage(IRCNumericMessage(RPL_WELCOME, "Welcome to the [Hello, World!] IRC Network " + GetMask()));
+    SendMessage(IRCNumericMessage(RPL_YOURHOST, "Your host is "HOSTNAME", running version ft_irc"));
+    SendMessage(IRCNumericMessage(RPL_CREATED, "This server was created on 42Seoul"));
+    SendMessage(IRCNumericMessage(RPL_MYINFO, HOSTNAME, "ft_irc(smun,seungyel,yejsong)-C++98-macOS", "o", ""));
+    SendMessage(IRCNumericMessage(RPL_ISUPPORT, "PREFIX=(ov)@+", "CHANTYPES=#&", "CASEMAPPING=strict-rfc1459", "are supported by this server"));
+    SendMessage(IRCNumericMessage(RPL_MOTDSTART, "- "HOSTNAME" Message of day - "));
+    SendMessage(IRCNumericMessage(RPL_MOTD, "[Hello, World!] IRC 서버에 오신 것을 환영합니다."));
+    SendMessage(IRCNumericMessage(RPL_MOTD, "서버 호스트 이름은 "HOSTNAME" 입니다."));
+    SendMessage(IRCNumericMessage(RPL_MOTD, "현재 서버는 [smun, seungyel, yejsong]의 ft_irc 에서 실행되고 있습니다."));
+    SendMessage(IRCNumericMessage(RPL_ENDOFMOTD, "End of /MOTD command"));
 }
 
 void    IRCSession::RegisterStep(int flag)
