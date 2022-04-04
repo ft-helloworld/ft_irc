@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:32:11 by smun              #+#    #+#             */
-/*   Updated: 2022/04/04 20:47:26 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/05 00:37:23 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,6 @@ void    Session::OnWrite()
         if (bytes < 0 && (errno == EAGAIN || errno == EWOULDBLOCK))
             return;
         Log::Dp("Session::OnWrite", "[%d/%s] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:%d", GetSocket(), GetRemoteAddress().c_str(), errno);
-
-        if (!_closed)
-        {
-            //Close();
-            return;
-        }
         bytes = _sendBuffer.size(); // 버퍼에서 전부 꺼내기
     }
     TakeBuffer(static_cast<size_t>(bytes));
