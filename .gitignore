@@ -34,3 +34,4 @@
 ircserv
 
 .vscode/settings.json
+*.dSYM

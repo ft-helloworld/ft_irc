@@ -2,6 +2,9 @@
 #include "ircserver.hpp"
 #include "ircsessionfactory.hpp"
 #include <stdexcept>
+#include <signal.h>
+
+static void _empty_sighandler(int) {}
 
 int main(int argc, char* argv[])
 {
@@ -10,6 +13,8 @@ int main(int argc, char* argv[])
         Log::I("Usage: %s [port] [password]", argv[0]);
         return 1;
     }
+
+    signal(SIGPIPE, _empty_sighandler);
 
     try
     {

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:43:03 by smun              #+#    #+#             */
-/*   Updated: 2022/03/31 02:09:20 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/04 16:18:35 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,50 @@ void    Log::Printfp(int level, const char* prefix, const char* format, va_list&
 #define VBEGIN  va_list va; va_start(va, format)
 #define VEND    va_end(va)
 
+#if LOG_LEVEL >= 5
 void    Log::V(const char* format, ...) { VBEGIN; Printf(LogLevel_Verbose, format, va); VEND; }
-void    Log::D(const char* format, ...) { VBEGIN; Printf(LogLevel_Debug, format, va); VEND; }
-void    Log::I(const char* format, ...) { VBEGIN; Printf(LogLevel_Info, format, va); VEND; }
-void    Log::W(const char* format, ...) { VBEGIN; Printf(LogLevel_Warning, format, va); VEND; }
-void    Log::E(const char* format, ...) { VBEGIN; Printf(LogLevel_Error, format, va); VEND; }
-void    Log::F(const char* format, ...) { VBEGIN; Printf(LogLevel_Fatal, format, va); VEND; }
-
 void    Log::Vp(const char* prefix, const char* format, ...) { VBEGIN; Printfp(LogLevel_Verbose, prefix, format, va); VEND; }
+#else
+void    Log::V(const char*, ...) {}
+void    Log::Vp(const char*, const char*, ...) {}
+#endif
+
+#if LOG_LEVEL >= 4
+void    Log::D(const char* format, ...) { VBEGIN; Printf(LogLevel_Debug, format, va); VEND; }
 void    Log::Dp(const char* prefix, const char* format, ...) { VBEGIN; Printfp(LogLevel_Debug, prefix, format, va); VEND; }
+#else
+void    Log::D(const char*, ...) {}
+void    Log::Dp(const char*, const char*, ...) {}
+#endif
+
+#if LOG_LEVEL >= 3
+void    Log::I(const char* format, ...) { VBEGIN; Printf(LogLevel_Info, format, va); VEND; }
 void    Log::Ip(const char* prefix, const char* format, ...) { VBEGIN; Printfp(LogLevel_Info, prefix, format, va); VEND; }
+#else
+void    Log::I(const char*, ...) {}
+void    Log::Ip(const char*, const char*, ...) {}
+#endif
+
+#if LOG_LEVEL >= 2
+void    Log::W(const char* format, ...) { VBEGIN; Printf(LogLevel_Warning, format, va); VEND; }
 void    Log::Wp(const char* prefix, const char* format, ...) { VBEGIN; Printfp(LogLevel_Warning, prefix, format, va); VEND; }
+#else
+void    Log::W(const char*, ...) {}
+void    Log::Wp(const char*, const char*, ...) {}
+#endif
+
+#if LOG_LEVEL >= 1
+void    Log::E(const char* format, ...) { VBEGIN; Printf(LogLevel_Error, format, va); VEND; }
 void    Log::Ep(const char* prefix, const char* format, ...) { VBEGIN; Printfp(LogLevel_Error, prefix, format, va); VEND; }
+#else
+void    Log::E(const char*, ...) {}
+void    Log::Ep(const char*, const char*, ...) {}
+#endif
+
+#if LOG_LEVEL >= 0
+void    Log::F(const char* format, ...) { VBEGIN; Printf(LogLevel_Fatal, format, va); VEND; }
 void    Log::Fp(const char* prefix, const char* format, ...) { VBEGIN; Printfp(LogLevel_Fatal, prefix, format, va); VEND; }
+#else
+void    Log::F(const char*, ...) {}
+void    Log::Fp(const char*, const char*, ...) {}
+#endif

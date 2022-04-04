@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:43:33 by smun              #+#    #+#             */
-/*   Updated: 2022/03/30 15:17:37 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/04 15:56:51 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@ class Session;
 class Channel
 {
 private:
+    struct EventBreakStatus
+    {
+        enum { Closed = 1 };
+
+        EventBreakStatus(int st) : status(st){}
+        int status;
+    };
+
     typedef     std::map<int, SharedPtr<Session> >             SessionMap;
     typedef     std::map<int, SharedPtr<Session> >::iterator   SessionMapIterator;
 

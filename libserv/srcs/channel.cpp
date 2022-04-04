@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:49:17 by smun              #+#    #+#             */
-/*   Updated: 2022/04/01 01:55:17 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/04 16:00:56 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,7 @@ void    Channel::Close(Session* session)
     if (session == NULL) throw std::runtime_error("Channel::Close 함수로 전달된 포인터가 세션 인스턴스를 가리키고 있지 않습니다.");
     Log::Vp("Channel::Close", "[%d/%s] 세션을 채널에서 해제합니다.", session->GetSocket(), session->GetRemoteAddress().c_str());
     _sessions.erase(session->GetSocketId());
+    throw EventBreakStatus(EventBreakStatus::Closed);
 }
 
 void    Channel::Run()
@@ -205,8 +206,7 @@ void    Channel::Run()
             {
                 // 세션이 닫혔다면 READ 이벤트 처리 안함.
                 if (context->IsClosed())
-                    if (filter == EVFILT_READ)
-                        continue;
+                    continue;
 
                 // 연결 수락
                 if (filter == EVFILT_READ && _listenContext == context)
@@ -223,6 +223,16 @@ void    Channel::Run()
                 // 세션 닫기
                 else if (filter == EVFILT_USER)
                     Close(dynamic_cast<Session*>(context));
+            }
+
+            // 더 이상 이벤트를 수행할 수 없는 예외
+            catch (const EventBreakStatus& eventSt)
+            {
+                if (eventSt.status == EventBreakStatus::Closed)
+                {
+                    Log::Dp("Channel::Run", "Close 이벤트가 발생하여 현재 소켓의 이벤트 처리를 중단합니다.");
+                    break;
+                }
             }
 
             // 예외 처리
