@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 13:59:10 by smun              #+#    #+#             */
-/*   Updated: 2022/04/04 20:50:14 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/05 01:17:11 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,9 @@ struct TestContext
 static void _send_packet(int sock, const std::string& line)
 {
     ssize_t ret = send(sock, line.c_str(), line.length(), 0);
-    if (ret < 0)
-        std::perror("");
     ssize_t ret2 = send(sock, CRLF, CRLF_SIZE, 0);
-    if (ret2 < 0)
-        std::perror("");
+    if (ret < 0 || ret2 < 0)
+        throw 0;
 }
 
 static const std::string _recv_packet(std::vector<char>& recvBuffer, int sock)
@@ -166,6 +164,7 @@ int main(int argc, char* argv[])
         pthread_t t;
         pthread_create(&t, NULL, _run, &ctx);
         threads.push_back(t);
+        usleep(100000);
     }
     printf("dummy is working... \n");
 
