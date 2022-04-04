@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:49:17 by smun              #+#    #+#             */
-/*   Updated: 2022/04/04 16:00:56 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/04 16:55:56 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ void    Channel::Close(Session* session)
 {
     if (session == NULL) throw std::runtime_error("Channel::Close 함수로 전달된 포인터가 세션 인스턴스를 가리키고 있지 않습니다.");
     Log::Vp("Channel::Close", "[%d/%s] 세션을 채널에서 해제합니다.", session->GetSocket(), session->GetRemoteAddress().c_str());
+    Log::Ip("Channel::Close", "%s 와 연결이 끊겼습니다.", session->GetRemoteAddress().c_str());
     _sessions.erase(session->GetSocketId());
     throw EventBreakStatus(EventBreakStatus::Closed);
 }
@@ -205,7 +206,7 @@ void    Channel::Run()
             try
             {
                 // 세션이 닫혔다면 READ 이벤트 처리 안함.
-                if (context->IsClosed())
+                if (context->IsClosed() && filter == EVFILT_READ)
                     continue;
 
                 // 연결 수락

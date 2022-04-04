@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:38:55 by smun              #+#    #+#             */
-/*   Updated: 2022/04/04 16:18:42 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/04 16:56:52 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <cstdarg>
 
 #ifndef LOG_LEVEL
-#define LOG_LEVEL 3
+#define LOG_LEVEL 5
 #endif
 
 class Log
