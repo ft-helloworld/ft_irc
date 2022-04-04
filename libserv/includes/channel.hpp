@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:43:33 by smun              #+#    #+#             */
-/*   Updated: 2022/04/04 20:10:16 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/05 01:02:00 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ private:
 
     /**
      * @brief 세션에서 데이터를 읽어올 때 사용하는 함수입니다.
-     * @details kevent64 함수에서 데이터를 읽을 수 있음이 확인되면,
+     * @details kevent 함수에서 데이터를 읽을 수 있음이 확인되면,
      * 이 함수를 호출해서 시스템 커널에 저장된 데이터를 읽어 세션의 _recvBuffer에 저장합니다.
      * 이후, <CR><LF>를 구분자로 하여 내용을 구분하고, 분석하여 처리할 수 있게 합니다.
      * 처리된 데이터는 한 줄씩 Session::Process 함수를 호출하여 넘깁니다.
@@ -120,7 +120,7 @@ private:
 
     /**
      * @brief 세션에서 원격으로 데이터를 보낼 때 사용하는 함수입니다.
-     * @details kevent64 함수에서 데이터를 1 바이트라도 보낼 수 있음이 확인되면, 이 함수를 호출해서
+     * @details kevent 함수에서 데이터를 1 바이트라도 보낼 수 있음이 확인되면, 이 함수를 호출해서
      * 세션의 _sendBuffer에서 데이터를 꺼내 시스템 커널에 원격으로 데이터 전송을 요청합니다.
      *
      * 보내진 데이터는 _sendBuffer에서 삭제되어 꺼내지며(Polling), 더 이상 보낼 데이터가 없다면
@@ -154,7 +154,7 @@ public:
     /**
      * @brief 해당 포트에서 연결을 수락하기 위한 준비를 합니다.
      *
-     * @details (socket -> bind -> setsockopt -> listen -> kevent64(SetEvent))
+     * @details (socket -> bind -> setsockopt -> listen -> kevent(SetEvent))
      *
      * @exception 실행 중 오류가 발생할 경우 std::runtime_error 예외가 발생합니다.
      */
@@ -177,7 +177,7 @@ public:
     /**
      * 소켓 이벤트를 처리할 메인 메서드입니다.
      * _killed 변수가 거짓일 동안 계속 반복합니다.
-     * kevent64 함수를 호출하여, 이벤트가 생길 때 까지 대기합니다.
+     * kevent 함수를 호출하여, 이벤트가 생길 때 까지 대기합니다.
      * 이벤트가 발생되면, 해당 이벤트 구조체의 udata 변수에서 Context 객체의 포인터를 얻어옵니다.
      *
      * Context 객체와 _listenContext가 같고, Read 이벤트라면 해당 이벤트는 연결을 수락하는 이벤트입니다. 따라서 Accept를 호출합니다.

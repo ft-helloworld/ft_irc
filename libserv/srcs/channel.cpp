@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:49:17 by smun              #+#    #+#             */
-/*   Updated: 2022/04/04 20:43:09 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/05 01:08:40 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,9 @@ void    Channel::BindAndListen()
 
 void    Channel::SetEvent(int fd, int events, int flags, Context* context)
 {
-    kevent64_s  ev[3];
-    int         eventNum = 0;
-    int         eventFlags = 0;
+    struct kevent   ev[3];
+    int             eventNum = 0;
+    int             eventFlags = 0;
 
     // 내가 만든 IOFlag 플래그를 실제 kqueue에서 사용되는 플래그로 변환.
     if (flags & IOFlag_Add)
@@ -110,16 +110,16 @@ void    Channel::SetEvent(int fd, int events, int flags, Context* context)
 
     // kqueue64를 위해 이벤트 등록 또는 삭제 구조체를 설정.
     if (events & IOEvent_Read)
-         EV_SET64(&ev[eventNum++], fd, EVFILT_READ, eventFlags, 0, 0, reinterpret_cast<uint64_t>(context), 0, 0);
+         EV_SET(&ev[eventNum++], fd, EVFILT_READ, eventFlags, 0, 0, context);
     if (events & IOEvent_Write)
-         EV_SET64(&ev[eventNum++], fd, EVFILT_WRITE, eventFlags, 0, 0, reinterpret_cast<uint64_t>(context), 0, 0);
+         EV_SET(&ev[eventNum++], fd, EVFILT_WRITE, eventFlags, 0, 0, context);
     if (events & IOEvent_Close)
-         EV_SET64(&ev[eventNum++], fd, EVFILT_USER, eventFlags, NOTE_TRIGGER, 0, reinterpret_cast<uint64_t>(context), 0, 0);
+         EV_SET(&ev[eventNum++], fd, EVFILT_USER, eventFlags, NOTE_TRIGGER, 0, context);
 
     // 실제 kqueue에 이벤트를 등록 또는 삭제 요청.
-    int evregist = kevent64(_eventfd, ev, eventNum, NULL, 0, 0, NULL);
+    int evregist = kevent(_eventfd, ev, eventNum, NULL, 0, NULL);
     if (evregist < 0)
-        throw std::runtime_error("kevent64() 함수 호출 실패");
+        throw std::runtime_error("kevent() 함수 호출 실패");
 }
 
 void    Channel::Accept()
@@ -188,22 +188,22 @@ void    Channel::Run()
 {
     // 한 번에 최대로 처리할 수 있는 이벤트 개수.
     const int MaxEvents = 20;
-    kevent64_s events[MaxEvents];
+    struct kevent events[MaxEvents];
 
     // 서버가 살아있을 동안 계속 반복.
     while (_killed == false)
     {
         // kqueue에서, 쌓여 있을 IO가능(ready) 이벤트를 모두 가져옴.
-        int numbers = kevent64(_eventfd, NULL, 0, events, MaxEvents, 0, NULL);
+        int numbers = kevent(_eventfd, NULL, 0, events, MaxEvents, NULL);
         if (numbers < 0)
         {
-            Log::Vp("Channel::Run", "kevent64 error", errno);
+            Log::Vp("Channel::Run", "kevent error", errno);
             continue;
         }
-        Log::Vp("Channel::Run", "kevent64에서 이벤트가 %d개 발생했습니다.", numbers);
+        Log::Vp("Channel::Run", "kevent에서 이벤트가 %d개 발생했습니다.", numbers);
         for (int i = 0; i < numbers; i++)
         {
-            kevent64_s& event = events[i];
+            struct kevent& event = events[i];
             int filter = event.filter;
             Context* context = reinterpret_cast<Context*>(event.udata);
 
