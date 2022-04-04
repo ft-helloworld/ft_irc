@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 20:04:48 by smun              #+#    #+#             */
-/*   Updated: 2022/04/01 20:05:34 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/04 17:07:32 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ bool IRCComparer::CompareChar(char ch1, char ch2)
         return false;
     if ((ch1 == '|' || ch1 == '\\') && (ch2 == '|' || ch2 == '\\'))
         return false;
-    return static_cast<int>(ch1 & 0xff) < static_cast<int>(ch2 & 0xff);
+    return static_cast<unsigned char>(ch1) < static_cast<unsigned char>(ch2);
 }

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:32:11 by smun              #+#    #+#             */
-/*   Updated: 2022/04/04 16:03:55 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/04 18:03:44 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,19 +113,32 @@ void    Session::OnWrite()
         if (bytes < 0 && (errno == EAGAIN || errno == EWOULDBLOCK))
             return;
         Log::Dp("Session::OnWrite", "[%d/%s] 원격 연결이 끊어졌습니다. 세션 종료를 시작합니다. errno:%d", GetSocket(), GetRemoteAddress().c_str(), errno);
-        Close();
+
+        // 이미 Session::Close 함수에서 처리가 완료되었다면, 더 이상 또 처리할 필요 없음.
+        if (!_closed)
+            Close();
+
+        // 대신, 여기에 들어왔다는 것은 Write이벤트를 정상적으로 수행할 수 없다는 의미이므로,
+        // Write이벤트를 해제시켜서 더 이상 이벤트를 받지 못하게 해야함.
+        else
+            DisableWriteEvent();
         return;
     }
     TakeBuffer(static_cast<size_t>(bytes));
     if (_sendBuffer.empty())
     {
         Log::Vp("Session::OnWrite", "[%d/%s] 세션의 송신 버퍼가 비었습니다. 송신 IO 플래그를 해제합니다.", GetSocket(), GetRemoteAddress().c_str());
-        if (_triggeredEvents & IOEvent_Write)
-        {
-            _attachedChannel->SetEvent(GetSocket(), IOEvent_Write, IOFlag_Remove, this);
-            _triggeredEvents &= ~IOEvent_Write;
-            Log::Vp("Session::OnWrite", "[%d/%s] 세션의 송신 IO 플래그를 해제했습니다.", GetSocket(), GetRemoteAddress().c_str());
-        }
+        DisableWriteEvent();
+    }
+}
+
+void    Session::DisableWriteEvent()
+{
+    if (_triggeredEvents & IOEvent_Write)
+    {
+        _attachedChannel->SetEvent(GetSocket(), IOEvent_Write, IOFlag_Remove, this);
+        _triggeredEvents &= ~IOEvent_Write;
+        Log::Vp("Session::OnWrite", "[%d/%s] 세션의 송신 IO 플래그를 해제했습니다.", GetSocket(), GetRemoteAddress().c_str());
     }
 }
 
@@ -140,9 +153,9 @@ void    Session::TakeBuffer(size_t bytes)
 
 void    Session::Close()
 {
-    Log::Vp("Session::Close", "[%d/%s] 세션의 닫기 이벤트를 트리거 합니다.", GetSocket(), GetRemoteAddress().c_str());
     if (!_closed)
     {
+        Log::Vp("Session::Close", "[%d/%s] 세션의 닫기 이벤트를 트리거 합니다.", GetSocket(), GetRemoteAddress().c_str());
         if (_triggeredEvents & IOEvent_Read)
         {
             _attachedChannel->SetEvent(GetSocket(), IOEvent_Read, IOFlag_Remove, NULL);
@@ -151,6 +164,8 @@ void    Session::Close()
         _attachedChannel->SetEvent(GetSocket(), IOEvent_Close, IOFlag_Add | IOFlag_OneShot, this);
         _closed = true;
     }
+    else
+        Log::Vp("Session::Close", "[%d/%s] 세션의 닫기 이벤트가 이미 트리거되었습니다.", GetSocket(), GetRemoteAddress().c_str());
 }
 
 void    Session::Process(const std::string& line)

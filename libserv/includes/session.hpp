@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:26:59 by smun              #+#    #+#             */
-/*   Updated: 2022/04/01 15:17:31 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/04 17:50:53 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ private:
      * @param len 세션으로 전송될 데이터의 크기
      */
     void    Send(const void* buf, size_t len);
+
+    void    DisableWriteEvent();
 
     /**
      * @brief 버퍼에서 개행을 통해 줄을 분리해옵니다. 개행이 없다면, false가 반환됩니다. 개행이 있다면, true가 반환되며 line 레퍼런스에 읽어온 한 줄이 들어갑니다.

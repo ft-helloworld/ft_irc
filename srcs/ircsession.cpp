@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/03 15:59:47 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/04 17:53:52 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,13 +126,9 @@ const std::string   IRCSession::GetEmail() const
 
 void    IRCSession::Close()
 {
-    Close("네트워크 오류");
-}
-
-void    IRCSession::Close(const std::string& reason)
-{
-    // 나중에 입장된 채널들에 퇴장 알림 전송을 위해 종료 사유 저장
-    _closeReason = "Closing link: ("+GetEmail()+") ["+reason+"]";
+    // 지정된 종료 사유가 없다면, 기본적인 종료 사유를 강제로 지정.
+    if (_closeReason.empty())
+        _closeReason = "Closing link: ("+GetEmail()+") [Network Error]";
 
     // 자기 자신에게 종료 메시지 먼저 전송
     SendMessage(IRCMessage("", "ERROR", _closeReason));
@@ -156,6 +152,14 @@ void    IRCSession::Close(const std::string& reason)
 
     // 실제 세션 종료 처리
     Session::Close();
+}
+
+void    IRCSession::Close(const std::string& reason)
+{
+    // 나중에 입장된 채널들에 퇴장 알림 전송을 위해 종료 사유 저장
+    _closeReason = "Closing link: ("+GetEmail()+") ["+reason+"]";
+
+    Close();
 }
 
 void    IRCSession::SendMOTD()

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:49:17 by smun              #+#    #+#             */
-/*   Updated: 2022/04/04 16:55:56 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/04 18:04:17 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ void    Channel::Run()
     {
         // kqueue에서, 쌓여 있을 IO가능(ready) 이벤트를 모두 가져옴.
         int numbers = kevent64(_eventfd, NULL, 0, events, MaxEvents, 0, NULL);
+        Log::Vp("Channel::Run", "kevent64에서 이벤트가 %d개 발생했습니다.", numbers);
         for (int i = 0; i < numbers; i++)
         {
             kevent64_s& event = events[i];
@@ -207,7 +208,10 @@ void    Channel::Run()
             {
                 // 세션이 닫혔다면 READ 이벤트 처리 안함.
                 if (context->IsClosed() && filter == EVFILT_READ)
+                {
+                    SetEvent(context->GetSocket(), IOEvent_Read, IOFlag_Remove, context);
                     continue;
+                }
 
                 // 연결 수락
                 if (filter == EVFILT_READ && _listenContext == context)
