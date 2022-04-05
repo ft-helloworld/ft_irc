@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:49:17 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 01:08:40 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/05 21:27:04 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ Channel::Channel(int port, ISessionFactory* sessionFactory)
     , _killed(false)
     , _sessions()
     , _sessionFactory(sessionFactory)
+    , _timerHandler()
 {
 }
 
@@ -140,7 +141,7 @@ void    Channel::Accept()
     {
         // 새로운 세션 인스턴스 생성.
         int socketId = ++socketIdCounter;
-        const std::string& addr = inet_ntoa(remoteaddr.sin_addr);
+        const std::string addr = inet_ntoa(remoteaddr.sin_addr);
         SharedPtr<Session> session = SharedPtr<Session>(
 
             // ISessionFactory 인터페이스를 구현한 팩토리를 사용해서, 세션을 새로이 생성합니다.
@@ -225,6 +226,10 @@ void    Channel::Run()
                 // 세션 닫기
                 else if (filter == EVFILT_USER)
                     Close(dynamic_cast<Session*>(context));
+
+                // 타이머 발동
+                else if (filter == EVFILT_TIMER && _timerHandler != NULL)
+                    _timerHandler->OnTimer();
             }
             // 예외 처리
             catch (const std::exception& ex)
@@ -248,4 +253,21 @@ Session&    Channel::FindSession(int sessionKey)
     if (found == _sessions.end())
         throw std::runtime_error("Not found session");
     return *(found->second.Load());
+}
+
+void    Channel::AddTimer(ITimerHandler* timerHandler)
+{
+    struct kevent   ev;
+    if (_timerHandler)
+    {
+        EV_SET(&ev, 1, EVFILT_TIMER, EV_DELETE, 0, 0, 0);
+        if (kevent(_eventfd, &ev, 1, NULL, 0, NULL) < 0)
+            throw std::runtime_error("timer1 - kevent() 함수 호출 실패");
+        Log::Vp("Channel::AddTimer", "%lu초 단위의 기존 타이머가 삭제되었습니다.", _timerHandler->GetInterval());
+    }
+    EV_SET(&ev, 1, EVFILT_TIMER, EV_ADD, NOTE_SECONDS, timerHandler->GetInterval(), 0);
+    if (kevent(_eventfd, &ev, 1, NULL, 0, NULL) < 0)
+        throw std::runtime_error("timer2 - kevent() 함수 호출 실패");
+    Log::Vp("Channel::AddTimer", "%lu초 단위의 타이머가 추가되었습니다.", timerHandler->GetInterval());
+    _timerHandler = timerHandler;
 }

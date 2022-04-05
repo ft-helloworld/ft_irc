@@ -37,6 +37,7 @@ int main(int argc, char* argv[])
         Channel channel(port, &sessionFactory);
         channel.Init();
         channel.BindAndListen();
+        channel.AddTimer(&server);
         channel.Run();
     }
     catch (const std::exception& ex)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserver.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/05 17:42:50 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/05 21:54:34 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -360,7 +360,7 @@ void    IRCServer::OnTopic(IRCSession& session, IRCMessage& msg)
 {
     if (msg.SizeParam() < 1 || msg.GetParam(0).empty())
         throw irc_exception(ERR_NOSUCHNICK, "No such nick/channel");
-    
+
     IRCString::TargetSet targets;
     IRCString::SplitTargets(targets, msg.GetParam(0));
     const std::string& chanName = *(targets.begin());
@@ -422,4 +422,24 @@ void    IRCServer::OnList(IRCSession& session, IRCMessage& msg)
     }
         //조건에 부합하는 채널만 출력
     session.SendMessage(IRCNumericMessage(RPL_LISTEND, "End of /LIST"));
+}
+
+void    IRCServer::OnTimer()
+{
+    std::vector<IRCSession*> sessions;
+
+    ClientMap::const_iterator it;
+    for (it = _clients.begin(); it != _clients.end(); ++it)
+        sessions.push_back(it->second);
+
+    std::vector<IRCSession*>::iterator sit;
+    for (sit = sessions.begin(); sit != sessions.end(); ++sit)
+        (*sit)->CheckActive();
+
+    Log::Vp("IRCServer::OnTimer", "클라이언트 PING 검사를 수행했습니다.");
+}
+
+size_t  IRCServer::GetInterval() const
+{
+    return static_cast<size_t>(30);
 }

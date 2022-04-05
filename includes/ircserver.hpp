@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserver.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:40:50 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 14:40:38 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/05 20:44:10 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@
 #include "ircchannel.hpp"
 #include "irccomparer.hpp"
 #include "shared_ptr.hpp"
+#include "timerhandler.hpp"
 
 class IRCSession;
 class IRCMessage;
 
-class IRCServer
+class IRCServer : public ITimerHandler
 {
 public:
     typedef std::map<const std::string, IRCSession*, IRCComparer> ClientMap;
@@ -59,6 +60,8 @@ public:
     void    UnregisterNickname(const std::string& nick);
     void    LeaveChannel(IRCSession& session, const std::string& chanName, const std::string& cmd);
     bool    IsPasswordMatched(const std::string& password) const;
+    void    OnTimer();
+    size_t  GetInterval() const;
 
     IRCSession* FindByNick(const std::string& nick) const;
 
