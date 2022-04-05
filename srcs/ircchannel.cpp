@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircchannel.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 16:00:52 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 18:27:43 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/05 14:51:28 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 IRCChannel::IRCChannel(const std::string& name)
     : _name(name)
+    , _topic()
     , _participants()
     , _flags(0)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserver.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/02 19:33:13 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/05 17:42:50 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,4 +354,72 @@ void    IRCServer::CheckChannelExpire(IRCChannel* channel)
 
     Log::Vp("IRCServer::CheckChannelExpire", "채널 '%s'가 비었습니다. 채널을 삭제합니다.", channel->GetChannelName().c_str());
     _channels.erase(channel->GetChannelName());
+}
+
+void    IRCServer::OnTopic(IRCSession& session, IRCMessage& msg)
+{
+    if (msg.SizeParam() < 1 || msg.GetParam(0).empty())
+        throw irc_exception(ERR_NOSUCHNICK, "No such nick/channel");
+    
+    IRCString::TargetSet targets;
+    IRCString::SplitTargets(targets, msg.GetParam(0));
+    const std::string& chanName = *(targets.begin());
+    ChannelMap::iterator chanIt = _channels.find(chanName);
+
+    if (chanIt != _channels.end())
+    {
+        IRCChannel* chan = chanIt->second.Load();
+        if (targets.size() == 1)
+        {
+            (void)session;
+            (void)chan;
+        }
+        else if (targets.size() == 2)
+        {
+            IRCString::TargetSet::iterator chanTopic = ++(targets.begin());
+            (void)chanTopic;
+        }
+    }
+    else
+        throw irc_exception(ERR_NOSUCHNICK, "No such nick/channel");
+}
+
+void    IRCServer::OnList(IRCSession& session, IRCMessage& msg)
+{
+    IRCString::TargetSet targets;
+    ChannelMap::iterator chanIt = _channels.begin();
+    IRCChannel* chan;
+
+    session.SendMessage(IRCNumericMessage(RPL_LISTSTART, "Channel :Users Name"));
+    if (msg.SizeParam() < 1 || msg.GetParam(0).empty()) //LIST or LIST *
+    {
+        for (;chanIt != _channels.end(); ++chanIt) //함수화?????
+        {
+            // :scarlet.irc.ozinger.org 322 nick #KPDS 1 :[+];
+            // num nick 채널명 접속중인 사람 :[+ns] topic;
+            // to_string 가능?
+            chan = chanIt->second.Load();
+            session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), std::to_string(chan->GetParticipantsNum()), chan->GetChannelTopic()));
+        }
+    }
+    else// 올바른 채널명이 들어온 경우
+    {
+        IRCString::SplitTargets(targets, msg.GetParam(0));
+        const std::string& chanName = *(targets.begin());
+        if (chanName == "*")
+        {
+            for (;chanIt != _channels.end(); ++chanIt)
+            {
+                chan = chanIt->second.Load();
+                session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), std::to_string(chan->GetParticipantsNum())));
+            }
+        }
+        else if (_channels.find(chanName) != _channels.end())
+        {
+            chan = chanIt->second.Load();
+            session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), std::to_string(chan->GetParticipantsNum())));
+        }
+    }
+        //조건에 부합하는 채널만 출력
+    session.SendMessage(IRCNumericMessage(RPL_LISTEND, "End of /LIST"));
 }

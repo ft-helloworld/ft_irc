@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircsession.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/04 17:53:52 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/05 14:40:21 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,10 @@ void IRCSession::Process(const std::string& line)
             _server->OnNames(*this, msg);
         else if (cmd == "PRIVMSG" || cmd == "NOTICE")
             _server->OnPrivMsg(*this, msg, cmd);
+        else if (cmd == "TOPIC")
+            _server->OnTopic(*this, msg);
+        else if (cmd == "LIST")
+            _server->OnList(*this, msg);
         else // :bassoon.irc.ozinger.org 421 smun WRONGCMD :Unknown command
             throw irc_exception(ERR_UNKNOWNCOMMAND, cmd, "Unknown command");
     }
