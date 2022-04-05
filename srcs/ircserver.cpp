@@ -6,7 +6,7 @@
 /*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/05 20:36:10 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/05 21:48:01 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -365,18 +365,23 @@ void    IRCServer::OnTopic(IRCSession& session, IRCMessage& msg)
     if (chanIt != _channels.end())
     {
         IRCChannel* chan = chanIt->second.Load();
+        const std::string chanName = chan->GetChannelName();
         if (msg.SizeParam() < 2)
         {
             if (chan->GetChannelTopic().empty())
-                session.SendMessage(IRCNumericMessage(RPL_NOTOPIC, chan->GetChannelName(), "No topic is set."));
+                session.SendMessage(IRCNumericMessage(RPL_NOTOPIC, chanName, "No topic is set."));
             else
-                session.SendMessage(IRCNumericMessage(RPL_TOPIC, chan->GetChannelName(), chan->GetChannelTopic()));
+            {
+                session.SendMessage(IRCNumericMessage(RPL_TOPIC, chanName, chan->GetChannelTopic()));
+                session.SendMessage(IRCNumericMessage(RPL_TOPICWHOTIME, chanName, session.GetMask(), String::ItoString(chan->GetSetTopicTime())));
+            }
         }
         else
         {
             const std::string& chanTopic = msg.GetParams(1);
-            chan->SetChannelTopic(chanTopic);
-            chan->Send(IRCMessage(session.GetMask(), "TOPIC", chan->GetChannelName(), chan->GetChannelTopic()));
+            const std::time_t current = std::time(NULL);
+            chan->SetChannelTopic(chanTopic, current);
+            chan->Send(IRCMessage(session.GetMask(), "TOPIC", chanName, chan->GetChannelTopic()));
         }
     }
     else
@@ -388,7 +393,7 @@ void    IRCServer::OnList(IRCSession& session, IRCMessage& msg)
     ChannelMap::iterator chanIt = _channels.begin();
     IRCChannel* chan;
 
-    session.SendMessage(IRCNumericMessage(RPL_LISTSTART, "Channel :Users Name"));
+    session.SendMessage(IRCNumericMessage(RPL_LISTSTART, "Channel", "Users Name"));
     if (msg.SizeParam() < 1 || msg.GetParam(0) == "*")
     {
         for (;chanIt != _channels.end(); ++chanIt)
@@ -408,5 +413,5 @@ void    IRCServer::OnList(IRCSession& session, IRCMessage& msg)
             session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), String::ItoString(chan->GetParticipantsNum()), chan->GetChannelTopic()));
         }
     }
-    session.SendMessage(IRCNumericMessage(RPL_LISTEND, "End of /LIST"));
+    session.SendMessage(IRCNumericMessage(RPL_LISTEND, "End of channel list."));
 }

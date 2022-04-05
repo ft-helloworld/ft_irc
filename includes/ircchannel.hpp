@@ -6,7 +6,7 @@
 /*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 12:37:36 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 19:38:26 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/05 21:40:06 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ public:
 private:
     const std::string               _name;
     std::string                     _topic;
-
+    time_t                     _set_topic;
     /**
      * @brief 채널의 참가자들을 저장하는 std::map 객체. Key: IRC세션 포인터 / Value: 채널 내 유저 플래그
      *
@@ -95,8 +95,9 @@ public:
     inline bool HasFlag(int flags) const { return (_flags & flags) == flags; }
     inline const std::string& GetChannelName() const { return _name; }
     inline const std::string& GetChannelTopic() const { return _topic; }
+    inline const time_t& GetSetTopicTime() const { return _set_topic; }
     inline int GetParticipantsNum() { return _participants.size(); }
-    void    SetChannelTopic(const std::string& topic) { _topic = topic; }
+    void    SetChannelTopic(const std::string& topic, const time_t time) { _topic = topic; _set_topic = time; }
     inline bool IsEmpty() const { return _participants.size() == 0; }
 };
 
