@@ -6,7 +6,7 @@
 /*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/05 20:28:50 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/05 20:31:04 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -361,10 +361,7 @@ void    IRCServer::OnTopic(IRCSession& session, IRCMessage& msg)
     if (msg.SizeParam() < 1 || msg.GetParam(0).empty())
         throw irc_exception(ERR_NOSUCHNICK, "No such nick/channel");
     
-    IRCString::TargetSet targets;
-    IRCString::SplitTargets(targets, msg.GetParam(0));
-    const std::string& chanName = *(targets.begin());
-    ChannelMap::iterator chanIt = _channels.find(chanName);
+    ChannelMap::iterator chanIt = _channels.find(msg.GetParam(0));
     if (chanIt != _channels.end())
     {
         IRCChannel* chan = chanIt->second.Load();
@@ -392,9 +389,9 @@ void    IRCServer::OnList(IRCSession& session, IRCMessage& msg)
     IRCChannel* chan;
 
     session.SendMessage(IRCNumericMessage(RPL_LISTSTART, "Channel :Users Name"));
-    if (msg.SizeParam() < 1 || msg.GetParam(0) == "*") //LIST or LIST *
+    if (msg.SizeParam() < 1 || msg.GetParam(0) == "*")
     {
-        for (;chanIt != _channels.end(); ++chanIt) //함수화?????
+        for (;chanIt != _channels.end(); ++chanIt)
         {
             // :scarlet.irc.ozinger.org 322 nick #KPDS 1 :[+];
             // num nick 채널명 접속중인 사람 :[+ns] topic;
