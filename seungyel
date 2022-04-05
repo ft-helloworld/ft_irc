@@ -1,0 +1,12 @@
+[작업중]
+실행
+pass 123
+nick <nick>
+user <user> 0 * :realname
+
+https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.3
+- 운영자 전용 명령어 구현.
+   - MODE 명령어 (임명) 4.2.3.1
+	User modes (o - operator flag.)
+
+- KILL message :: <닉네임> <코멘트>  (쫓아낼 때 사용)

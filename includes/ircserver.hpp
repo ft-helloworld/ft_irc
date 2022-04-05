@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserver.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:40:50 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 14:40:38 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/05 19:58:47 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ public:
     void    OnPrivMsg(IRCSession& session, IRCMessage& msg, const std::string& cmd);
     void    OnTopic(IRCSession& session, IRCMessage& msg);
     void    OnList(IRCSession& session, IRCMessage& msg);
+	void    OnKill(IRCSession& session, IRCMessage& msg);
     void    UnregisterNickname(const std::string& nick);
     void    LeaveChannel(IRCSession& session, const std::string& chanName, const std::string& cmd);
     bool    IsPasswordMatched(const std::string& password) const;

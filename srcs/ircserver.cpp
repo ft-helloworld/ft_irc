@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserver.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/05 17:42:50 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/05 22:09:53 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -422,4 +422,22 @@ void    IRCServer::OnList(IRCSession& session, IRCMessage& msg)
     }
         //조건에 부합하는 채널만 출력
     session.SendMessage(IRCNumericMessage(RPL_LISTEND, "End of /LIST"));
+}
+
+//지금은 아무나 들어올 수 있음. session에서 운영자 일때만 사용 가능하도록 바꿔야함.
+#include <iostream>
+void    IRCServer::OnKill(IRCSession& session, IRCMessage& msg)
+{
+	(void)session;
+	if (msg.SizeParam() < 2 || msg.GetParam(0).empty() || msg.GetParam(1).empty())
+		throw irc_exception(ERR_NOSUCHNICK, "No such nick/comment");
+	else //잘 들어오는 경우.
+	{
+		IRCSession* target = FindByNick(msg.GetParam(0));
+		//nickname을 못찾는 경우.
+		if (target == NULL)
+			session.SendMessage(IRCNumericMessage(ERR_NOSUCHNICK, msg.GetParam(0), "No such nickname"));
+		session.Close(msg.GetParams(1));
+		Log::Vp("IRCServer::UnregisterNickname", "닉네임 '%s' 가 서버에서 '%s'이유로 삭제되었습니다.", msg.GetParam(0).c_str(), msg.GetParam(1).c_str());
+	}
 }

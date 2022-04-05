@@ -11,8 +11,12 @@
     - 메시지 보내기 및 받기 ✅
        - PRIVMSG (개인-채널 및 개인-개인 모두 사용.) ✅
     - 운영자(operators) 및 일반 유저가 각각 있어야 한다.
+
+	https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.3
     - 운영자 전용 명령어 구현.
-       - MODE 명령어 (임명)
+       - MODE 명령어 (임명) 4.2.3.1
+		User modes (o - operator flag.)
+
        - KILL message :: <닉네임> <코멘트>  (쫓아낼 때 사용)
 
 - 서브젝트 요구 조건 불확실 (RFC문서)
@@ -23,7 +27,7 @@
     - 클라이언트 정보 관련
       - WHOIS 명령
         - 대상의 정보를 얻는 명령 (아래 응답 순서 참고)
-    - 채팅 관련
+    - [X] 채팅 관련 
       - NOTICE 명령
         - PRIVMSG와 용법이 같으나, 자동 응답을 하지 않음.
       - AWAY 명령

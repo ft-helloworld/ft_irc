@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircsession.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 14:40:21 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/05 22:14:17 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void IRCSession::Process(const std::string& line)
             _server->OnTopic(*this, msg);
         else if (cmd == "LIST")
             _server->OnList(*this, msg);
+		else if (cmd == "KILL")
+            _server->OnKill(*this, msg);
         else // :bassoon.irc.ozinger.org 421 smun WRONGCMD :Unknown command
             throw irc_exception(ERR_UNKNOWNCOMMAND, cmd, "Unknown command");
     }
