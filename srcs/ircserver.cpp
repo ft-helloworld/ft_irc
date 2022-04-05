@@ -6,7 +6,7 @@
 /*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/05 20:35:03 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/05 20:36:10 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -399,7 +399,7 @@ void    IRCServer::OnList(IRCSession& session, IRCMessage& msg)
             session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), String::ItoString(chan->GetParticipantsNum()), chan->GetChannelTopic()));
         }
     }
-    else// 올바른 채널명이 들어온 경우
+    else
     {
         const std::string& chanName = msg.GetParam(0);
         if (_channels.find(chanName) != _channels.end())
@@ -408,6 +408,5 @@ void    IRCServer::OnList(IRCSession& session, IRCMessage& msg)
             session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), String::ItoString(chan->GetParticipantsNum()), chan->GetChannelTopic()));
         }
     }
-        //조건에 부합하는 채널만 출력
     session.SendMessage(IRCNumericMessage(RPL_LISTEND, "End of /LIST"));
 }
