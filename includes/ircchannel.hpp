@@ -6,7 +6,7 @@
 /*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 12:37:36 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 15:24:31 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/05 19:38:26 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ public:
     inline const std::string& GetChannelName() const { return _name; }
     inline const std::string& GetChannelTopic() const { return _topic; }
     inline int GetParticipantsNum() { return _participants.size(); }
-    void    SetChannelTopic(std::string& topic) { _topic = topic; }
+    void    SetChannelTopic(const std::string& topic) { _topic = topic; }
     inline bool IsEmpty() const { return _participants.size() == 0; }
 };
 

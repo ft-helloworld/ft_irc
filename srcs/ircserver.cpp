@@ -6,7 +6,7 @@
 /*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/05 17:42:50 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/05 20:28:50 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void    IRCServer::OnNickname(IRCSession& session, IRCMessage& msg)
     if (session.IsFullyRegistered())
     {
         const IRCMessage nickmsg(session.GetMask(), "NICK", nick);
-        session.SendMessageToNeighbor(nickmsg, &session);
+        session.MessageToNeighbor(nickmsg, &session);
         session.SendMessage(nickmsg);
     }
 
@@ -365,19 +365,21 @@ void    IRCServer::OnTopic(IRCSession& session, IRCMessage& msg)
     IRCString::SplitTargets(targets, msg.GetParam(0));
     const std::string& chanName = *(targets.begin());
     ChannelMap::iterator chanIt = _channels.find(chanName);
-
     if (chanIt != _channels.end())
     {
         IRCChannel* chan = chanIt->second.Load();
-        if (targets.size() == 1)
+        if (msg.SizeParam() < 2)
         {
-            (void)session;
-            (void)chan;
+            if (chan->GetChannelTopic().empty())
+                session.SendMessage(IRCNumericMessage(RPL_NOTOPIC, chan->GetChannelName(), "No topic is set."));
+            else
+                session.SendMessage(IRCNumericMessage(RPL_TOPIC, chan->GetChannelName(), chan->GetChannelTopic()));
         }
-        else if (targets.size() == 2)
+        else
         {
-            IRCString::TargetSet::iterator chanTopic = ++(targets.begin());
-            (void)chanTopic;
+            const std::string& chanTopic = msg.GetParams(1);
+            chan->SetChannelTopic(chanTopic);
+            chan->Send(IRCMessage(session.GetMask(), "TOPIC", chan->GetChannelName(), chan->GetChannelTopic()));
         }
     }
     else
@@ -386,38 +388,27 @@ void    IRCServer::OnTopic(IRCSession& session, IRCMessage& msg)
 
 void    IRCServer::OnList(IRCSession& session, IRCMessage& msg)
 {
-    IRCString::TargetSet targets;
     ChannelMap::iterator chanIt = _channels.begin();
     IRCChannel* chan;
 
     session.SendMessage(IRCNumericMessage(RPL_LISTSTART, "Channel :Users Name"));
-    if (msg.SizeParam() < 1 || msg.GetParam(0).empty()) //LIST or LIST *
+    if (msg.SizeParam() < 1 || msg.GetParam(0) == "*") //LIST or LIST *
     {
         for (;chanIt != _channels.end(); ++chanIt) //함수화?????
         {
             // :scarlet.irc.ozinger.org 322 nick #KPDS 1 :[+];
             // num nick 채널명 접속중인 사람 :[+ns] topic;
-            // to_string 가능?
             chan = chanIt->second.Load();
-            session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), std::to_string(chan->GetParticipantsNum()), chan->GetChannelTopic()));
+            session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), String::ItoString(chan->GetParticipantsNum()), chan->GetChannelTopic()));
         }
     }
     else// 올바른 채널명이 들어온 경우
     {
-        IRCString::SplitTargets(targets, msg.GetParam(0));
-        const std::string& chanName = *(targets.begin());
-        if (chanName == "*")
-        {
-            for (;chanIt != _channels.end(); ++chanIt)
-            {
-                chan = chanIt->second.Load();
-                session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), std::to_string(chan->GetParticipantsNum())));
-            }
-        }
-        else if (_channels.find(chanName) != _channels.end())
+        const std::string& chanName = msg.GetParam(0);
+        if (_channels.find(chanName) != _channels.end())
         {
             chan = chanIt->second.Load();
-            session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), std::to_string(chan->GetParticipantsNum())));
+            session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), String::ItoString(chan->GetParticipantsNum())));
         }
     }
         //조건에 부합하는 채널만 출력

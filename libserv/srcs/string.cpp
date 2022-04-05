@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:40:30 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 14:47:53 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/05 20:25:17 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,13 @@ const std::string String::ItoCode(int number)
 {
 	std::ostringstream ss;
 	ss << std::setw(3) << std::setfill('0') << number;
+	return ss.str();
+}
+
+const std::string String::ItoString(int number)
+{
+	std::ostringstream ss;
+	ss << number;
 	return ss.str();
 }
 

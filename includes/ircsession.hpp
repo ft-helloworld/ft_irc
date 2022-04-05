@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircsession.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:44:02 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 16:54:28 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/05 18:54:00 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ public:
     virtual void Process(const std::string& line);
 
     void    SendMessage(const IRCMessage& msg);
-    void    SendMessageToNeighbor(const IRCMessage& msg, IRCSession* except);
+    void    MessageToNeighbor(const IRCMessage& msg, IRCSession* except);
     void    SendMOTD();
 
     void                SetNickname(const std::string& nickname);
