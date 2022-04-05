@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 22:14:17 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/05 22:19:14 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include <sstream>
 #include <vector>
 #include <set>
+#include <ctime>
 
 IRCSession::IRCSession(IRCServer* server, Channel* channel, int socketfd, int socketId, const std::string& addr)
     : Session(channel, socketfd, socketId, addr)
@@ -33,6 +34,9 @@ IRCSession::IRCSession(IRCServer* server, Channel* channel, int socketfd, int so
     , _password()
     , _closeReason()
     , _channels()
+    , _pingState(PingState_Active)
+    , _lastPingTime(std::time(NULL))
+    , _lastPingWord()
     {}
 
 IRCSession::~IRCSession()
@@ -62,22 +66,33 @@ void IRCSession::Process(const std::string& line)
             _server->OnPassword(*this, msg);
         else if (cmd == "QUIT")
             _server->OnQuit(*this, msg);
-        else if (cmd == "JOIN")
-            _server->OnJoin(*this, msg);
-        else if (cmd == "PART")
-            _server->OnPart(*this, msg);
-        else if (cmd == "NAMES")
-            _server->OnNames(*this, msg);
-        else if (cmd == "PRIVMSG" || cmd == "NOTICE")
-            _server->OnPrivMsg(*this, msg, cmd);
-        else if (cmd == "TOPIC")
-            _server->OnTopic(*this, msg);
-        else if (cmd == "LIST")
-            _server->OnList(*this, msg);
-		else if (cmd == "KILL")
-            _server->OnKill(*this, msg);
-        else // :bassoon.irc.ozinger.org 421 smun WRONGCMD :Unknown command
-            throw irc_exception(ERR_UNKNOWNCOMMAND, cmd, "Unknown command");
+        else if (cmd == "PING")
+            OnPing(msg);
+        else if (cmd == "PONG")
+            OnPong(msg);
+        else
+        {
+            if (!IsFullyRegistered())
+                throw irc_exception(ERR_NOTREGISTERED, cmd, "You are not registered");
+
+            // 로그인 완료 한 사용자만 사용할 수 있는 커맨드들
+            if (cmd == "JOIN")
+                _server->OnJoin(*this, msg);
+            else if (cmd == "PART")
+                _server->OnPart(*this, msg);
+            else if (cmd == "NAMES")
+                _server->OnNames(*this, msg);
+            else if (cmd == "PRIVMSG" || cmd == "NOTICE")
+                _server->OnPrivMsg(*this, msg, cmd);
+            else if (cmd == "TOPIC")
+                _server->OnTopic(*this, msg);
+            else if (cmd == "LIST")
+                _server->OnList(*this, msg);
+			else if (cmd == "KILL")
+            	_server->OnKill(*this, msg);
+            else // :bassoon.irc.ozinger.org 421 smun WRONGCMD :Unknown command
+                throw irc_exception(ERR_UNKNOWNCOMMAND, cmd, "Unknown command");
+        }
     }
     catch (const irc_exception& rex)
     {
@@ -144,7 +159,7 @@ void    IRCSession::Close()
 
     // 참여중인 채널에서 모두 퇴장
 
-    SendMessageToNeighbor(IRCMessage(GetMask(), "QUIT", _closeReason), this);
+    MessageToNeighbor(IRCMessage(GetMask(), "QUIT", _closeReason), this);
     std::vector<const std::string> channels(_channels.begin(), _channels.end());
     std::vector<const std::string>::iterator it;
     for (it = channels.begin(); it != channels.end(); ++it)
@@ -246,7 +261,7 @@ void    IRCSession::SendMessage(const IRCMessage& msg)
     Send(oss.str());
 }
 
-void    IRCSession::SendMessageToNeighbor(const IRCMessage& msg, IRCSession* except)
+void    IRCSession::MessageToNeighbor(const IRCMessage& msg, IRCSession* except)
 {
     std::set<IRCSession*> neighbors;
 
@@ -258,4 +273,57 @@ void    IRCSession::SendMessageToNeighbor(const IRCMessage& msg, IRCSession* exc
     std::set<IRCSession*>::iterator nit = neighbors.begin();
     for (; nit != neighbors.end(); ++nit)
         (*nit)->SendMessage(msg);
+}
+
+void    IRCSession::CheckActive()
+{
+    const std::time_t curTime = std::time(NULL);
+
+    if (_pingState == PingState_Active)
+    {
+        if (curTime - _lastPingTime > PINGTIMEDOUT)
+        {
+            Log::Vp("IRCSession::CheckActive", "PING을 전송했습니다.");
+            _lastPingTime = curTime;
+            _lastPingWord = HOSTNAME;
+            SendMessage(IRCMessage("", "PING", HOSTNAME));
+            _pingState = PingState_Idle;
+        }
+    }
+    else
+    {
+        time_t diff = curTime - _lastPingTime;
+        if (curTime - _lastPingTime > PINGTIMEDOUT)
+        {
+            Log::Vp("IRCSession::CheckActive", "핑 전송 후, 대기 시간을 초과하여 연결을 종료합니다.");
+            Close("Ping timed out (" + String::ItoString(diff) + " secs over)");
+        }
+    }
+}
+
+void    IRCSession::OnPing(const IRCMessage& msg)
+{
+    if (msg.SizeParam() == 0)
+        throw irc_exception(ERR_NEEDMOREPARAMS, "PING", "Not enough parameters.");
+    SendMessage(IRCMessage(HOSTNAME, "PONG", HOSTNAME, msg.GetParam(0)));
+}
+
+void    IRCSession::OnPong(const IRCMessage& msg)
+{
+    if (msg.SizeParam() == 0)
+        return;
+    if (msg.GetParam(0) != _lastPingWord)
+    {
+        Log::Vp("IRCSession::OnPong", "수신 받은 값과, 클라이언트로 전송한 팡 값이 달라 퐁을 거절합니다. (서버:%s, 클라:%s)", _lastPingWord.c_str(), msg.GetParam(0).c_str());
+        return;
+    }
+    Log::Vp("IRCSession::OnPong", "퐁을 수신하였습니다.");
+    UpdateActive();
+}
+
+void    IRCSession::UpdateActive()
+{
+    _lastPingTime = std::time(NULL);
+    _pingState = PingState_Active;
+    Log::Vp("IRCSession::UpdateActive", "마지막 패킷 수신 시각을 갱신합니다."); // 세션 유지를 위해.
 }

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:43:33 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 01:02:00 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/05 20:39:42 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <map>
 #include "shared_ptr.hpp"
 #include "sessionfactory.hpp"
+#include "timerhandler.hpp"
 
 class Context;
 class Session;
@@ -88,6 +89,12 @@ private:
      * 자식 클래스로 그 역할을 일부 이전시켜서 코드의 가독성을 높이고, Session 클래스의 과도한 책임을 덜기 위함입니다.
      */
     ISessionFactory* _sessionFactory;
+
+    /**
+     * 일정 시간마다 처리할 핸들러를 지정합니다. PING, PONG 기능 구현을 위해 추가되었습니다.
+     *
+     */
+    ITimerHandler*  _timerHandler;
 
     Channel();
     Channel(const Channel&);
@@ -209,6 +216,13 @@ public:
      * @exception 세션을 발견하지 못하면 std::runtime_error 예외가 발생합니다.
      */
     Session&    FindSession(int sessionKey);
+
+    /**
+     * @brief 주기적으로 호출될 타이머 함수를 kqueue에 등록합니다.
+     *
+     * @param timerHandler 호출할 타이머 핸들러 구현 클래스. 호출 간격도 포함합니다.
+     */
+    void    AddTimer(ITimerHandler* timerHandler);
 
     /**
      * @brief 소켓을 논블로킹 소켓으로 설정합니다. (과제 참조!)

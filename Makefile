@@ -6,12 +6,12 @@
 #    By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/24 12:21:35 by smun              #+#    #+#              #
-#    Updated: 2022/04/05 20:14:38 by seungyel         ###   ########.fr        #
+#    Updated: 2022/04/05 22:17:24 by seungyel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CXX = c++
-CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -DLOG_LEVEL=5 -O3# -g -fsanitize=address
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -DLOG_LEVEL=5 -g -fsanitize=address #-O3
 RM = rm
 RMFLAGS = -f
 

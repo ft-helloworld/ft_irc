@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:44:02 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 22:12:05 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/05 22:18:37 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "irccomparer.hpp"
 #include <string>
 #include <set>
+#include <ctime>
 
 class IRCServer;
 class IRCMessage;
@@ -27,6 +28,7 @@ class IRCMessage;
 class IRCSession : public Session
 {
 private:
+    enum { PingState_Active, PingState_Idle };
 
     std::string _nickname;
     std::string _username;
@@ -38,9 +40,17 @@ private:
 
     std::set<const std::string, IRCComparer> _channels;
 
+    int         _pingState;
+    std::time_t _lastPingTime;
+    std::string _lastPingWord;
+
     IRCSession();
     IRCSession(const IRCSession&);
     IRCSession& operator=(const IRCSession&);
+
+    void    OnPing(const IRCMessage& msg);
+    void    OnPong(const IRCMessage& msg);
+    void    UpdateActive();
 
 public:
     enum { FLAG_NICKNAME = 1 << 0, FLAG_USERNAME = 1 << 1 };
@@ -51,7 +61,7 @@ public:
     virtual void Process(const std::string& line);
 
     void    SendMessage(const IRCMessage& msg);
-    void    SendMessageToNeighbor(const IRCMessage& msg, IRCSession* except);
+    void    MessageToNeighbor(const IRCMessage& msg, IRCSession* except);
     void    SendMOTD();
 
     void                SetNickname(const std::string& nickname);
@@ -76,6 +86,8 @@ public:
     bool    RemoveChannel(const std::string& name);
     bool    IsJoinedChannel(const std::string& name);
     size_t  GetJoinedChannelNum() const;
+
+    void    CheckActive();
 };
 
 
