@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 21:59:15 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/05 22:04:27 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,10 +290,11 @@ void    IRCSession::CheckActive()
     }
     else
     {
+        time_t diff = curTime - _lastPingTime;
         if (curTime - _lastPingTime > PINGTIMEDOUT)
         {
             Log::Vp("IRCSession::CheckActive", "핑 전송 후, 대기 시간을 초과하여 연결을 종료합니다.");
-            Close("Ping timed out");
+            Close("Ping timed out (" + String::ItoString(diff) + " secs over)");
         }
     }
 }
