@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:44:02 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 21:52:41 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/05 21:58:41 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ public:
     virtual void Process(const std::string& line);
 
     void    SendMessage(const IRCMessage& msg);
-    void    SendMessageToNeighbor(const IRCMessage& msg, IRCSession* except);
+    void    MessageToNeighbor(const IRCMessage& msg, IRCSession* except);
     void    SendMOTD();
 
     void                SetNickname(const std::string& nickname);

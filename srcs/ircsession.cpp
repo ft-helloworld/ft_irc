@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 21:53:29 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/05 21:59:15 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void    IRCSession::Close()
 
     // 참여중인 채널에서 모두 퇴장
 
-    SendMessageToNeighbor(IRCMessage(GetMask(), "QUIT", _closeReason), this);
+    MessageToNeighbor(IRCMessage(GetMask(), "QUIT", _closeReason), this);
     std::vector<const std::string> channels(_channels.begin(), _channels.end());
     std::vector<const std::string>::iterator it;
     for (it = channels.begin(); it != channels.end(); ++it)
@@ -259,7 +259,7 @@ void    IRCSession::SendMessage(const IRCMessage& msg)
     Send(oss.str());
 }
 
-void    IRCSession::SendMessageToNeighbor(const IRCMessage& msg, IRCSession* except)
+void    IRCSession::MessageToNeighbor(const IRCMessage& msg, IRCSession* except)
 {
     std::set<IRCSession*> neighbors;
 
