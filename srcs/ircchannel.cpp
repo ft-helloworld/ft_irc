@@ -6,7 +6,7 @@
 /*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 16:00:52 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 14:57:15 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/06 19:52:42 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,3 +149,52 @@ void     IRCChannel::MakeChannelModeString(std::string& ret)
         ret = ret + "n";
 }
 
+std::string&    IRCChannel::RetrunChannelModeString(IRCSession& session, std::string& tmp, std::string& res)
+{
+    size_t  i = 0;
+    if (tmp[i] == '+' || tmp[i] == '-')
+        res = tmp[i];
+    while (i < tmp.size())
+    {
+        int c = tmp[i];
+        if (c == 'o' || c == 'p' || c == 's' || c == 'n')
+            res += c;
+        else
+            session.SendMessage(IRCNumericMessage(ERR_UNKNOWNMODE, std::string(1, c), "is unknown mode char to me")); //수정
+        i++;
+    }
+    return (res);
+}
+
+void        IRCChannel::SetChannelMode(char neg, std::string& res)
+{
+    std::string::const_iterator it = res.begin();
+    if (neg == '\0' || neg == '+')
+    {
+        for (; it != res.end(); ++it)
+        {
+            if (*it == 'o')
+                _flags &= MODE_OP;
+            else if (*it == 'p')
+                _flags &= MODE_PRIV;
+            else if (*it == 's')
+                _flags &= MODE_SECRET;
+            else if (*it == 'n')
+                _flags &= MODE_OUTSIDE;
+        }
+    }
+    else if (neg == '-')
+    {
+        for (; it != res.end(); ++it)
+        {
+            if (*it == 'o')
+                _flags &= MODE_OP;
+            else if (*it == 'p')
+                _flags &= MODE_PRIV;
+            else if (*it == 's')
+                _flags &= MODE_SECRET;
+            else if (*it == 'n')
+                _flags &= MODE_OUTSIDE;
+        }
+    }
+}

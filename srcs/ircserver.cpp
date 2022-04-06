@@ -6,7 +6,7 @@
 /*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/06 15:17:47 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/06 19:48:27 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -443,21 +443,8 @@ void    IRCServer::OnMode(IRCSession& session, IRCMessage& msg)
         session.SendMessage(IRCNumericMessage(RPL_CHANNELMODEIS, chanName, c_mode));
         session.SendMessage(IRCNumericMessage(RPL_CREATIONTIME, chanName, String::ItoString(chan->GetCreatedTime())));
     }
-    // else
-    // {
-    //     const std::string& wantFlag = msg.GetParam(1);
-    //     // 함수 ('+/-' 따라서 모드 플래그 켜고 끄기, )
-    //     if (chan->GetParticipantFlag(session) & IRCChannel::MODE_OP)
-            
-    //     if (*wantFlag.begin() == '+')
-    //     {
-    //         // 모드 추가
-    //     }
-    //     else if (*wantFlag.begin() == '-')
-    //     {
-    //         // 모드 제거
-    //     }
-    // }
+    else
+    {
     // 1. 플래그를 바꾸기 위한 채널 관리자 권한이 있는지 확인한다.
     // 2. 모드에 맞는 알파벳인지 확인한다.
     // 3. 둘 다 오류일 시에는 둘 다 에러메세지 출력해야함.
@@ -473,6 +460,48 @@ void    IRCServer::OnMode(IRCSession& session, IRCMessage& msg)
     // :bassoon.irc.ozinger.org 329 ncik #4242 1649222687
     // mode #4242 -s eeeee
     // :ncik!user@121.135.181.44 MODE #4242 -s
+    // mode #seoul42 *dffd
+    // :bassoon.irc.ozinger.org 472 sheelell * :is unknown mode char to me
+    // :bassoon.irc.ozinger.org 472 sheelell d :is unknown mode char to me
+    // :bassoon.irc.ozinger.org 472 sheelell d :is unknown mode char to me
+    // mode #yejon +ns-n
+    // :nnnnn!userdfd@121.135.181.44 MODE #yejon +ns-n
+    // mode #4222 +ns-n+d-s
+    // :bassoon.irc.ozinger.org 472 niii d :is unknown mode char to me
+    // :niii!user@121.135.181.44 MODE #4222 +ns-ns
+    // mode #4222
+    // :bassoon.irc.ozinger.org 324 niii #4222 +
+    // :bassoon.irc.ozinger.org 329 niii #4222 1649232616
+    // mode #4222 +ns-n+dn-s
+    // :bassoon.irc.ozinger.org 472 niii d :is unknown mode char to me
+    // :niii!user@121.135.181.44 MODE #4222 +ns-n+n-s
+        if (chan->GetParticipantFlag(session) & IRCChannel::MODE_OP)
+            session.SendMessage(IRCNumericMessage(ERR_CHANOPRIVSNEEDED, chanName, "You are not a channel founder"));
+        size_t  i = -1;
+        size_t  j;
+        char    neg = 0;
+        const std::string& wantFlag = msg.GetParam(1);
+        std::vector<std::string> ret;
+        while (++i < wantFlag.size())
+        {
+            j = i;
+            std::string tmp;
+            std::string res;
+            if (wantFlag[i] == '+' || wantFlag[i] == '-')
+                neg = wantFlag[i];
+            if (wantFlag[i + 1] == '\0')
+                break;
+            while (wantFlag[j] != '+' && wantFlag[j] != '-')
+                j++;
+            tmp = neg + wantFlag.substr(i, j);
+            if (!chan->RetrunChannelModeString(session, tmp, res).empty())
+                ret.push_back(res);
+            if (!res.empty())
+                chan->SetChannelMode(neg, res);
+        }
+        // Send(IRCMessage(session.GetMask(), "MODE", _name, ))
+
+    }
 }
 
 //지금은 아무나 들어올 수 있음. session에서 운영자 일때만 사용 가능하도록 바꿔야함.

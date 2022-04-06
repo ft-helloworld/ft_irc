@@ -6,7 +6,7 @@
 /*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 12:37:36 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 15:18:56 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/06 19:47:27 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ public:
     void    GatherParticipants(std::set<IRCSession*>& targets, IRCSession* except = NULL);
     void    SetChannelTopic(const std::string& topic, const time_t time, const std::string& mask);
     void    MakeChannelModeString(std::string& ret);
+    std::string&    RetrunChannelModeString(IRCSession& session, std::string& tmp, std::string& res);
+    void    SetChannelMode(char neg, std::string& res);
 
     // 여기는 안해도 될 지도..
     void    SendTopic(IRCSession& session);
