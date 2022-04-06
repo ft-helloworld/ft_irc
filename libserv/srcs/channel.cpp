@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:49:17 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 21:27:04 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/06 14:41:06 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,16 +258,19 @@ Session&    Channel::FindSession(int sessionKey)
 void    Channel::AddTimer(ITimerHandler* timerHandler)
 {
     struct kevent   ev;
-    if (_timerHandler)
+    if (_timerHandler != NULL) // 이전에 있있는 타이머를 삭제.
     {
         EV_SET(&ev, 1, EVFILT_TIMER, EV_DELETE, 0, 0, 0);
         if (kevent(_eventfd, &ev, 1, NULL, 0, NULL) < 0)
             throw std::runtime_error("timer1 - kevent() 함수 호출 실패");
         Log::Vp("Channel::AddTimer", "%lu초 단위의 기존 타이머가 삭제되었습니다.", _timerHandler->GetInterval());
     }
-    EV_SET(&ev, 1, EVFILT_TIMER, EV_ADD, NOTE_SECONDS, timerHandler->GetInterval(), 0);
-    if (kevent(_eventfd, &ev, 1, NULL, 0, NULL) < 0)
-        throw std::runtime_error("timer2 - kevent() 함수 호출 실패");
-    Log::Vp("Channel::AddTimer", "%lu초 단위의 타이머가 추가되었습니다.", timerHandler->GetInterval());
+    if (timerHandler != NULL) // 새로운 타이머가 있다면 새로이 설정.
+    {
+        EV_SET(&ev, 1, EVFILT_TIMER, EV_ADD, NOTE_SECONDS, timerHandler->GetInterval(), 0);
+        if (kevent(_eventfd, &ev, 1, NULL, 0, NULL) < 0)
+            throw std::runtime_error("timer2 - kevent() 함수 호출 실패");
+        Log::Vp("Channel::AddTimer", "%lu초 단위의 타이머가 추가되었습니다.", timerHandler->GetInterval());
+    }
     _timerHandler = timerHandler;
 }
