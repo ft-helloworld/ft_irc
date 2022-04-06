@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:32:11 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 00:37:23 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/06 15:44:05 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ Session::Session(Channel* channel, int socketfd, int socketId, const std::string
 
 Session::~Session()
 {
+    if (_attachedChannel == NULL)
+        return;
     if (_triggeredEvents)
     {
         _attachedChannel->SetEvent(GetSocket(), _triggeredEvents, IOFlag_Remove, NULL);
@@ -144,6 +146,8 @@ void    Session::TakeBuffer(size_t bytes)
 
 void    Session::Close()
 {
+    if (_attachedChannel == NULL)
+        return;
     if (!_closed)
     {
         Log::Vp("Session::Close", "[%d/%s] 세션의 닫기 이벤트를 트리거 합니다.", GetSocket(), GetRemoteAddress().c_str());

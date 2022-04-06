@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/06 15:23:25 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/06 16:05:07 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,16 @@ IRCSession* IRCServer::FindByNick(const std::string& nick) const
 {
     ClientMap::const_iterator it = _clients.find(nick);
     if (it == _clients.end())
-        return 0;
+        return NULL;
     return it->second;
+}
+
+IRCChannel* IRCServer::FindChannel(const std::string& channel)
+{
+    ChannelMap::iterator it = _channels.find(channel);
+    if (it == _channels.end())
+        return NULL;
+    return it->second.Load();
 }
 
 void    IRCServer::OnNickname(IRCSession& session, IRCMessage& msg)

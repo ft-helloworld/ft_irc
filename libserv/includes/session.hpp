@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:26:59 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 20:46:23 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/06 16:13:20 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ private:
      * @param buf 세션으로 전송될 데이터의 포인터
      * @param len 세션으로 전송될 데이터의 크기
      */
-    void    Send(const void* buf, size_t len);
+    virtual void    Send(const void* buf, size_t len);
 
     void    DisableWriteEvent();
 

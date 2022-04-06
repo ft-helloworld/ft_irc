@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserver.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:40:50 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 13:31:15 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/06 16:05:04 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 class IRCSession;
 class IRCMessage;
+class IRCBot;
 
 class IRCServer : public ITimerHandler
 {
@@ -66,6 +67,9 @@ public:
     size_t  GetInterval() const;
 
     IRCSession* FindByNick(const std::string& nick) const;
+    IRCChannel* FindChannel(const std::string& channel);
+
+    void    RegisterBot(IRCBot& bot);
 
     template<typename ChannelNameIterator>
     void    GatherNeighbors(std::set<IRCSession*>& neighbors, ChannelNameIterator first, ChannelNameIterator last, IRCSession* except = NULL)

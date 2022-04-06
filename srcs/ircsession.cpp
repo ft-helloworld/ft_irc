@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircsession.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 13:30:38 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/06 15:49:42 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,6 @@ void IRCSession::Process(const std::string& line)
     // 명령어 처리
     try
     {
-        if (line.length() > MAX_MESSAGE_LEN - CRLF_SIZE)
-            throw std::runtime_error("exceed message len");
-
         IRCMessage msg = IRCMessage::Parse(line);
         if (msg.IsEmpty())
             return;

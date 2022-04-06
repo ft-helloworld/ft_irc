@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:44:02 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 15:35:40 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/06 16:15:02 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ public:
     IRCSession(IRCServer* server, Channel* channel, int socketfd, int socketId, const std::string& addr);
     virtual ~IRCSession();
 
-    virtual void Process(const std::string& line);
-
+    void    Process(const std::string& line);
     void    SendMessage(const IRCMessage& msg);
+
     void    MessageToNeighbor(const IRCMessage& msg, IRCSession* except);
     void    SendMOTD();
 
