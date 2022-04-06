@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:44:02 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 22:18:37 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/06 19:21:08 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ private:
     std::string _username;
     IRCServer*  _server;
     int         _registerFlag;
+	int			_operflag; //session에서 운영자 플래그가 있는지, 그 플래그를 저장하는 친구.
     std::string _password;
     std::string _closeReason;
-	int			_flag; //session에서 운영자 플래그가 있는지, 그 플래그를 저장하는 친구.
 
     std::set<const std::string, IRCComparer> _channels;
 
@@ -70,13 +70,15 @@ public:
     const std::string&  GetUsername() const;
     void                SetPassword(const std::string& password);
     const std::string&  GetPassword() const;
-
+	void                SetOperFlag(int operflag);
+    int  				GetOperFlag() const;
     const std::string   GetMask() const;
     const std::string   GetEmail() const;
     const std::string&  GetCloseReason() const;
 
     void    RegisterStep(int flag);
     bool    HasRegisterFlag(int flag) const;
+	int		HasOperatorFlag(std::string str);
     bool    IsFullyRegistered() const;
 
     virtual void    Close();

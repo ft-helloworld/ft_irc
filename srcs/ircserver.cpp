@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/05 22:19:08 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/06 19:48:54 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -432,6 +432,36 @@ void    IRCServer::OnKill(IRCSession& session, IRCMessage& msg)
 		session.Close(msg.GetParams(1));
 		Log::Vp("IRCServer::UnregisterNickname", "닉네임 '%s' 가 서버에서 '%s'이유로 삭제되었습니다.", msg.GetParam(0).c_str(), msg.GetParam(1).c_str());
 	}
+}
+
+void    IRCServer::OnMode(IRCSession& session, IRCMessage& msg)
+{
+	// MODE 뒤에 user가 아닌 경우.
+	if (msg.SizeParam() < 1)
+	{
+		throw irc_exception(ERR_NEEDMOREPARAMS, ":Not enough parameters.");
+		throw irc_exception(RPL_TEXT, "SYNTAX MODE <target> <modes> {<mode-parameters>}");
+	}
+		
+	IRCSession* target = FindByNick(msg.GetParam(0));
+	if (target == NULL)
+		throw irc_exception(ERR_NOSUCHNICK, "No such nick/channel");
+
+	int operatorFlag = session.HasOperatorFlag(msg.GetParam(1));
+	// +o일때
+	if (operatorFlag == 1)
+	{
+		session.SetOperFlag(operatorFlag);
+		throw irc_exception(ERR_NOPRIVILEGES, "Permission Denied - Only operators may set user mode o");
+	}
+	// -o일때
+	else if (operatorFlag == -1)
+	{
+		session.SetOperFlag(operatorFlag);
+		throw irc_exception(ERR_NOPRIVILEGES, "Permission Denied - Only operators may set user mode o");
+	}
+	else
+		throw irc_exception(ERR_NOTEXTTOSEND, "Unknown command");
 }
 
 void    IRCServer::OnTimer()
