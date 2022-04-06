@@ -6,7 +6,7 @@
 /*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/06 22:01:10 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/06 22:02:10 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -509,7 +509,6 @@ void    IRCServer::OnUserMode(IRCSession& session, IRCMessage& msg)
 }
 
 //지금은 아무나 들어올 수 있음. session에서 운영자 일때만 사용 가능하도록 바꿔야함.
-#include <iostream>
 void    IRCServer::OnKill(IRCSession& session, IRCMessage& msg)
 {
 	(void)session;
@@ -520,9 +519,9 @@ void    IRCServer::OnKill(IRCSession& session, IRCMessage& msg)
 		IRCSession* target = FindByNick(msg.GetParam(0));
 		//nickname을 못찾는 경우.
 		if (target == NULL)
-			session.SendMessage(IRCNumericMessage(ERR_NOSUCHNICK, msg.GetParam(0), "No such nickname"));
-		session.Close(msg.GetParams(1));
-		Log::Vp("IRCServer::UnregisterNickname", "닉네임 '%s' 가 서버에서 '%s'이유로 삭제되었습니다.", msg.GetParam(0).c_str(), msg.GetParam(1).c_str());
+			throw irc_exception(ERR_NOSUCHNICK, msg.GetParam(0), "No such nickname");
+        target->Close("Killed: " + msg.GetParams(1));
+        Log::Vp("IRCServer::UnregisterNickname", "닉네임 '%s' 가 서버에서 '%s'이유로 삭제되었습니다.", msg.GetParam(0).c_str(), msg.GetParam(1).c_str());
 	}
 }
 
