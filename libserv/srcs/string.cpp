@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:40:30 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 20:25:17 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/06 19:10:54 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void String::SplitArguments(std::vector<const std::string>& args, const std::str
 	{
 		if (!s.empty())
 		{
-			if (!flag)
+			if (args.size() > 0)
 				flag = true;
 			if (flag && s[0] == ':')
 			{

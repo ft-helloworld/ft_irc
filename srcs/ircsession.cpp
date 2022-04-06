@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 19:21:27 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/06 19:53:05 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ IRCSession::IRCSession(IRCServer* server, Channel* channel, int socketfd, int so
     : Session(channel, socketfd, socketId, addr)
     , _nickname()
     , _username()
-    , _server(server)
-    , _registerFlag(0)
 	, _operflag(0)
     , _password()
     , _closeReason()
@@ -38,6 +36,8 @@ IRCSession::IRCSession(IRCServer* server, Channel* channel, int socketfd, int so
     , _pingState(PingState_Active)
     , _lastPingTime(std::time(NULL))
     , _lastPingWord()
+    , _server(server)
+    , _registerFlag(0)
     {}
 
 IRCSession::~IRCSession()
@@ -52,9 +52,6 @@ void IRCSession::Process(const std::string& line)
     // 명령어 처리
     try
     {
-        if (line.length() > MAX_MESSAGE_LEN - CRLF_SIZE)
-            throw std::runtime_error("exceed message len");
-
         IRCMessage msg = IRCMessage::Parse(line);
         if (msg.IsEmpty())
             return;
@@ -89,6 +86,8 @@ void IRCSession::Process(const std::string& line)
                 _server->OnTopic(*this, msg);
             else if (cmd == "LIST")
                 _server->OnList(*this, msg);
+            else if (cmd == "MODE")
+                _server->OnMode(*this, msg);
 			else if (cmd == "KILL")
             	_server->OnKill(*this, msg);
 			else if (cmd == "MODE")

@@ -6,7 +6,7 @@
 /*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 16:00:52 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 21:41:54 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/06 14:57:15 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@
 
 IRCChannel::IRCChannel(const std::string& name)
     : _name(name)
+    , _created(std::time(NULL))
     , _topic()
     , _set_topic()
+    , _mask_topic()
     , _participants()
     , _flags(0)
 {
@@ -127,3 +129,23 @@ void    IRCChannel::GatherParticipants(std::set<IRCSession*>& targets, IRCSessio
         if (except != it->first)
             targets.insert(it->first);
 }
+
+void    IRCChannel::SetChannelTopic(const std::string& topic, const time_t time, const std::string& mask)
+{
+    _topic = topic;
+    _set_topic = time;
+    _mask_topic = mask;
+}
+
+void     IRCChannel::MakeChannelModeString(std::string& ret)
+{
+    if (_flags & MODE_OP)
+        ret = ret + "o";
+    if (_flags & MODE_PRIV)
+        ret = ret + "p";
+    if (_flags & MODE_SECRET)
+        ret = ret + "s";
+    if (_flags & MODE_OUTSIDE)
+        ret = ret + "n";
+}
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:37:44 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 20:24:48 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/06 18:58:05 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #define STRING_HPP
 
 #include <vector>
-#include <iosfwd>
+#include <string>
+#include <sstream>
 
 class String
 {
@@ -35,6 +36,22 @@ public:
     static bool IsLetter(char ch);
     static bool IsDigit(char ch);
     static bool IsSpecial(char ch);
+
+    template<typename InputIterator>
+    static const std::string Join(InputIterator first, InputIterator last, const std::string& delimeter)
+    {
+        std::ostringstream oss;
+        InputIterator it = first;
+
+        while (it != last)
+        {
+            if (it != first)
+                oss << delimeter;
+            oss << *it;
+            ++it;
+        }
+        return oss.str();
+    }
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:44:02 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 19:21:08 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/06 19:54:07 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ private:
 
     std::string _nickname;
     std::string _username;
-    IRCServer*  _server;
-    int         _registerFlag;
-	int			_operflag; //session에서 운영자 플래그가 있는지, 그 플래그를 저장하는 친구.
+	int			_operflag;
     std::string _password;
     std::string _closeReason;
 
@@ -52,15 +50,19 @@ private:
     void    OnPong(const IRCMessage& msg);
     void    UpdateActive();
 
+protected:
+    IRCServer*  _server;
+    int         _registerFlag;
+
 public:
     enum { FLAG_NICKNAME = 1 << 0, FLAG_USERNAME = 1 << 1 };
 
     IRCSession(IRCServer* server, Channel* channel, int socketfd, int socketId, const std::string& addr);
     virtual ~IRCSession();
 
-    virtual void Process(const std::string& line);
-
+    void    Process(const std::string& line);
     void    SendMessage(const IRCMessage& msg);
+
     void    MessageToNeighbor(const IRCMessage& msg, IRCSession* except);
     void    SendMOTD();
 
@@ -89,8 +91,7 @@ public:
     bool    IsJoinedChannel(const std::string& name);
     size_t  GetJoinedChannelNum() const;
 
-    void    CheckActive();
+    virtual void    CheckActive();
 };
-
 
 #endif

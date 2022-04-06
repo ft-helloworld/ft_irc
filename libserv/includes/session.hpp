@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:26:59 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 20:46:23 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/06 16:47:43 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,6 @@ private:
      */
     void    TakeBuffer(size_t bytes);
 
-    /**
-     * @brief 세션으로 문자열을 전송합니다. 문자열에는 여러 개행이 포함될 수 있으며, 클라이언트에서 이 개행을 각각 모두 분리하여 처리할 수도 있습니다.
-     *
-     * @param buf 세션으로 전송될 데이터의 포인터
-     * @param len 세션으로 전송될 데이터의 크기
-     */
-    void    Send(const void* buf, size_t len);
-
     void    DisableWriteEvent();
 
     /**
@@ -111,6 +103,14 @@ protected:
      *
      */
     virtual void    Close();
+
+    /**
+     * @brief 세션으로 문자열을 전송합니다. 문자열에는 여러 개행이 포함될 수 있으며, 클라이언트에서 이 개행을 각각 모두 분리하여 처리할 수도 있습니다.
+     *
+     * @param buf 세션으로 전송될 데이터의 포인터
+     * @param len 세션으로 전송될 데이터의 크기
+     */
+    virtual void    Send(const void* buf, size_t len);
 
 public:
     Session(Channel* channel, int socketfd, int socketId, const std::string& addr);

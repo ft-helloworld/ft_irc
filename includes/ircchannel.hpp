@@ -6,7 +6,7 @@
 /*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 12:37:36 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 21:40:06 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/06 15:18:56 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,20 @@ public:
     typedef int ModeFlag;
     typedef std::map<IRCSession*, ModeFlag> ParticipantMap;
 
-    enum { MODE_OP = 1 << 0, MODE_PRIV = 1 << 1, MODE_SECRET = 1 << 2 };
+    enum { MODE_OP = 1 << 0, MODE_PRIV = 1 << 1, MODE_SECRET = 1 << 2, MODE_OUTSIDE = 1 << 5 };
 
 private:
     const std::string               _name;
+    const time_t                    _created;
     std::string                     _topic;
-    time_t                     _set_topic;
+    time_t                          _set_topic;
+    std::string                     _mask_topic;
     /**
      * @brief 채널의 참가자들을 저장하는 std::map 객체. Key: IRC세션 포인터 / Value: 채널 내 유저 플래그
      *
      */
     ParticipantMap  _participants;
-    int             _flags;
+    int             _flags; //flag 말고 mode가 더 적절하지 않을지??
 
     IRCChannel();
     IRCChannel(const IRCChannel&);
@@ -86,6 +88,8 @@ public:
      * @param except insert 생략할 세션 포인터. 일반적으로 자기 자신을 제외하고 나머지 세션들을 찾아 추가하기 위해 사용.
      */
     void    GatherParticipants(std::set<IRCSession*>& targets, IRCSession* except = NULL);
+    void    SetChannelTopic(const std::string& topic, const time_t time, const std::string& mask);
+    void    MakeChannelModeString(std::string& ret);
 
     // 여기는 안해도 될 지도..
     void    SendTopic(IRCSession& session);
@@ -96,8 +100,10 @@ public:
     inline const std::string& GetChannelName() const { return _name; }
     inline const std::string& GetChannelTopic() const { return _topic; }
     inline const time_t& GetSetTopicTime() const { return _set_topic; }
-    inline int GetParticipantsNum() { return _participants.size(); }
-    void    SetChannelTopic(const std::string& topic, const time_t time) { _topic = topic; _set_topic = time; }
+    inline const std::string& GetSetTopicMask() const { return _mask_topic; }
+    inline const time_t& GetCreatedTime() const { return _created; }
+    inline size_t GetParticipantsNum() { return _participants.size(); }
+    inline int GetParticipantFlag(IRCSession& session) {return _participants[&session]; }
     inline bool IsEmpty() const { return _participants.size() == 0; }
 };
 
