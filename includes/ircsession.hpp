@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircsession.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:44:02 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 22:18:37 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/06 15:35:40 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ private:
 
     std::string _nickname;
     std::string _username;
-    IRCServer*  _server;
-    int         _registerFlag;
     std::string _password;
     std::string _closeReason;
 	int			_flag; //session에서 운영자 플래그가 있는지, 그 플래그를 저장하는 친구.
@@ -51,6 +49,10 @@ private:
     void    OnPing(const IRCMessage& msg);
     void    OnPong(const IRCMessage& msg);
     void    UpdateActive();
+
+protected:
+    IRCServer*  _server;
+    int         _registerFlag;
 
 public:
     enum { FLAG_NICKNAME = 1 << 0, FLAG_USERNAME = 1 << 1 };
@@ -87,8 +89,7 @@ public:
     bool    IsJoinedChannel(const std::string& name);
     size_t  GetJoinedChannelNum() const;
 
-    void    CheckActive();
+    virtual void    CheckActive();
 };
-
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserver.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/06 15:17:47 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/06 15:23:25 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,8 +316,7 @@ void    IRCServer::OnPrivMsg(IRCSession& session, IRCMessage& msg, const std::st
                 session.SendMessage(IRCNumericMessage(ERR_NOSUCHNICK, recipient, "No such channel"));
                 continue;
             }
-            IRCMessage sendmsg(session.GetMask(), cmd, recipient, message);
-            it->second.Load()->Send(sendmsg, &session);
+            it->second.Load()->Send(IRCMessage(session.GetMask(), cmd, recipient, message), &session);
             Log::Vp("IRCServer::OnPrivMsg", "유저 <%s>가 채널 '%s'에 %llu 바이트의 메시지를 보냈습니다.", session.GetEmail().c_str(), recipient.c_str(), message.size());
         }
         else
@@ -329,8 +328,7 @@ void    IRCServer::OnPrivMsg(IRCSession& session, IRCMessage& msg, const std::st
                 session.SendMessage(IRCNumericMessage(ERR_NOSUCHNICK, recipient, "No such user"));
                 continue;
             }
-            IRCMessage sendmsg(session.GetMask(), cmd, recipient, message);
-            target->SendMessage(sendmsg);
+            target->SendMessage(IRCMessage(session.GetMask(), cmd, recipient, message));
             Log::Vp("IRCServer::OnPrivMsg", "유저 <%s>가 대상 '%s'에 %llu 바이트의 메시지를 보냈습니다.", session.GetEmail().c_str(), recipient.c_str(), message.size());
         }
     }
@@ -448,7 +446,7 @@ void    IRCServer::OnMode(IRCSession& session, IRCMessage& msg)
     //     const std::string& wantFlag = msg.GetParam(1);
     //     // 함수 ('+/-' 따라서 모드 플래그 켜고 끄기, )
     //     if (chan->GetParticipantFlag(session) & IRCChannel::MODE_OP)
-            
+
     //     if (*wantFlag.begin() == '+')
     //     {
     //         // 모드 추가
