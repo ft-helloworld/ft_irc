@@ -6,7 +6,7 @@
 /*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 16:00:52 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 19:52:42 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/06 21:51:36 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,11 +153,11 @@ std::string&    IRCChannel::RetrunChannelModeString(IRCSession& session, std::st
 {
     size_t  i = 0;
     if (tmp[i] == '+' || tmp[i] == '-')
-        res = tmp[i];
+        res = tmp[i++];
     while (i < tmp.size())
     {
         int c = tmp[i];
-        if (c == 'o' || c == 'p' || c == 's' || c == 'n')
+        if (c == '+' || c == '-' || c == 'o' || c == 'p' || c == 's' || c == 'n')
             res += c;
         else
             session.SendMessage(IRCNumericMessage(ERR_UNKNOWNMODE, std::string(1, c), "is unknown mode char to me")); //수정
@@ -166,35 +166,29 @@ std::string&    IRCChannel::RetrunChannelModeString(IRCSession& session, std::st
     return (res);
 }
 
-void        IRCChannel::SetChannelMode(char neg, std::string& res)
+void        IRCChannel::SetChannelMode(std::vector<ModeChange>& ret, int sign, char c)
 {
-    std::string::const_iterator it = res.begin();
-    if (neg == '\0' || neg == '+')
+    int modeFlag = 0;
+    if (c == 'o')
+        modeFlag = MODE_OP;
+    else if (c == 'p')
+        modeFlag = MODE_PRIV;
+    else if (c == 's')
+        modeFlag = MODE_SECRET;
+    else if (c == 'n')
+        modeFlag = MODE_OUTSIDE;
+    if (sign == '+')
     {
-        for (; it != res.end(); ++it)
-        {
-            if (*it == 'o')
-                _flags &= MODE_OP;
-            else if (*it == 'p')
-                _flags &= MODE_PRIV;
-            else if (*it == 's')
-                _flags &= MODE_SECRET;
-            else if (*it == 'n')
-                _flags &= MODE_OUTSIDE;
-        }
+        if (_flags & modeFlag)
+            return ;
+        _flags |= modeFlag;
     }
-    else if (neg == '-')
+    else
     {
-        for (; it != res.end(); ++it)
-        {
-            if (*it == 'o')
-                _flags &= MODE_OP;
-            else if (*it == 'p')
-                _flags &= MODE_PRIV;
-            else if (*it == 's')
-                _flags &= MODE_SECRET;
-            else if (*it == 'n')
-                _flags &= MODE_OUTSIDE;
-        }
+        if ((_flags & modeFlag) == 0)
+            return ;
+        _flags &= ~modeFlag;
+    
     }
+    ret.push_back(ModeChange(sign, c));   
 }

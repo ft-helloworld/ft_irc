@@ -6,7 +6,7 @@
 /*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 12:37:36 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 19:47:27 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/06 21:56:17 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ public:
     typedef std::map<IRCSession*, ModeFlag> ParticipantMap;
 
     enum { MODE_OP = 1 << 0, MODE_PRIV = 1 << 1, MODE_SECRET = 1 << 2, MODE_OUTSIDE = 1 << 5 };
+    struct ModeChange
+    {
+        int sign;
+        int ch;
+        ModeChange(int sign, int ch)
+            : sign(sign), ch(ch) {}
+    };
 
 private:
     const std::string               _name;
@@ -91,7 +98,7 @@ public:
     void    SetChannelTopic(const std::string& topic, const time_t time, const std::string& mask);
     void    MakeChannelModeString(std::string& ret);
     std::string&    RetrunChannelModeString(IRCSession& session, std::string& tmp, std::string& res);
-    void    SetChannelMode(char neg, std::string& res);
+    void    SetChannelMode(std::vector<ModeChange>& ret, int sign, char c);
 
     // 여기는 안해도 될 지도..
     void    SendTopic(IRCSession& session);

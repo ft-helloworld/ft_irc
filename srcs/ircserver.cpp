@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserver.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/06 20:03:35 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/06 22:01:10 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -443,14 +443,6 @@ void    IRCServer::OnChannelMode(IRCSession& session, IRCMessage& msg)
     if (chanIt == _channels.end())
         throw irc_exception(ERR_NOSUCHNICK, "No such nick/channel");
     IRCChannel* chan = chanIt->second.Load();
-    // :bassoon.irc.ozinger.org 324 ncnncncncn #42ssss +ns✅
-    // :bassoon.irc.ozinger.org 329 ncnncncncn #42ssss 1649221129✅
-    // mode #42ssss -sn
-    // :ncnncncncn!user@121.135.181.44 MODE #42ssss -sn
-    // mode #42ssss
-    // :bassoon.irc.ozinger.org 324 ncnncncncn #42ssss +
-    // :bassoon.irc.ozinger.org 329 ncnncncncn #42ssss 1649221129
-    // 플래그를 기준으로 string을 만든다
     if (msg.SizeParam() < 2)
     {
         std::string c_mode = "+";
@@ -460,75 +452,29 @@ void    IRCServer::OnChannelMode(IRCSession& session, IRCMessage& msg)
     }
     else
     {
-    //     const std::string& wantFlag = msg.GetParam(1);
-    //     // 함수 ('+/-' 따라서 모드 플래그 켜고 끄기, )
-    //     if (chan->GetParticipantFlag(session) & IRCChannel::MODE_OP)
-
-    //     if (*wantFlag.begin() == '+')
-    //     {
-    //         // 모드 추가
-    //     }
-    //     else if (*wantFlag.begin() == '-')
-    //     {
-    //         // 모드 제거
-    //     }
-    // }
-    // 1. 플래그를 바꾸기 위한 채널 관리자 권한이 있는지 확인한다.
-    // 2. 모드에 맞는 알파벳인지 확인한다.
-    // 3. 둘 다 오류일 시에는 둘 다 에러메세지 출력해야함.
-    // mode #4242 -p
-    // mode #4242
-    // :scarlet.irc.ozinger.org 324 ndkjfdk #4242 +ns
-    // :scarlet.irc.ozinger.org 329 ndkjfdk #4242 1649222388
-    // mode #4242 +abcd
-    // :bassoon.irc.ozinger.org 472 ncik d :is unknown mode char to me
-    // :ncik!user@121.135.181.44 MODE #4242 +c
-    // mode #4242
-    // :bassoon.irc.ozinger.org 324 ncik #4242 +cns
-    // :bassoon.irc.ozinger.org 329 ncik #4242 1649222687
-    // mode #4242 -s eeeee
-    // :ncik!user@121.135.181.44 MODE #4242 -s
-    // mode #seoul42 *dffd
-    // :bassoon.irc.ozinger.org 472 sheelell * :is unknown mode char to me
-    // :bassoon.irc.ozinger.org 472 sheelell d :is unknown mode char to me
-    // :bassoon.irc.ozinger.org 472 sheelell d :is unknown mode char to me
-    // mode #yejon +ns-n
-    // :nnnnn!userdfd@121.135.181.44 MODE #yejon +ns-n
-    // mode #4222 +ns-n+d-s
-    // :bassoon.irc.ozinger.org 472 niii d :is unknown mode char to me
-    // :niii!user@121.135.181.44 MODE #4222 +ns-ns
-    // mode #4222
-    // :bassoon.irc.ozinger.org 324 niii #4222 +
-    // :bassoon.irc.ozinger.org 329 niii #4222 1649232616
-    // mode #4222 +ns-n+dn-s
-    // :bassoon.irc.ozinger.org 472 niii d :is unknown mode char to me
-    // :niii!user@121.135.181.44 MODE #4222 +ns-n+n-s
-        if (chan->GetParticipantFlag(session) & IRCChannel::MODE_OP)
-            session.SendMessage(IRCNumericMessage(ERR_CHANOPRIVSNEEDED, chanName, "You are not a channel founder"));
-        size_t  i = -1;
-        size_t  j;
-        char    neg = 0;
-        const std::string& wantFlag = msg.GetParam(1);
-        std::vector<std::string> ret;
-        while (++i < wantFlag.size())
+        if (!(chan->GetParticipantFlag(session) & IRCChannel::MODE_OP))
+            throw irc_exception(ERR_CHANOPRIVSNEEDED, chanName, "You are not a channel founder");
+        const std::string& wantFlag = msg.GetParams(1);
+        std::vector<IRCChannel::ModeChange> ret;
+        int sign = '+';
+        for (std::string::const_iterator it = wantFlag.begin(); it != wantFlag.end(); ++it)
         {
-            j = i;
-            std::string tmp;
-            std::string res;
-            if (wantFlag[i] == '+' || wantFlag[i] == '-')
-                neg = wantFlag[i];
-            if (wantFlag[i + 1] == '\0')
-                break;
-            while (wantFlag[j] != '+' && wantFlag[j] != '-')
-                j++;
-            tmp = neg + wantFlag.substr(i, j);
-            if (!chan->RetrunChannelModeString(session, tmp, res).empty())
-                ret.push_back(res);
-            if (!res.empty())
-                chan->SetChannelMode(neg, res);
+            if (*it == '+' || *it == '-')
+                sign = *it;
+            else if (*it != 'o' && *it != 'p' && *it != 's' && *it != 'n')
+                session.SendMessage(IRCNumericMessage(ERR_UNKNOWNMODE, std::string(1, *it), "is unknown mode char to me"));
+            else
+                chan->SetChannelMode(ret, sign, *it);
         }
-        // Send(IRCMessage(session.GetMask(), "MODE", _name, ))
-
+        std::string finale;
+        int neg = 0;
+        for (std::vector<IRCChannel::ModeChange>::const_iterator it = ret.begin(); it != ret.end(); ++it)
+        {
+            if (neg != it->sign)
+                finale += static_cast<char>(neg = it->sign);
+            finale += static_cast<char>(it->ch);
+        }
+        chan->Send(IRCMessage(session.GetMask(), "MODE", chan->GetChannelName(), finale));
     }
 }
 
