@@ -164,3 +164,18 @@ ERR_NOSUCHNICK
 :bassoon.irc.ozinger.org 371 aaabbbccc :
 :bassoon.irc.ozinger.org 371 aaabbbccc : Best experienced with: An IRC client
 :bassoon.irc.ozinger.org 374 aaabbbccc :End of /INFO list
+
+----
+
+챈봇
+
+기본적인 기능
+ - 채널에서 자동 응답 (OnMessage)
+ - 귓속말에서 자동 응답 (OnMessage)
+ - 메시지 구조체
+   - IRCMessage 구조체
+ - 봇 스크립팅 기반
+   - 메시지 전송 (SendTo(target, message))
+   - 채널 조정
+   - 유저 조정
+

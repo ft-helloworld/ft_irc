@@ -1,6 +1,7 @@
 #include "ft_irc.hpp"
 #include "ircserver.hpp"
 #include "ircsessionfactory.hpp"
+#include "ircbot.hpp"
 #include <stdexcept>
 #include <signal.h>
 
@@ -33,6 +34,9 @@ int main(int argc, char* argv[])
         }
         if (port < 1 || port > 65535)
             throw std::runtime_error("Not valid port range");
+
+        IRCBot bot(&server, "$$", "$$");
+        server.RegisterBot(bot);
 
         Channel channel(port, &sessionFactory);
         channel.Init();

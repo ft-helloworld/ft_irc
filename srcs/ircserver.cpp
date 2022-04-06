@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ircserver.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/04/06 19:48:27 by yejsong          ###   ########.fr       */
+=======
+/*   Updated: 2022/04/06 19:53:15 by seungyel         ###   ########.fr       */
+>>>>>>> 41f7b64594107dfd4380562a1284ad06d4182c25
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +21,7 @@
 #include "ircstring.hpp"
 #include "ircmessage.hpp"
 #include "ircnumericmessage.hpp"
+#include "ircbot.hpp"
 #include <sstream>
 #include <string>
 #include <stdexcept>
@@ -33,8 +38,16 @@ IRCSession* IRCServer::FindByNick(const std::string& nick) const
 {
     ClientMap::const_iterator it = _clients.find(nick);
     if (it == _clients.end())
-        return 0;
+        return NULL;
     return it->second;
+}
+
+IRCChannel* IRCServer::FindChannel(const std::string& channel)
+{
+    ChannelMap::iterator it = _channels.find(channel);
+    if (it == _channels.end())
+        return NULL;
+    return it->second.Load();
 }
 
 void    IRCServer::OnNickname(IRCSession& session, IRCMessage& msg)
@@ -141,58 +154,59 @@ void    IRCServer::OnJoin(IRCSession& session, IRCMessage& msg)
     IRCString::SplitTargets(targets, msg.GetParam(0));
     for (sit = targets.begin(); sit != targets.end(); ++sit)
     {
-        const std::string& chanName = *sit;
-
-        // ERR_BADCHANMASK 채널명이 #, &로 시작하지 않을 때
-        if (chanName.front() != '#' && chanName.front() != '&')
+        try
         {
-            session.SendMessage(IRCNumericMessage(ERR_BADCHANMASK, chanName, "Invalid channel name"));
-            continue;
+            JoinChannel(session, *sit);
         }
-        // ERR_NOSUCHCHANNEL 채널명 규칙 잘못됨 (길이 초과/문자열 잘못됨)
-        if (!IRCString::IsValidChstring(chanName.substr(1)))
+        catch (const irc_exception& iex)
         {
-            session.SendMessage(IRCNumericMessage(ERR_NOSUCHCHANNEL, chanName, "No such channel"));
-            continue;
+            session.SendMessage(iex.message());
         }
-        // ERR_TOOMANYCHANNELS 더 이상 들어갈 수 없을 때. (대충 최대 개수 지정)
-        if (session.GetJoinedChannelNum() >= MAX_CHANNEL)
-        {
-            session.SendMessage(IRCNumericMessage(ERR_TOOMANYCHANNELS, chanName, "You have joined too many channels"));
-            continue;
-        }
-        // RPL_TOPIC 구현 필요 없음
-
-        // 이미 채널에 참여중
-        if (session.IsJoinedChannel(chanName))
-        {
-            Log::Vp("IRCServer::OnJoin", "유저 <%s>는 이미 채널 '%s'에 참여중입니다. JOIN 요청을 무시합니다.", session.GetEmail().c_str(), chanName.c_str());
-            continue;
-        }
-
-        // 1. 채널이 없으면 생성
-        ChannelMap::iterator chanIt = _channels.find(chanName);
-        IRCChannel* chan;
-        bool    newChan = false;
-        if (chanIt == _channels.end())
-        {
-            typedef std::pair<const std::string, SharedPtr<IRCChannel> > ChannelPair;
-            _channels.insert(ChannelPair(chanName, SharedPtr<IRCChannel>(chan = new IRCChannel(chanName))));
-            newChan = true;
-            Log::Vp("IRCServer::OnJoin", "새로운 채널 '%s'가 유저 <%s> 에 의해 생성됩니다.", chanName.c_str(), session.GetEmail().c_str());
-        }
-        else
-            chan = chanIt->second.Load();
-
-        // 2. 채널에 입장
-        session.AddChannel(chan->GetChannelName());
-
-        chan->Join(session);
-        Log::Vp("IRCServer::OnJoin", "유저 <%s> 가 채널 '%s'에 참여합니다.", session.GetEmail().c_str(), chanName.c_str());
-
-        // 3. 채널에 Names 커맨드 사용
-        chan->SendNames(session);
     }
+}
+
+void    IRCServer::JoinChannel(IRCSession& session, const std::string& chanName)
+{
+    // ERR_BADCHANMASK 채널명이 #, &로 시작하지 않을 때
+    if (chanName.front() != '#' && chanName.front() != '&')
+        throw irc_exception(ERR_BADCHANMASK, chanName, "Invalid channel name");
+    // ERR_NOSUCHCHANNEL 채널명 규칙 잘못됨 (길이 초과/문자열 잘못됨)
+    if (!IRCString::IsValidChstring(chanName.substr(1)))
+        throw irc_exception(ERR_NOSUCHCHANNEL, chanName, "No such channel");
+    // ERR_TOOMANYCHANNELS 더 이상 들어갈 수 없을 때. (대충 최대 개수 지정)
+    if (session.GetJoinedChannelNum() >= MAX_CHANNEL)
+        throw irc_exception(ERR_TOOMANYCHANNELS, chanName, "You have joined too many channels");
+    // RPL_TOPIC 구현 필요 없음
+
+    // 이미 채널에 참여중
+    if (session.IsJoinedChannel(chanName))
+    {
+        Log::Vp("IRCServer::OnJoin", "유저 <%s>는 이미 채널 '%s'에 참여중입니다. JOIN 요청을 무시합니다.", session.GetEmail().c_str(), chanName.c_str());
+        return;
+    }
+
+    // 1. 채널이 없으면 생성
+    ChannelMap::iterator chanIt = _channels.find(chanName);
+    IRCChannel* chan;
+    bool    newChan = false;
+    if (chanIt == _channels.end())
+    {
+        typedef std::pair<const std::string, SharedPtr<IRCChannel> > ChannelPair;
+        _channels.insert(ChannelPair(chanName, SharedPtr<IRCChannel>(chan = new IRCChannel(chanName))));
+        newChan = true;
+        Log::Vp("IRCServer::OnJoin", "새로운 채널 '%s'가 유저 <%s> 에 의해 생성됩니다.", chanName.c_str(), session.GetEmail().c_str());
+    }
+    else
+        chan = chanIt->second.Load();
+
+    // 2. 채널에 입장
+    session.AddChannel(chan->GetChannelName());
+
+    chan->Join(session);
+    Log::Vp("IRCServer::OnJoin", "유저 <%s> 가 채널 '%s'에 참여합니다.", session.GetEmail().c_str(), chanName.c_str());
+
+    // 3. 채널에 Names 커맨드 사용
+    chan->SendNames(session);
 }
 
 void    IRCServer::OnPart(IRCSession& session, IRCMessage& msg)
@@ -316,8 +330,7 @@ void    IRCServer::OnPrivMsg(IRCSession& session, IRCMessage& msg, const std::st
                 session.SendMessage(IRCNumericMessage(ERR_NOSUCHNICK, recipient, "No such channel"));
                 continue;
             }
-            IRCMessage sendmsg(session.GetMask(), cmd, recipient, message);
-            it->second.Load()->Send(sendmsg, &session);
+            it->second.Load()->Send(IRCMessage(session.GetMask(), cmd, recipient, message), &session);
             Log::Vp("IRCServer::OnPrivMsg", "유저 <%s>가 채널 '%s'에 %llu 바이트의 메시지를 보냈습니다.", session.GetEmail().c_str(), recipient.c_str(), message.size());
         }
         else
@@ -329,8 +342,7 @@ void    IRCServer::OnPrivMsg(IRCSession& session, IRCMessage& msg, const std::st
                 session.SendMessage(IRCNumericMessage(ERR_NOSUCHNICK, recipient, "No such user"));
                 continue;
             }
-            IRCMessage sendmsg(session.GetMask(), cmd, recipient, message);
-            target->SendMessage(sendmsg);
+            target->SendMessage(IRCMessage(session.GetMask(), cmd, recipient, message));
             Log::Vp("IRCServer::OnPrivMsg", "유저 <%s>가 대상 '%s'에 %llu 바이트의 메시지를 보냈습니다.", session.GetEmail().c_str(), recipient.c_str(), message.size());
         }
     }
@@ -443,8 +455,26 @@ void    IRCServer::OnMode(IRCSession& session, IRCMessage& msg)
         session.SendMessage(IRCNumericMessage(RPL_CHANNELMODEIS, chanName, c_mode));
         session.SendMessage(IRCNumericMessage(RPL_CREATIONTIME, chanName, String::ItoString(chan->GetCreatedTime())));
     }
+<<<<<<< HEAD
     else
     {
+=======
+    // else
+    // {
+    //     const std::string& wantFlag = msg.GetParam(1);
+    //     // 함수 ('+/-' 따라서 모드 플래그 켜고 끄기, )
+    //     if (chan->GetParticipantFlag(session) & IRCChannel::MODE_OP)
+
+    //     if (*wantFlag.begin() == '+')
+    //     {
+    //         // 모드 추가
+    //     }
+    //     else if (*wantFlag.begin() == '-')
+    //     {
+    //         // 모드 제거
+    //     }
+    // }
+>>>>>>> 41f7b64594107dfd4380562a1284ad06d4182c25
     // 1. 플래그를 바꾸기 위한 채널 관리자 권한이 있는지 확인한다.
     // 2. 모드에 맞는 알파벳인지 확인한다.
     // 3. 둘 다 오류일 시에는 둘 다 에러메세지 출력해야함.
@@ -522,6 +552,36 @@ void    IRCServer::OnKill(IRCSession& session, IRCMessage& msg)
 	}
 }
 
+void    IRCServer::OnMode(IRCSession& session, IRCMessage& msg)
+{
+	// MODE 뒤에 user가 아닌 경우.
+	if (msg.SizeParam() < 1)
+	{
+		throw irc_exception(ERR_NEEDMOREPARAMS, ":Not enough parameters.");
+		throw irc_exception(RPL_TEXT, "SYNTAX MODE <target> <modes> {<mode-parameters>}");
+	}
+		
+	IRCSession* target = FindByNick(msg.GetParam(0));
+	if (target == NULL)
+		throw irc_exception(ERR_NOSUCHNICK, "No such nick/channel");
+
+	int operatorFlag = session.HasOperatorFlag(msg.GetParam(1));
+	// +o일때
+	if (operatorFlag == 1)
+	{
+		session.SetOperFlag(operatorFlag);
+		throw irc_exception(ERR_NOPRIVILEGES, "Permission Denied - Only operators may set user mode o");
+	}
+	// -o일때
+	else if (operatorFlag == -1)
+	{
+		session.SetOperFlag(operatorFlag);
+		throw irc_exception(ERR_NOPRIVILEGES, "Permission Denied - Only operators may set user mode o");
+	}
+	else
+		throw irc_exception(ERR_NOTEXTTOSEND, "Unknown command");
+}
+
 void    IRCServer::OnTimer()
 {
     std::vector<IRCSession*> sessions;
@@ -540,4 +600,10 @@ void    IRCServer::OnTimer()
 size_t  IRCServer::GetInterval() const
 {
     return static_cast<size_t>(30);
+}
+
+void    IRCServer::RegisterBot(IRCBot& bot)
+{
+    _clients[bot.GetNickname()] = &bot;
+    Log::Ip("IRCServer::RegisterBot", "IRC 서버에 봇(%s)을 등록했습니다.", bot.GetNickname().c_str());
 }

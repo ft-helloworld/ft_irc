@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 16:43:59 by smun              #+#    #+#             */
-/*   Updated: 2022/04/02 15:54:57 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/06 18:50:33 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,13 +107,14 @@ IRCMessage IRCMessage::Parse(const std::string& line)
     // [':' <prefix> <SPACE> ] <command> <params> <crlf>
 }
 
-const std::string  IRCMessage::GetParams(ParamVector::size_type begin, ParamVector::size_type end)
+const std::string  IRCMessage::GetParams(ParamVector::size_type begin, ParamVector::size_type end) const
 {
     const ParamVector::const_iterator beginPos = _params.begin() + begin;
+    const ParamVector::const_iterator endPos = _params.begin() + end;
 
     std::ostringstream oss;
     ParamVector::const_iterator it;
-    for (it = beginPos; it != _params.begin() + end && it != _params.end(); ++it)
+    for (it = beginPos; it != endPos && it != _params.end(); ++it)
     {
         if (it != beginPos)
             oss << " ";

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserver.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:40:50 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 13:31:15 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/06 19:53:24 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 class IRCSession;
 class IRCMessage;
+class IRCBot;
 
 class IRCServer : public ITimerHandler
 {
@@ -59,13 +60,18 @@ public:
     void    OnList(IRCSession& session, IRCMessage& msg);
     void    OnMode(IRCSession& session, IRCMessage& msg);
 	void    OnKill(IRCSession& session, IRCMessage& msg);
+	void	OnMode(IRCSession& session, IRCMessage& msg);
     void    UnregisterNickname(const std::string& nick);
+    void    JoinChannel(IRCSession& session, const std::string& chanName);
     void    LeaveChannel(IRCSession& session, const std::string& chanName, const std::string& cmd);
     bool    IsPasswordMatched(const std::string& password) const;
     void    OnTimer();
     size_t  GetInterval() const;
 
     IRCSession* FindByNick(const std::string& nick) const;
+    IRCChannel* FindChannel(const std::string& channel);
+
+    void    RegisterBot(IRCBot& bot);
 
     template<typename ChannelNameIterator>
     void    GatherNeighbors(std::set<IRCSession*>& neighbors, ChannelNameIterator first, ChannelNameIterator last, IRCSession* except = NULL)

@@ -9,4 +9,10 @@ https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.3
    - MODE 명령어 (임명) 4.2.3.1
 	User modes (o - operator flag.)
 
+	1) MODE user +o : 내가 운영자인데, user에 운영자 모드 주겠다.
+	2) MODE user -o : 내가 운영자인데, user는 더이상 운영자 모드 아님!.
+
+
+
+
 - KILL message :: <닉네임> <코멘트>  (쫓아낼 때 사용)

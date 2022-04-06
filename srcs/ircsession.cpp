@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircsession.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 13:30:38 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/06 19:53:05 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,15 @@ IRCSession::IRCSession(IRCServer* server, Channel* channel, int socketfd, int so
     : Session(channel, socketfd, socketId, addr)
     , _nickname()
     , _username()
-    , _server(server)
-    , _registerFlag(0)
+	, _operflag(0)
     , _password()
     , _closeReason()
     , _channels()
     , _pingState(PingState_Active)
     , _lastPingTime(std::time(NULL))
     , _lastPingWord()
+    , _server(server)
+    , _registerFlag(0)
     {}
 
 IRCSession::~IRCSession()
@@ -51,9 +52,6 @@ void IRCSession::Process(const std::string& line)
     // 명령어 처리
     try
     {
-        if (line.length() > MAX_MESSAGE_LEN - CRLF_SIZE)
-            throw std::runtime_error("exceed message len");
-
         IRCMessage msg = IRCMessage::Parse(line);
         if (msg.IsEmpty())
             return;
@@ -92,6 +90,8 @@ void IRCSession::Process(const std::string& line)
                 _server->OnMode(*this, msg);
 			else if (cmd == "KILL")
             	_server->OnKill(*this, msg);
+			else if (cmd == "MODE")
+            	_server->OnMode(*this, msg);
             else // :bassoon.irc.ozinger.org 421 smun WRONGCMD :Unknown command
                 throw irc_exception(ERR_UNKNOWNCOMMAND, cmd, "Unknown command");
         }
@@ -107,10 +107,11 @@ void IRCSession::Process(const std::string& line)
     }
 }
 
-void    IRCSession::SetNickname(const std::string& nickname) { _nickname = nickname; }
-void    IRCSession::SetUsername(const std::string& username) { _username = username; }
-void    IRCSession::SetPassword(const std::string& password) { _password = password; }
-
+void	IRCSession::SetNickname(const std::string& nickname) { _nickname = nickname; }
+void	IRCSession::SetUsername(const std::string& username) { _username = username; }
+void	IRCSession::SetPassword(const std::string& password) { _password = password; }
+void	IRCSession::SetOperFlag(int operflag) { _operflag = operflag; }
+int		IRCSession::GetOperFlag() const { return _operflag; }
 const std::string&  IRCSession::GetNickname() const { return _nickname; }
 const std::string&  IRCSession::GetUsername() const { return _username; }
 const std::string&  IRCSession::GetPassword() const { return _password; }
@@ -210,11 +211,20 @@ void    IRCSession::RegisterStep(int flag)
 
         // 서버 실행 인자로 주어진 패스워드와 일치하는지 검사
         if (!_server->IsPasswordMatched(GetPassword()))
-            throw std::runtime_error("Password mismatched.");
+            throw std::runtime_error("Pas sword mismatched.");
 
         Log::Vp("IRCSession::RegisterStep", "패스워드가 일치합니다. 세션이 인증되었습니다. 환영 메시지를 전송합니다.");
         SendMOTD();
-    }
+	}	
+}
+
+int    IRCSession::HasOperatorFlag(std::string str)
+{ 
+	if (str.find("+o") != std::string::npos)
+		return(1);
+	if (str.find("-o") != std::string::npos)
+		return(-1);
+	return (0);
 }
 
 bool    IRCSession::HasRegisterFlag(int flag) const { return (_registerFlag & flag) == flag; }
