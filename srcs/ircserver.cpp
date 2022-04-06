@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserver.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/04/06 19:48:27 by yejsong          ###   ########.fr       */
-=======
-/*   Updated: 2022/04/06 19:53:15 by seungyel         ###   ########.fr       */
->>>>>>> 41f7b64594107dfd4380562a1284ad06d4182c25
+/*   Updated: 2022/04/06 20:03:35 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -432,8 +428,15 @@ void    IRCServer::OnList(IRCSession& session, IRCMessage& msg)
 void    IRCServer::OnMode(IRCSession& session, IRCMessage& msg)
 {
     if (msg.SizeParam() < 1 || msg.GetParam(0).empty())
-		throw irc_exception(ERR_NEEDMOREPARAMS, "MODE", "Not enough parameters");
+        throw irc_exception(ERR_NEEDMOREPARAMS, "MODE", "Not enough parameters");
+    if (IRCString::IsChannelPrefix(msg.GetParam(0).front()))
+        OnChannelMode(session, msg);
+    else
+        OnUserMode(session, msg);
+}
 
+void    IRCServer::OnChannelMode(IRCSession& session, IRCMessage& msg)
+{
     const std::string& chanName = msg.GetParam(0);
     ChannelMap::iterator chanIt = _channels.find(chanName);
 
@@ -455,12 +458,8 @@ void    IRCServer::OnMode(IRCSession& session, IRCMessage& msg)
         session.SendMessage(IRCNumericMessage(RPL_CHANNELMODEIS, chanName, c_mode));
         session.SendMessage(IRCNumericMessage(RPL_CREATIONTIME, chanName, String::ItoString(chan->GetCreatedTime())));
     }
-<<<<<<< HEAD
     else
     {
-=======
-    // else
-    // {
     //     const std::string& wantFlag = msg.GetParam(1);
     //     // 함수 ('+/-' 따라서 모드 플래그 켜고 끄기, )
     //     if (chan->GetParticipantFlag(session) & IRCChannel::MODE_OP)
@@ -474,7 +473,6 @@ void    IRCServer::OnMode(IRCSession& session, IRCMessage& msg)
     //         // 모드 제거
     //     }
     // }
->>>>>>> 41f7b64594107dfd4380562a1284ad06d4182c25
     // 1. 플래그를 바꾸기 위한 채널 관리자 권한이 있는지 확인한다.
     // 2. 모드에 맞는 알파벳인지 확인한다.
     // 3. 둘 다 오류일 시에는 둘 다 에러메세지 출력해야함.
@@ -534,33 +532,15 @@ void    IRCServer::OnMode(IRCSession& session, IRCMessage& msg)
     }
 }
 
-//지금은 아무나 들어올 수 있음. session에서 운영자 일때만 사용 가능하도록 바꿔야함.
-#include <iostream>
-void    IRCServer::OnKill(IRCSession& session, IRCMessage& msg)
+void    IRCServer::OnUserMode(IRCSession& session, IRCMessage& msg)
 {
-	(void)session;
-	if (msg.SizeParam() < 2 || msg.GetParam(0).empty() || msg.GetParam(1).empty())
-		throw irc_exception(ERR_NOSUCHNICK, "No such nick/comment");
-	else //잘 들어오는 경우.
-	{
-		IRCSession* target = FindByNick(msg.GetParam(0));
-		//nickname을 못찾는 경우.
-		if (target == NULL)
-			session.SendMessage(IRCNumericMessage(ERR_NOSUCHNICK, msg.GetParam(0), "No such nickname"));
-		session.Close(msg.GetParams(1));
-		Log::Vp("IRCServer::UnregisterNickname", "닉네임 '%s' 가 서버에서 '%s'이유로 삭제되었습니다.", msg.GetParam(0).c_str(), msg.GetParam(1).c_str());
-	}
-}
-
-void    IRCServer::OnMode(IRCSession& session, IRCMessage& msg)
-{
-	// MODE 뒤에 user가 아닌 경우.
+    // MODE 뒤에 user가 아닌 경우.
 	if (msg.SizeParam() < 1)
 	{
 		throw irc_exception(ERR_NEEDMOREPARAMS, ":Not enough parameters.");
 		throw irc_exception(RPL_TEXT, "SYNTAX MODE <target> <modes> {<mode-parameters>}");
 	}
-		
+
 	IRCSession* target = FindByNick(msg.GetParam(0));
 	if (target == NULL)
 		throw irc_exception(ERR_NOSUCHNICK, "No such nick/channel");
@@ -580,6 +560,24 @@ void    IRCServer::OnMode(IRCSession& session, IRCMessage& msg)
 	}
 	else
 		throw irc_exception(ERR_NOTEXTTOSEND, "Unknown command");
+}
+
+//지금은 아무나 들어올 수 있음. session에서 운영자 일때만 사용 가능하도록 바꿔야함.
+#include <iostream>
+void    IRCServer::OnKill(IRCSession& session, IRCMessage& msg)
+{
+	(void)session;
+	if (msg.SizeParam() < 2 || msg.GetParam(0).empty() || msg.GetParam(1).empty())
+		throw irc_exception(ERR_NOSUCHNICK, "No such nick/comment");
+	else //잘 들어오는 경우.
+	{
+		IRCSession* target = FindByNick(msg.GetParam(0));
+		//nickname을 못찾는 경우.
+		if (target == NULL)
+			session.SendMessage(IRCNumericMessage(ERR_NOSUCHNICK, msg.GetParam(0), "No such nickname"));
+		session.Close(msg.GetParams(1));
+		Log::Vp("IRCServer::UnregisterNickname", "닉네임 '%s' 가 서버에서 '%s'이유로 삭제되었습니다.", msg.GetParam(0).c_str(), msg.GetParam(1).c_str());
+	}
 }
 
 void    IRCServer::OnTimer()

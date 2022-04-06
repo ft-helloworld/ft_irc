@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserver.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:40:50 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 19:53:24 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/06 20:03:40 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ public:
     void    OnTopic(IRCSession& session, IRCMessage& msg);
     void    OnList(IRCSession& session, IRCMessage& msg);
     void    OnMode(IRCSession& session, IRCMessage& msg);
+    void    OnChannelMode(IRCSession& session, IRCMessage& msg);
+    void    OnUserMode(IRCSession& session, IRCMessage& msg);
 	void    OnKill(IRCSession& session, IRCMessage& msg);
-	void	OnMode(IRCSession& session, IRCMessage& msg);
     void    UnregisterNickname(const std::string& nick);
     void    JoinChannel(IRCSession& session, const std::string& chanName);
     void    LeaveChannel(IRCSession& session, const std::string& chanName, const std::string& cmd);
