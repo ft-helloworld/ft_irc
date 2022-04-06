@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircmessage.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 13:45:47 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 20:29:09 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/06 18:50:45 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ public:
     inline const std::string&          GetPrefix() const   { return _prefix; }
 
     inline void                        AddParam(const std::string& param) { _params.push_back(param); }
-    const std::string                  GetParams(ParamVector::size_type begin = 0, ParamVector::size_type end = SIZE_MAX);
+    const std::string                  GetParams(ParamVector::size_type begin = 0, ParamVector::size_type end = SIZE_MAX) const;
 
     inline ParamVectorConstIterator    BeginParam() const  { return _params.begin(); }
     inline ParamVectorConstIterator    EndParam() const    { return _params.end(); }

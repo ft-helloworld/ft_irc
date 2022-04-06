@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 15:49:42 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/06 19:05:15 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ IRCSession::IRCSession(IRCServer* server, Channel* channel, int socketfd, int so
     : Session(channel, socketfd, socketId, addr)
     , _nickname()
     , _username()
-    , _server(server)
-    , _registerFlag(0)
     , _password()
     , _closeReason()
     , _channels()
     , _pingState(PingState_Active)
     , _lastPingTime(std::time(NULL))
     , _lastPingWord()
+    , _server(server)
+    , _registerFlag(0)
     {}
 
 IRCSession::~IRCSession()

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/06 16:05:07 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/06 19:06:22 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "ircstring.hpp"
 #include "ircmessage.hpp"
 #include "ircnumericmessage.hpp"
+#include "ircbot.hpp"
 #include <sstream>
 #include <string>
 #include <stdexcept>
@@ -149,58 +150,59 @@ void    IRCServer::OnJoin(IRCSession& session, IRCMessage& msg)
     IRCString::SplitTargets(targets, msg.GetParam(0));
     for (sit = targets.begin(); sit != targets.end(); ++sit)
     {
-        const std::string& chanName = *sit;
-
-        // ERR_BADCHANMASK 채널명이 #, &로 시작하지 않을 때
-        if (chanName.front() != '#' && chanName.front() != '&')
+        try
         {
-            session.SendMessage(IRCNumericMessage(ERR_BADCHANMASK, chanName, "Invalid channel name"));
-            continue;
+            JoinChannel(session, *sit);
         }
-        // ERR_NOSUCHCHANNEL 채널명 규칙 잘못됨 (길이 초과/문자열 잘못됨)
-        if (!IRCString::IsValidChstring(chanName.substr(1)))
+        catch (const irc_exception& iex)
         {
-            session.SendMessage(IRCNumericMessage(ERR_NOSUCHCHANNEL, chanName, "No such channel"));
-            continue;
+            session.SendMessage(iex.message());
         }
-        // ERR_TOOMANYCHANNELS 더 이상 들어갈 수 없을 때. (대충 최대 개수 지정)
-        if (session.GetJoinedChannelNum() >= MAX_CHANNEL)
-        {
-            session.SendMessage(IRCNumericMessage(ERR_TOOMANYCHANNELS, chanName, "You have joined too many channels"));
-            continue;
-        }
-        // RPL_TOPIC 구현 필요 없음
-
-        // 이미 채널에 참여중
-        if (session.IsJoinedChannel(chanName))
-        {
-            Log::Vp("IRCServer::OnJoin", "유저 <%s>는 이미 채널 '%s'에 참여중입니다. JOIN 요청을 무시합니다.", session.GetEmail().c_str(), chanName.c_str());
-            continue;
-        }
-
-        // 1. 채널이 없으면 생성
-        ChannelMap::iterator chanIt = _channels.find(chanName);
-        IRCChannel* chan;
-        bool    newChan = false;
-        if (chanIt == _channels.end())
-        {
-            typedef std::pair<const std::string, SharedPtr<IRCChannel> > ChannelPair;
-            _channels.insert(ChannelPair(chanName, SharedPtr<IRCChannel>(chan = new IRCChannel(chanName))));
-            newChan = true;
-            Log::Vp("IRCServer::OnJoin", "새로운 채널 '%s'가 유저 <%s> 에 의해 생성됩니다.", chanName.c_str(), session.GetEmail().c_str());
-        }
-        else
-            chan = chanIt->second.Load();
-
-        // 2. 채널에 입장
-        session.AddChannel(chan->GetChannelName());
-
-        chan->Join(session);
-        Log::Vp("IRCServer::OnJoin", "유저 <%s> 가 채널 '%s'에 참여합니다.", session.GetEmail().c_str(), chanName.c_str());
-
-        // 3. 채널에 Names 커맨드 사용
-        chan->SendNames(session);
     }
+}
+
+void    IRCServer::JoinChannel(IRCSession& session, const std::string& chanName)
+{
+    // ERR_BADCHANMASK 채널명이 #, &로 시작하지 않을 때
+    if (chanName.front() != '#' && chanName.front() != '&')
+        throw irc_exception(ERR_BADCHANMASK, chanName, "Invalid channel name");
+    // ERR_NOSUCHCHANNEL 채널명 규칙 잘못됨 (길이 초과/문자열 잘못됨)
+    if (!IRCString::IsValidChstring(chanName.substr(1)))
+        throw irc_exception(ERR_NOSUCHCHANNEL, chanName, "No such channel");
+    // ERR_TOOMANYCHANNELS 더 이상 들어갈 수 없을 때. (대충 최대 개수 지정)
+    if (session.GetJoinedChannelNum() >= MAX_CHANNEL)
+        throw irc_exception(ERR_TOOMANYCHANNELS, chanName, "You have joined too many channels");
+    // RPL_TOPIC 구현 필요 없음
+
+    // 이미 채널에 참여중
+    if (session.IsJoinedChannel(chanName))
+    {
+        Log::Vp("IRCServer::OnJoin", "유저 <%s>는 이미 채널 '%s'에 참여중입니다. JOIN 요청을 무시합니다.", session.GetEmail().c_str(), chanName.c_str());
+        return;
+    }
+
+    // 1. 채널이 없으면 생성
+    ChannelMap::iterator chanIt = _channels.find(chanName);
+    IRCChannel* chan;
+    bool    newChan = false;
+    if (chanIt == _channels.end())
+    {
+        typedef std::pair<const std::string, SharedPtr<IRCChannel> > ChannelPair;
+        _channels.insert(ChannelPair(chanName, SharedPtr<IRCChannel>(chan = new IRCChannel(chanName))));
+        newChan = true;
+        Log::Vp("IRCServer::OnJoin", "새로운 채널 '%s'가 유저 <%s> 에 의해 생성됩니다.", chanName.c_str(), session.GetEmail().c_str());
+    }
+    else
+        chan = chanIt->second.Load();
+
+    // 2. 채널에 입장
+    session.AddChannel(chan->GetChannelName());
+
+    chan->Join(session);
+    Log::Vp("IRCServer::OnJoin", "유저 <%s> 가 채널 '%s'에 참여합니다.", session.GetEmail().c_str(), chanName.c_str());
+
+    // 3. 채널에 Names 커맨드 사용
+    chan->SendNames(session);
 }
 
 void    IRCServer::OnPart(IRCSession& session, IRCMessage& msg)
@@ -517,4 +519,10 @@ void    IRCServer::OnTimer()
 size_t  IRCServer::GetInterval() const
 {
     return static_cast<size_t>(30);
+}
+
+void    IRCServer::RegisterBot(IRCBot& bot)
+{
+    _clients[bot.GetNickname()] = &bot;
+    Log::Ip("IRCServer::RegisterBot", "IRC 서버에 봇(%s)을 등록했습니다.", bot.GetNickname().c_str());
 }

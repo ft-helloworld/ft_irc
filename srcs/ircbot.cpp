@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:44:33 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 16:23:31 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/06 19:42:47 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 #include "ircserver.hpp"
 #include "ircmessage.hpp"
 #include "ircstring.hpp"
+#include "irc_exception.hpp"
+#include <string>
+#include <sstream>
+#include <vector>
+#include <algorithm>
 
 IRCBot::IRCBot(IRCServer* server, const std::string& nickname, const std::string& username)
     : IRCSession(server, NULL, -1, -1, HOSTNAME)
@@ -22,7 +27,7 @@ IRCBot::IRCBot(IRCServer* server, const std::string& nickname, const std::string
     _registerFlag = FLAG_NICKNAME | FLAG_USERNAME;
     SetNickname(nickname);
     SetUsername(username);
-    Log::Ip("IRCBot::IRCBot", "새로운 봇 (%s)이 생성되었습니다.", GetMask().c_str());
+    Log::Dp("IRCBot::IRCBot", "새로운 봇 (%s)이 생성되었습니다.", GetMask().c_str());
 }
 
 IRCBot::~IRCBot()
@@ -64,19 +69,21 @@ size_t    IRCBot::SendTo(const std::string& param, bool notice, const std::strin
         }
         ++ret;
     }
+    return ret;
 }
 
-void    IRCBot::Send(const void* buf, size_t len);
+void    IRCBot::Send(const void* buf, size_t len)
 {
     try
     {
-        IRCMessage msg = IRCMessage::Parse(line);
+        IRCMessage msg = IRCMessage::Parse(std::string(reinterpret_cast<const char*>(buf), len));
         if (msg.IsEmpty())
             return;
         const std::string& cmd = msg.GetCommand();
-        if (cmd != "PRIVMSG")
+        if (cmd != "PRIVMSG" || msg.SizeParam() < 2 || msg.GetParam(0) != GetNickname())
             return;
-        OnMessage(msg.GetPrefix(), msg);
+        const std::string& prefix = msg.GetPrefix();
+        OnMessage(prefix.substr(0, prefix.find('!')), msg.GetParams(1));
     }
     catch (const std::exception& ex)
     {
@@ -86,10 +93,80 @@ void    IRCBot::Send(const void* buf, size_t len);
 
 void    IRCBot::Close()
 {
-    // ...
+    Log::Dp("IRCBot::Close", "봇을 Close 하는 요청을 무시했습니다.");
+    // do nothing
 }
 
 void    IRCBot::CheckActive()
 {
     // do nothing
+}
+
+static int toLower(int ch)
+{
+    return std::tolower(ch);
+}
+
+void    IRCBot::OnMessage(const std::string& fromNick, const std::string& commandline)
+{
+    std::istringstream iss(commandline);
+    std::string line;
+    std::vector<std::string> args;
+
+    while (std::getline(iss, line, ' '))
+        args.push_back(line);
+    if (args.empty())
+    {
+        SendTo(fromNick, true, "Not typed command... 명령이 기입되지 않았습니다. 명령을 기입해주세요.");
+        return;
+    }
+    std::string cmd = args[0];
+    std::transform(cmd.begin(), cmd.end(), cmd.begin(), toLower);
+
+    try
+    {
+        if (args[0] == "hello")
+            OnHelp(fromNick, args);
+        else if (args[0] == "join")
+            OnJoin(fromNick, args);
+        else if (args[0] == "msg")
+            OnMsg(fromNick, args);
+    }
+    catch (const bot_exception& err)
+    {
+        SendTo(fromNick, true, err.message);
+    }
+    catch (const irc_exception& iex)
+    {
+        SendTo(fromNick, true, iex.message().GetParams(0));
+    }
+}
+
+void    IRCBot::OnHelp(const std::string& fromNick, ArgsVector& args)
+{
+    (void)args;
+    SendTo(fromNick, true, "안녕하세요 " + fromNick + "! 행복한 하루 되세요 :)");
+}
+
+void    IRCBot::OnJoin(const std::string& fromNick, ArgsVector& args)
+{
+    if (args.size() < 2)
+        throw bot_exception("[SYNTAX] /join <channel>");
+    if (IsJoinedChannel(args[1]))
+        throw bot_exception("해당 채널 '" + args[1] + "'에 이미 봇이 입장하고 있습니다.");
+    _server->JoinChannel(*this, args[1]);
+    SendTo(fromNick, true, args[1] + " 채널에 입장합니다.");
+}
+
+void    IRCBot::OnMsg(const std::string& fromNick, ArgsVector& args)
+{
+    (void)fromNick;
+    if (args.size() < 3)
+        throw bot_exception("[SYNTAX] /msg <channel> <msg>");
+    IRCChannel* channel = _server->FindChannel(args[1]);
+    if (channel == NULL)
+        throw bot_exception("Not exists channel '" + args[1] + "'.");
+    if (!IsJoinedChannel(args[1]))
+        throw bot_exception("This bot is not joined that channel '" + args[1] + "'.");
+    channel->Send(IRCMessage(GetMask(), "PRIVMSG", args[1], String::Join(args.begin() + 2, args.end(), " ")));
 }

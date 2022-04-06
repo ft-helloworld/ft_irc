@@ -6,14 +6,15 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:35:55 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 16:14:46 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/06 19:42:49 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef IRCBOT_HPP
 #define IRCBOT_HPP
 
-#include <iosfwd>
+#include <string>
+#include <vector>
 #include "ircsession.hpp"
 
 class IRCMessage;
@@ -21,12 +22,28 @@ class IRCMessage;
 class IRCBot : public IRCSession
 {
 private:
+    typedef std::vector<std::string> ArgsVector;
+
+    struct bot_exception
+    {
+        const std::string message;
+
+        inline bot_exception(const std::string& msg)
+            : message(msg) {}
+    };
+
     IRCBot();
     IRCBot(const IRCBot&);
     IRCBot& operator=(const IRCBot&);
 
+    void    OnHelp(const std::string& fromNick, ArgsVector& args);
+    void    OnJoin(const std::string& fromNick, ArgsVector& args);
+    void    OnMsg(const std::string& fromNick, ArgsVector& args);
+
 protected:
-    virtual void    OnMessage(const std::string& fromNick, IRCMessage& msg) = 0;
+    virtual void    OnMessage(const std::string& fromNick, const std::string& commandline);
+    virtual void    Send(const void* buf, size_t len);
+
     size_t    SendTo(const std::string& param, bool notice, const std::string& msg);
 
 public:
@@ -35,7 +52,6 @@ public:
 
     virtual void    Close();
     virtual void    CheckActive();
-    virtual void    Send(const void* buf, size_t len);
 };
 
 #endif

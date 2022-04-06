@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:40:50 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 16:05:04 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/06 17:04:25 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ public:
     void    OnMode(IRCSession& session, IRCMessage& msg);
 	void    OnKill(IRCSession& session, IRCMessage& msg);
     void    UnregisterNickname(const std::string& nick);
+    void    JoinChannel(IRCSession& session, const std::string& chanName);
     void    LeaveChannel(IRCSession& session, const std::string& chanName, const std::string& cmd);
     bool    IsPasswordMatched(const std::string& password) const;
     void    OnTimer();
