@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserver.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:40:50 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 22:18:50 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/06 13:31:15 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ public:
     void    OnPrivMsg(IRCSession& session, IRCMessage& msg, const std::string& cmd);
     void    OnTopic(IRCSession& session, IRCMessage& msg);
     void    OnList(IRCSession& session, IRCMessage& msg);
+    void    OnMode(IRCSession& session, IRCMessage& msg);
 	void    OnKill(IRCSession& session, IRCMessage& msg);
     void    UnregisterNickname(const std::string& nick);
     void    LeaveChannel(IRCSession& session, const std::string& chanName, const std::string& cmd);

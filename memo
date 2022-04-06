@@ -37,7 +37,21 @@
         - 채널의 주제를 설정하는 명령
       - LIST 명령
         - 공개 채널의 목록을 띄우는 명령 ✅
-        - mode도 띄워야함!!! 구현하기!
+        - mode도 띄워야함!!! 구현하기! (구현할 mode o, p, s, n ?정도??)
+          - mode 종류:
+            **- o - give/take channel operator privileges; (0)
+            **- p - private channel flag;(1)
+            **- s - secret channel flag;(2)
+            - i - invite-only channel flag;(3)
+            - t - topic settable by channel operator only flag;(4)
+            **- n - no messages to channel from clients on the outside;(5)
+            - m - moderated channel;
+            - l - set the user limit to channel;
+            - b - set a ban mask to keep users out;
+            - v - give/take the ability to speak on a moderated channel;
+            - k - set a channel key (password).
+          - 기본 상태 : [+]
+          - topic설정시 : -> 오징어서버는 다를 수 있으니 주의!!
     - 서버 정보 관련
       - INFO 명령
         - 서버 정보를 출력하는 명령 [RPL_INFO, RPL_ENDOFINFO]

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserver.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/05 22:19:08 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/06 15:17:47 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -373,14 +373,15 @@ void    IRCServer::OnTopic(IRCSession& session, IRCMessage& msg)
             else
             {
                 session.SendMessage(IRCNumericMessage(RPL_TOPIC, chanName, chan->GetChannelTopic()));
-                session.SendMessage(IRCNumericMessage(RPL_TOPICWHOTIME, chanName, session.GetMask(), String::ItoString(chan->GetSetTopicTime())));
+                session.SendMessage(IRCNumericMessage(RPL_TOPICWHOTIME, chanName, chan->GetSetTopicMask(), String::ItoString(chan->GetSetTopicTime())));
             }
         }
         else
         {
             const std::string& chanTopic = msg.GetParams(1);
             const std::time_t current = std::time(NULL);
-            chan->SetChannelTopic(chanTopic, current);
+            const std::string& Mask = session.GetMask();
+            chan->SetChannelTopic(chanTopic, current, Mask);
             chan->Send(IRCMessage(session.GetMask(), "TOPIC", chanName, chan->GetChannelTopic()));
         }
     }
@@ -414,6 +415,64 @@ void    IRCServer::OnList(IRCSession& session, IRCMessage& msg)
         }
     }
     session.SendMessage(IRCNumericMessage(RPL_LISTEND, "End of channel list."));
+}
+
+void    IRCServer::OnMode(IRCSession& session, IRCMessage& msg)
+{
+    if (msg.SizeParam() < 1 || msg.GetParam(0).empty())
+		throw irc_exception(ERR_NEEDMOREPARAMS, "MODE", "Not enough parameters");
+
+    const std::string& chanName = msg.GetParam(0);
+    ChannelMap::iterator chanIt = _channels.find(chanName);
+
+    if (chanIt == _channels.end())
+        throw irc_exception(ERR_NOSUCHNICK, "No such nick/channel");
+    IRCChannel* chan = chanIt->second.Load();
+    // :bassoon.irc.ozinger.org 324 ncnncncncn #42ssss +ns✅
+    // :bassoon.irc.ozinger.org 329 ncnncncncn #42ssss 1649221129✅
+    // mode #42ssss -sn
+    // :ncnncncncn!user@121.135.181.44 MODE #42ssss -sn
+    // mode #42ssss
+    // :bassoon.irc.ozinger.org 324 ncnncncncn #42ssss +
+    // :bassoon.irc.ozinger.org 329 ncnncncncn #42ssss 1649221129
+    // 플래그를 기준으로 string을 만든다
+    if (msg.SizeParam() < 2)
+    {
+        std::string c_mode = "+";
+        chan->MakeChannelModeString(c_mode);
+        session.SendMessage(IRCNumericMessage(RPL_CHANNELMODEIS, chanName, c_mode));
+        session.SendMessage(IRCNumericMessage(RPL_CREATIONTIME, chanName, String::ItoString(chan->GetCreatedTime())));
+    }
+    // else
+    // {
+    //     const std::string& wantFlag = msg.GetParam(1);
+    //     // 함수 ('+/-' 따라서 모드 플래그 켜고 끄기, )
+    //     if (chan->GetParticipantFlag(session) & IRCChannel::MODE_OP)
+            
+    //     if (*wantFlag.begin() == '+')
+    //     {
+    //         // 모드 추가
+    //     }
+    //     else if (*wantFlag.begin() == '-')
+    //     {
+    //         // 모드 제거
+    //     }
+    // }
+    // 1. 플래그를 바꾸기 위한 채널 관리자 권한이 있는지 확인한다.
+    // 2. 모드에 맞는 알파벳인지 확인한다.
+    // 3. 둘 다 오류일 시에는 둘 다 에러메세지 출력해야함.
+    // mode #4242 -p
+    // mode #4242
+    // :scarlet.irc.ozinger.org 324 ndkjfdk #4242 +ns
+    // :scarlet.irc.ozinger.org 329 ndkjfdk #4242 1649222388
+    // mode #4242 +abcd
+    // :bassoon.irc.ozinger.org 472 ncik d :is unknown mode char to me
+    // :ncik!user@121.135.181.44 MODE #4242 +c
+    // mode #4242
+    // :bassoon.irc.ozinger.org 324 ncik #4242 +cns
+    // :bassoon.irc.ozinger.org 329 ncik #4242 1649222687
+    // mode #4242 -s eeeee
+    // :ncik!user@121.135.181.44 MODE #4242 -s
 }
 
 //지금은 아무나 들어올 수 있음. session에서 운영자 일때만 사용 가능하도록 바꿔야함.

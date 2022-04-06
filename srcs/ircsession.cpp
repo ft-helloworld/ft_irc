@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircsession.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/05 22:19:14 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/06 13:30:38 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void IRCSession::Process(const std::string& line)
                 _server->OnTopic(*this, msg);
             else if (cmd == "LIST")
                 _server->OnList(*this, msg);
+            else if (cmd == "MODE")
+                _server->OnMode(*this, msg);
 			else if (cmd == "KILL")
             	_server->OnKill(*this, msg);
             else // :bassoon.irc.ozinger.org 421 smun WRONGCMD :Unknown command
