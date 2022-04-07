@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 17:44:58 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 17:55:12 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,6 @@ void    IRCSession::ChangeFlag(ModeResult& ret, int sign, int c)
     int modeFlag = 0;
     if (c == 'o')
         modeFlag = FLAG_OP;
-    else if (c == 'i')
-        modeFlag = FLAG_INVISIBLE;
     if (adding)
     {
         if (HasFlag(modeFlag))

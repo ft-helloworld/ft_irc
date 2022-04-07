@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/07 17:49:29 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 17:55:02 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -527,7 +527,7 @@ void    IRCServer::OnUserMode(IRCSession& session, IRCMessage& msg)
     {
         if (*it == '+' || *it == '-')
             sign = *it;
-        else if (*it != 'o' && *it != 'i')
+        else if (*it != 'o')
             session.SendMessage(IRCNumericMessage(ERR_UNKNOWNMODE, std::string(1, *it), "is unknown mode char to me"));
         else
         {

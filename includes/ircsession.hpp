@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:44:02 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 17:39:56 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 17:55:08 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ protected:
     int         _registerFlag;
 
 public:
-    enum { FLAG_NICKNAME = 1 << 0, FLAG_USERNAME = 1 << 1, FLAG_OP = 1 << 2, FLAG_INVISIBLE = 1 << 3 };
+    enum { FLAG_NICKNAME = 1 << 0, FLAG_USERNAME = 1 << 1, FLAG_OP = 1 << 2 };
 
     IRCSession(IRCServer* server, Channel* channel, int socketfd, int socketId, const std::string& addr);
     virtual ~IRCSession();
