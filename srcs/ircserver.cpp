@@ -6,7 +6,7 @@
 /*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/06 22:02:10 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/07 14:53:03 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -401,16 +401,17 @@ void    IRCServer::OnList(IRCSession& session, IRCMessage& msg)
 {
     ChannelMap::iterator chanIt = _channels.begin();
     IRCChannel* chan;
+    std::string mode = "+";
 
     session.SendMessage(IRCNumericMessage(RPL_LISTSTART, "Channel", "Users Name"));
     if (msg.SizeParam() < 1 || msg.GetParam(0) == "*")
     {
         for (;chanIt != _channels.end(); ++chanIt)
         {
-            // :scarlet.irc.ozinger.org 322 nick #KPDS 1 :[+];
-            // num nick 채널명 접속중인 사람 :[+ns] topic;
+            // :scarlet.irc.ozinger.org 322 nick #KPDS 1 :[+] topic;
             chan = chanIt->second.Load();
-            session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), String::ItoString(chan->GetParticipantsNum()), chan->GetChannelTopic()));
+            if (chan->IsListShownTo(session))
+                session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), String::ItoString(chan->GetParticipants().size()), chan->GetChannelTopic()));
         }
     }
     else
@@ -419,8 +420,10 @@ void    IRCServer::OnList(IRCSession& session, IRCMessage& msg)
         if (_channels.find(chanName) != _channels.end())
         {
             chan = chanIt->second.Load();
-            session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), String::ItoString(chan->GetParticipantsNum()), chan->GetChannelTopic()));
+            if (chan->IsListShownTo(session))
+                session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), String::ItoString(chan->GetParticipants().size()), chan->GetChannelTopic()));
         }
+        
     }
     session.SendMessage(IRCNumericMessage(RPL_LISTEND, "End of channel list."));
 }

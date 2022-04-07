@@ -6,7 +6,7 @@
 /*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 12:37:36 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 21:56:17 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/07 14:51:39 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ public:
     void    MakeChannelModeString(std::string& ret);
     std::string&    RetrunChannelModeString(IRCSession& session, std::string& tmp, std::string& res);
     void    SetChannelMode(std::vector<ModeChange>& ret, int sign, char c);
+    bool    IsListShownTo(IRCSession& session) const;
 
     // 여기는 안해도 될 지도..
     void    SendTopic(IRCSession& session);
@@ -111,8 +112,9 @@ public:
     inline const time_t& GetSetTopicTime() const { return _set_topic; }
     inline const std::string& GetSetTopicMask() const { return _mask_topic; }
     inline const time_t& GetCreatedTime() const { return _created; }
-    inline size_t GetParticipantsNum() { return _participants.size(); }
-    inline int GetParticipantFlag(IRCSession& session) {return _participants[&session]; }
+    inline ParticipantMap& GetParticipants() { return _participants; }
+    inline int GetChannelFlag() const { return _flags; }
+    inline int GetParticipantFlag(IRCSession& session) { return _participants[&session]; }
     inline bool IsEmpty() const { return _participants.size() == 0; }
 };
 
