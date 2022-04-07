@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 16:31:37 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/07 16:35:47 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void IRCSession::Process(const std::string& line)
             	_server->OnKill(*this, msg);
 			else if (cmd == "MODE")
             	_server->OnMode(*this, msg);
+            else if (cmd == "MOTD")
+                _server->OnMOTD(*this);
             else // :bassoon.irc.ozinger.org 421 smun WRONGCMD :Unknown command
                 throw irc_exception(ERR_UNKNOWNCOMMAND, cmd, "Unknown command");
         }
@@ -186,20 +188,6 @@ void    IRCSession::Close(const std::string& reason)
     Close();
 }
 
-void    IRCSession::SendMOTD()
-{
-    SendMessage(IRCNumericMessage(RPL_WELCOME, "Welcome to the [Hello, World!] IRC Network " + GetMask()));
-    SendMessage(IRCNumericMessage(RPL_YOURHOST, "Your host is "HOSTNAME", running version ft_irc"));
-    SendMessage(IRCNumericMessage(RPL_CREATED, "This server was created on 42Seoul"));
-    SendMessage(IRCNumericMessage(RPL_MYINFO, HOSTNAME, "ft_irc(smun,seungyel,yejsong)-C++98-macOS", "o", ""));
-    SendMessage(IRCNumericMessage(RPL_ISUPPORT, "PREFIX=(ov)@+", "CHANTYPES=#&", "CASEMAPPING=strict-rfc1459", "are supported by this server"));
-    SendMessage(IRCNumericMessage(RPL_MOTDSTART, "- "HOSTNAME" Message of day - "));
-    SendMessage(IRCNumericMessage(RPL_MOTD, "[Hello, World!] IRC 서버에 오신 것을 환영합니다."));
-    SendMessage(IRCNumericMessage(RPL_MOTD, "서버 호스트 이름은 "HOSTNAME" 입니다."));
-    SendMessage(IRCNumericMessage(RPL_MOTD, "현재 서버는 [smun, seungyel, yejsong]의 ft_irc 에서 실행되고 있습니다."));
-    SendMessage(IRCNumericMessage(RPL_ENDOFMOTD, "End of /MOTD command"));
-}
-
 void    IRCSession::RegisterStep(int flag)
 {
     if (HasRegisterFlag(flag))
@@ -214,7 +202,12 @@ void    IRCSession::RegisterStep(int flag)
             throw std::runtime_error("Pas sword mismatched.");
 
         Log::Vp("IRCSession::RegisterStep", "패스워드가 일치합니다. 세션이 인증되었습니다. 환영 메시지를 전송합니다.");
-        SendMOTD();
+        SendMessage(IRCNumericMessage(RPL_WELCOME, "Welcome to the [Hello, World!] IRC Network " + GetMask()));
+        SendMessage(IRCNumericMessage(RPL_YOURHOST, "Your host is "HOSTNAME", running version ft_irc"));
+        SendMessage(IRCNumericMessage(RPL_CREATED, "This server was created on 42Seoul"));
+        SendMessage(IRCNumericMessage(RPL_MYINFO, HOSTNAME, "ft_irc(smun,seungyel,yejsong)-C++98-macOS", "o", ""));
+        SendMessage(IRCNumericMessage(RPL_ISUPPORT, "PREFIX=(ov)@+", "CHANTYPES=#&", "CASEMAPPING=strict-rfc1459", "are supported by this server"));
+        _server->OnMOTD(*this);
 	}
 }
 

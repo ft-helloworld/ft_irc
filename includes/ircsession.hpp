@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:44:02 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 16:31:56 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/07 16:35:34 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ public:
     void    SendMessage(const IRCMessage& msg);
 
     void    MessageToNeighbor(const IRCMessage& msg, IRCSession* except);
-    void    SendMOTD();
 
     void                SetNickname(const std::string& nickname);
     const std::string&  GetNickname() const;

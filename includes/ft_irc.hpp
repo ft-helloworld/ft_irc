@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 17:31:23 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 14:26:56 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 15:40:49 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 #define HOSTNAME        "ft-helloworld"
 #define ERROR           "ERROR"
 #define MAX_CHANNEL     30
-#define PINGTIMEDOUT    10
+#define PINGTIMEDOUT    300
 #define BOTNAME         "$$"
 
 //TODO
