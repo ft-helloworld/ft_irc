@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 16:00:52 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 17:08:05 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 21:44:40 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,6 @@ void    IRCChannel::Join(IRCSession& session)
 
 void    IRCChannel::Part(IRCSession& session, const std::string& cmd)
 {
-    // :smun!smun@0::1 PART :#42
-    // :smun!smun@0::1 JOIN :#42
-    // :smun!smun@0::1 QUIT :Quit:
     Log::Vp("IRCChannel::Part", "%s 유저가 %s 채널에서 퇴장합니다.", session.GetMask().c_str(), GetChannelName().c_str());
     if (cmd == "PART")
         Send(IRCMessage(session.GetMask(), cmd, GetChannelName()));
@@ -147,8 +144,6 @@ void     IRCChannel::MakeChannelModeString(std::string& ret, bool val)
         ret = "[+";
     else
         ret = "+";
-    if (_flags & MODE_OP)
-        ret += "o";
     if (_flags & MODE_PRIV)
         ret += "p";
     if (_flags & MODE_SECRET)
@@ -176,50 +171,43 @@ std::string&    IRCChannel::RetrunChannelModeString(IRCSession& session, std::st
     return (res);
 }
 
-void        IRCChannel::SetChannelMode(IRCServer* server, IRCSession& req, ModeResult& result, int sign, char c, const IRCMessage& msg, size_t& i)
+int        IRCChannel::SetChannelMode(IRCServer* server, const ModeChange& modeChange)
 {
-    const bool adding = sign == '+';
+    const bool adding = modeChange.sign == '+';
 
     int modeFlag = 0;
-    if (c == 'o')
+    if (modeChange.ch == 'o')
         modeFlag = MODE_OP;
-    else if (c == 'p')
+    else if (modeChange.ch == 'p')
         modeFlag = MODE_PRIV;
-    else if (c == 's')
+    else if (modeChange.ch == 's')
         modeFlag = MODE_SECRET;
-    else if (c == 'n')
+    else if (modeChange.ch == 'n')
         modeFlag = MODE_OUTSIDE;
-    if (c == 'o') // 매개변수가 있어야 하는 플래그
+    if (modeChange.ch == 'o') // 매개변수가 있어야 하는 플래그
     {
-        if (msg.SizeParam() < i)
-            return;
-        const std::string& nick = msg.GetParam(i++);
-        IRCSession* session = server->FindByNick(nick);
+        IRCSession* session = server->FindByNick(modeChange.target);
         if (session == NULL)
-        {
-            req.SendMessage(IRCNumericMessage(ERR_NOSUCHNICK, nick, "No such nick/channel"));
-            return;
-        }
+            return ModeChange::CHANGEMODE_NOSUCHNICK;
         if (!ChangeParticipantFlag(*session, adding, modeFlag))
-            return;
-        result.arguments.push_back(nick);
+            return ModeChange::CHANGEMODE_NOTAFFECTED;
     }
     else
     {
         if (adding)
         {
             if (HasFlag(modeFlag))
-                return ;
+                return ModeChange::CHANGEMODE_NOTAFFECTED;
             _flags |= modeFlag;
         }
         else
         {
             if ((_flags & modeFlag) == 0)
-                return ;
+                return ModeChange::CHANGEMODE_NOTAFFECTED;
             _flags &= ~modeFlag;
         }
     }
-    result.changedFlags.push_back(ModeChange(sign, c));
+    return ModeChange::CHANGEMODE_SUCCESS;
 }
 
 bool    IRCChannel::IsListShownTo(const IRCSession& session) const

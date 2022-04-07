@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:44:02 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 17:55:08 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 21:44:07 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define IRCSESSION_HPP
 
 #include "irccomparer.hpp"
-#include "moderesult.hpp"
+#include "modelist.hpp"
 #include <string>
 #include <set>
 #include <ctime>
@@ -73,7 +73,7 @@ public:
     void                SetPassword(const std::string& password);
     const std::string&  GetPassword() const;
     inline bool         HasFlag(int flag) const { return (_flag & flag) == flag; }
-    void                ChangeFlag(ModeResult& ret, int sign, int c);
+    int                 SetFlag(const ModeChange& modeChange);
     const std::string   GetMask() const;
     const std::string   GetEmail() const;
     const std::string&  GetCloseReason() const;

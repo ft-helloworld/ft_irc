@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 12:37:36 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 17:12:56 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 21:43:10 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <vector>
 #include <map>
 #include <set>
-#include "moderesult.hpp"
+#include "modelist.hpp"
 
 class IRCSession;
 class IRCMessage;
@@ -42,7 +42,7 @@ private:
      *
      */
     ParticipantMap  _participants;
-    int             _flags; //flag 말고 mode가 더 적절하지 않을지??
+    int             _flags;
 
     IRCChannel();
     IRCChannel(const IRCChannel&);
@@ -93,7 +93,7 @@ public:
     void    SetChannelTopic(const std::string& topic, const time_t time, const std::string& mask);
     void    MakeChannelModeString(std::string& ret, bool val);
     std::string&    RetrunChannelModeString(IRCSession& session, std::string& tmp, std::string& res);
-    void    SetChannelMode(IRCServer* server, IRCSession& req, ModeResult& result, int sign, char c, const IRCMessage& msg, size_t& i);
+    int     SetChannelMode(IRCServer* server, const ModeChange& modeChange);
     bool    IsListShownTo(const IRCSession& session) const;
     bool    IsJoined(const IRCSession& session) const;
     bool    ChangeParticipantFlag(IRCSession& session, bool adding, ModeFlag flag);
@@ -110,7 +110,7 @@ public:
     inline const time_t& GetSetTopicTime() const { return _set_topic; }
     inline const std::string& GetSetTopicMask() const { return _mask_topic; }
     inline const time_t& GetCreatedTime() const { return _created; }
-    inline ParticipantMap& GetParticipants() { return _participants; }
+    inline ParticipantMap::size_type GetParticipantNum() const { return _participants.size(); }
     inline int GetChannelFlag() const { return _flags; }
     inline bool HasParticipantFlag(IRCSession& session, ModeFlag flag) { return (_participants[&session] & flag) == flag; }
     inline bool IsEmpty() const { return _participants.size() == 0; }

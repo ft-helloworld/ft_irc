@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:40:50 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 17:06:10 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 21:41:38 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include "irccomparer.hpp"
 #include "shared_ptr.hpp"
 #include "timerhandler.hpp"
-#include "moderesult.hpp"
+#include "modelist.hpp"
 
 class IRCSession;
 class IRCMessage;
@@ -60,8 +60,6 @@ public:
     void    OnTopic(IRCSession& session, IRCMessage& msg);
     void    OnList(IRCSession& session, IRCMessage& msg);
     void    OnMode(IRCSession& session, IRCMessage& msg);
-    void    OnChannelMode(IRCSession& session, IRCMessage& msg);
-    void    OnUserMode(IRCSession& session, IRCMessage& msg);
 	void    OnKill(IRCSession& session, IRCMessage& msg);
     void    OnMOTD(IRCSession& session);
     void    UnregisterNickname(const std::string& nick);

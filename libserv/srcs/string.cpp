@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:40:30 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 19:10:54 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 20:52:28 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,6 @@ const std::string String::ItoCode(int number)
 {
 	std::ostringstream ss;
 	ss << std::setw(3) << std::setfill('0') << number;
-	return ss.str();
-}
-
-const std::string String::ItoString(int number)
-{
-	std::ostringstream ss;
-	ss << number;
 	return ss.str();
 }
 

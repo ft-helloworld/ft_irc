@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:38:55 by smun              #+#    #+#             */
-/*   Updated: 2022/04/04 16:56:52 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 20:45:02 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define LOG_HPP
 
 #include <iosfwd>
-#include <string> // for convenience
+#include <string>
 #include <cstdarg>
 
 #ifndef LOG_LEVEL

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 17:31:23 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 15:40:49 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 20:44:35 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,5 @@
 #define MAX_CHANNEL     30
 #define PINGTIMEDOUT    300
 #define BOTNAME         "$$"
-
-//TODO
-// IRC서버, IRC채널(방), 개인메시지, 관리자 등등
 
 #endif

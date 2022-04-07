@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:37:44 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 18:58:05 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 20:54:22 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <type_traits>
 
 class String
 {
@@ -32,7 +33,15 @@ public:
     static void SplitArguments(StringVector& args, const std::string& line);
     static int  Stoi(const std::string& str);
     static const std::string ItoCode(int number);
-    static const std::string ItoString(int number);
+
+    template<typename T>
+    static const std::string ItoString(T number, typename std::enable_if<std::is_integral<T>::value>::type* = NULL)
+    {
+        std::ostringstream ss;
+        ss << number;
+        return ss.str();
+    }
+
     static bool IsLetter(char ch);
     static bool IsDigit(char ch);
     static bool IsSpecial(char ch);

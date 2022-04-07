@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/07 17:55:02 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 22:13:36 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,16 +259,8 @@ void    IRCServer::OnNames(IRCSession& session, IRCMessage& msg)
     // 1. 조건에 맞으면 채널의 이름들 전송.
     // 따로 오류 응답은 없음.
 
-    if (msg.SizeParam() == 0/* || msg.GetParam(0) == "*"*/)
+    if (msg.SizeParam() == 0)
     {
-        /*ChannelMap::const_iterator it;
-        for (it = _channels.begin(); it != _channels.end(); ++it)
-        {
-            const IRCChannel* chan = it->second.Load();
-            if (chan->HasFlag(IRCChannel::MODE_PRIV) || chan->HasFlag(IRCChannel::MODE_SECRET))
-                continue;
-            chan->SendNames(session, false);
-        }*/
         session.SendMessage(IRCNumericMessage(RPL_ENDOFNAMES, "*", "End of /NAMES list"));
     }
     else
@@ -335,7 +327,7 @@ void    IRCServer::OnPrivMsg(IRCSession& session, IRCMessage& msg, const std::st
                 continue;
             }
             const IRCChannel* chan = it->second.Load();
-            if (chan->HasFlag(IRCChannel::MODE_OUTSIDE) && !chan->IsJoined(session))
+            if (chan->HasFlag(IRCChannel::MODE_OUTSIDE) && !chan->IsJoined(session)) // +n 플래그 채널
             {
                 session.SendMessage(IRCNumericMessage(ERR_CANNOTSENDTOCHAN, recipient, "Cannot send to channel"));
                 continue;
@@ -422,11 +414,10 @@ void    IRCServer::OnList(IRCSession& session, IRCMessage& msg)
     {
         for (;chanIt != _channels.end(); ++chanIt)
         {
-            // :scarlet.irc.ozinger.org 322 nick #KPDS 1 :[+] topic;
             chan = chanIt->second.Load();
             chan->MakeChannelModeString(mode, true);
             if (chan->IsListShownTo(session))
-                session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), String::ItoString(chan->GetParticipants().size()), mode, chan->GetChannelTopic()));
+                session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), String::ItoString(chan->GetParticipantNum()), mode, chan->GetChannelTopic()));
         }
     }
     else
@@ -437,9 +428,8 @@ void    IRCServer::OnList(IRCSession& session, IRCMessage& msg)
             chan = chanIt->second.Load();
             chan->MakeChannelModeString(mode, true);
             if (chan->IsListShownTo(session))
-                session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), String::ItoString(chan->GetParticipants().size()), mode, chan->GetChannelTopic()));
+                session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), String::ItoString(chan->GetParticipantNum()), mode, chan->GetChannelTopic()));
         }
-
     }
     session.SendMessage(IRCNumericMessage(RPL_LISTEND, "End of channel list."));
 }
@@ -448,114 +438,75 @@ void    IRCServer::OnMode(IRCSession& session, IRCMessage& msg)
 {
     if (msg.SizeParam() < 1 || msg.GetParam(0).empty())
         throw irc_exception(ERR_NEEDMOREPARAMS, "MODE", "Not enough parameters");
-    if (IRCString::IsChannelPrefix(msg.GetParam(0).front()))
-        OnChannelMode(session, msg);
-    else
-        OnUserMode(session, msg);
-}
 
-void    IRCServer::OnChannelMode(IRCSession& session, IRCMessage& msg)
-{
-    const std::string& chanName = msg.GetParam(0);
-    ChannelMap::iterator chanIt = _channels.find(chanName);
-
-    if (chanIt == _channels.end())
-        throw irc_exception(ERR_NOSUCHNICK, "No such nick/channel");
-    IRCChannel* chan = chanIt->second.Load();
-    if (msg.SizeParam() < 2)
+    const std::string& targetName = msg.GetParam(0);
+    bool isChannel = IRCString::IsChannelPrefix(targetName.front());
+    IRCChannel* chan;
+    IRCSession* target;
+    if (isChannel)
     {
-        std::string c_mode;
-        chan->MakeChannelModeString(c_mode, false);
-        session.SendMessage(IRCNumericMessage(RPL_CHANNELMODEIS, chanName, c_mode));
-        session.SendMessage(IRCNumericMessage(RPL_CREATIONTIME, chanName, String::ItoString(chan->GetCreatedTime())));
-    }
-    else
-    {
+        ChannelMap::iterator chanIt = _channels.find(targetName);
+        if (chanIt == _channels.end())
+            throw irc_exception(ERR_NOSUCHNICK, targetName, "No such nick/channel");
+        chan = chanIt->second.Load();
+        if (msg.SizeParam() < 2)
+        {
+            std::string c_mode;
+            chan->MakeChannelModeString(c_mode, false);
+            session.SendMessage(IRCNumericMessage(RPL_CHANNELMODEIS, targetName, c_mode));
+            session.SendMessage(IRCNumericMessage(RPL_CREATIONTIME, targetName, String::ItoString(chan->GetCreatedTime())));
+            return;
+        }
         if (!chan->HasParticipantFlag(session, IRCChannel::MODE_OP))
-            throw irc_exception(ERR_CHANOPRIVSNEEDED, chanName, "You are not a channel operator");
-        const std::string& wantFlag = msg.GetParam(1);
+            throw irc_exception(ERR_CHANOPRIVSNEEDED, targetName, "You are not a channel operator");
+    }
+    else
+    {
+        target = FindByNick(msg.GetParam(0));
+        if (target == NULL)
+            throw irc_exception(ERR_NOSUCHNICK, msg.GetParam(0), "No such nick/channel");
+        if (!session.HasFlag(IRCSession::FLAG_OP) && &session != target)
+            throw irc_exception(ERR_NOPRIVILEGES, "Permission Denied. You can only change flag yourself.");
+    }
 
-        ModeResult ret;
-        int sign = '+';
-        size_t i = 2;
-        for (std::string::const_iterator it = wantFlag.begin(); it != wantFlag.end(); ++it)
-        {
-            if (*it == '+' || *it == '-')
-                sign = *it;
-            else if (*it != 'o' && *it != 'p' && *it != 's' && *it != 'n')
-                session.SendMessage(IRCNumericMessage(ERR_UNKNOWNMODE, std::string(1, *it), "is unknown mode char to me"));
-            else
-                chan->SetChannelMode(this, session, ret, sign, *it, msg, i);
-        }
+    // MODE #channel +o+o target target2
+    // MODE target +o
 
-		std::string finale;
-        int neg = 0;
-        for (std::vector<ModeChange>::const_iterator it = ret.changedFlags.begin(); it != ret.changedFlags.end(); ++it)
+    ModeList modeList = ModeList::Parse(msg.GetParam(1), (isChannel ? "psn" : "o"), (isChannel ? "o" : ""), msg, 2);
+    for (ModeList::ModeChangeVector::const_iterator it = modeList.requestedList.begin(); it != modeList.requestedList.end(); ++it)
+    {
+        if (it->err == ModeChange::ERROR_UNKNOWNFLAG)
+            session.SendMessage(IRCNumericMessage(ERR_UNKNOWNMODE, "'" + std::string(1, it->ch) +"' is unknown mode char to me"));
+        if (it->err != ModeChange::ERROR_SUCCESS)
+            continue;
+        int result = (isChannel ? chan->SetChannelMode(this, *it) : target->SetFlag(*it));
+        switch (result)
         {
-            if (neg != it->sign)
-                finale += static_cast<char>(neg = it->sign);
-            finale += static_cast<char>(it->ch);
+            case ModeChange::CHANGEMODE_NOSUCHNICK:
+                session.SendMessage(IRCNumericMessage(ERR_NOSUCHNICK, it->target, "No such nick/channel"));
+                break;
+            case ModeChange::CHANGEMODE_NOTAFFECTED:
+                break;
+            case ModeChange::CHANGEMODE_SUCCESS:
+                modeList.changedList.push_back(*it);
+                break;
         }
-        IRCMessage msg(session.GetMask(), "MODE", chan->GetChannelName(), finale);
-        for (std::vector<const std::string>::const_iterator it = ret.arguments.begin(); it != ret.arguments.end(); ++it)
-            msg.AddParam(*it);
-        if (!ret.changedFlags.empty())
+    }
+    if (!modeList.changedList.empty())
+    {
+        IRCMessage msg(session.GetMask(), "MODE", targetName, modeList.ToString());
+        for (ModeList::ModeChangeVector::const_iterator it = modeList.changedList.begin(); it != modeList.changedList.end(); ++it)
+            if (!it->target.empty())
+                msg.AddParam(it->target);
+        if (isChannel)
             chan->Send(msg);
-    }
-}
-
-void    IRCServer::OnUserMode(IRCSession& session, IRCMessage& msg)
-{
-    // MODE 뒤에 user가 아닌 경우.
-	if (msg.SizeParam() < 2)
-	{
-		throw irc_exception(ERR_NEEDMOREPARAMS, ":Not enough parameters.");
-		throw irc_exception(RPL_TEXT, "SYNTAX MODE <target> <modes> {<mode-parameters>}");
-	}
-
-	IRCSession* target = FindByNick(msg.GetParam(0));
-	if (target == NULL)
-		throw irc_exception(ERR_NOSUCHNICK, "No such nick/channel");
-
-    if (!session.HasFlag(IRCSession::FLAG_OP) && &session != target)
-		throw irc_exception(ERR_NOPRIVILEGES, "Permission Denied. You can only change flag yourself.");
-
-    const std::string& wantFlag = msg.GetParam(1);
-    int sign = '+';
-    ModeResult ret;
-    for (std::string::const_iterator it = wantFlag.begin(); it != wantFlag.end(); ++it)
-    {
-        if (*it == '+' || *it == '-')
-            sign = *it;
-        else if (*it != 'o')
-            session.SendMessage(IRCNumericMessage(ERR_UNKNOWNMODE, std::string(1, *it), "is unknown mode char to me"));
         else
-        {
-            if (*it == 'o' && !session.HasFlag(IRCSession::FLAG_OP))
-            {
-                session.SendMessage(IRCNumericMessage(ERR_NOPRIVILEGES, "Permission Denied - Only operators may set user mode o"));
-                continue;
-            }
-            target->ChangeFlag(ret, sign, *it);
-        }
-    }
-    std::string finale;
-    int neg = 0;
-    for (std::vector<ModeChange>::const_iterator it = ret.changedFlags.begin(); it != ret.changedFlags.end(); ++it)
-    {
-        if (neg != it->sign)
-            finale += static_cast<char>(neg = it->sign);
-        finale += static_cast<char>(it->ch);
-    }
-    if (!ret.changedFlags.empty())
-    {
-        session.SendMessage(IRCMessage(session.GetMask(), "MODE", target->GetNickname(), finale));
-        if (&session != target)
-            target->SendMessage(IRCMessage(session.GetMask(), "MODE", target->GetNickname(), finale));
+            session.SendMessage(msg);
+        if (!isChannel && &session != target)
+            target->SendMessage(msg);
     }
 }
 
-//지금은 아무나 들어올 수 있음. session에서 운영자 일때만 사용 가능하도록 바꿔야함.
 void    IRCServer::OnKill(IRCSession& session, IRCMessage& msg)
 {
     if (!session.HasFlag(IRCSession::FLAG_OP))

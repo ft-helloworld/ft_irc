@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 19:04:10 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 21:44:02 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void IRCSession::Process(const std::string& line)
             	_server->OnMode(*this, msg);
             else if (cmd == "MOTD")
                 _server->OnMOTD(*this);
-            else // :bassoon.irc.ozinger.org 421 smun WRONGCMD :Unknown command
+            else
                 throw irc_exception(ERR_UNKNOWNCOMMAND, cmd, "Unknown command");
         }
     }
@@ -113,27 +113,28 @@ void	IRCSession::SetNickname(const std::string& nickname) { _nickname = nickname
 void	IRCSession::SetUsername(const std::string& username) { _username = username; }
 void	IRCSession::SetPassword(const std::string& password) { _password = password; }
 
-void    IRCSession::ChangeFlag(ModeResult& ret, int sign, int c)
+int     IRCSession::SetFlag(const ModeChange& modeChange)
 {
-    const bool adding = sign == '+';
+    const bool adding = modeChange.sign == '+';
 
     int modeFlag = 0;
-    if (c == 'o')
+    if (modeChange.ch == 'o')
         modeFlag = FLAG_OP;
     if (adding)
     {
         if (HasFlag(modeFlag))
-            return;
+            return ModeChange::CHANGEMODE_NOTAFFECTED;
         _flag |= modeFlag;
     }
     else
     {
         if (!HasFlag(modeFlag))
-            return;
+            return ModeChange::CHANGEMODE_NOTAFFECTED;
         _flag &= ~modeFlag;
     }
-    ret.changedFlags.push_back(ModeChange(sign, c));
+    return ModeChange::CHANGEMODE_SUCCESS;
 }
+
 const std::string&  IRCSession::GetNickname() const { return _nickname; }
 const std::string&  IRCSession::GetUsername() const { return _username; }
 const std::string&  IRCSession::GetPassword() const { return _password; }
@@ -193,7 +194,7 @@ void    IRCSession::Close()
         {
             _server->LeaveChannel(*this, *it, "QUIT");
         }
-        catch (const irc_exception&) {} // ignore
+        catch (const irc_exception&) {}
     }
 
     // 실제 세션 종료 처리
