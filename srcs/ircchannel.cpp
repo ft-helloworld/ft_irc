@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 16:00:52 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 15:04:27 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 15:16:32 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,9 +192,14 @@ void        IRCChannel::SetChannelMode(std::vector<ModeChange>& ret, int sign, c
     ret.push_back(ModeChange(sign, c));
 }
 
-bool IRCChannel::IsListShownTo(const IRCSession& session) const
+bool    IRCChannel::IsListShownTo(const IRCSession& session) const
 {
     if(_flags & MODE_SECRET)
         return IsJoined(session);
     return true;
+}
+
+bool    IRCChannel::IsJoined(const IRCSession& session) const
+{
+    return session.IsJoinedChannel(GetChannelName());
 }
