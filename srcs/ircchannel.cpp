@@ -6,7 +6,7 @@
 /*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 16:00:52 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 21:51:36 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/07 14:52:21 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,17 @@ void        IRCChannel::SetChannelMode(std::vector<ModeChange>& ret, int sign, c
         if ((_flags & modeFlag) == 0)
             return ;
         _flags &= ~modeFlag;
-    
     }
     ret.push_back(ModeChange(sign, c));   
+}
+
+bool IRCChannel::IsListShownTo(IRCSession& session) const
+{
+    if(_flags & MODE_SECRET)
+    {
+        if (_participants.find(&session) != _participants.end())
+            return true;
+        return false;
+    }
+    return true;
 }

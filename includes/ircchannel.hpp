@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 12:37:36 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 15:00:04 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 15:03:35 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ public:
     void    MakeChannelModeString(std::string& ret);
     std::string&    RetrunChannelModeString(IRCSession& session, std::string& tmp, std::string& res);
     void    SetChannelMode(std::vector<ModeChange>& ret, int sign, char c);
+    bool    IsListShownTo(IRCSession& session) const;
 
     // 여기는 안해도 될 지도..
     void    SendTopic(IRCSession& session);
@@ -111,8 +112,9 @@ public:
     inline const time_t& GetSetTopicTime() const { return _set_topic; }
     inline const std::string& GetSetTopicMask() const { return _mask_topic; }
     inline const time_t& GetCreatedTime() const { return _created; }
-    inline size_t GetParticipantsNum() { return _participants.size(); }
-    inline int GetParticipantFlag(IRCSession& session) {return _participants[&session]; }
+    inline ParticipantMap& GetParticipants() { return _participants; }
+    inline int GetChannelFlag() const { return _flags; }
+    inline int GetParticipantFlag(IRCSession& session) { return _participants[&session]; }
     inline bool IsEmpty() const { return _participants.size() == 0; }
     inline bool IsJoined(const IRCSession& session) const { session.IsJoinedChannel(GetChannelName()); }
 };
