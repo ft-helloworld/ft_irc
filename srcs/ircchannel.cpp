@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 16:00:52 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 16:13:27 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 17:08:05 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "ircnumericmessage.hpp"
 #include "ircsession.hpp"
 #include "numerics.hpp"
+#include "ircserver.hpp"
 #include "log.hpp"
 #include <string>
 #include <sstream>
@@ -175,8 +176,10 @@ std::string&    IRCChannel::RetrunChannelModeString(IRCSession& session, std::st
     return (res);
 }
 
-void        IRCChannel::SetChannelMode(std::vector<ModeChange>& ret, int sign, char c)
+void        IRCChannel::SetChannelMode(IRCServer* server, IRCSession& req, ModeResult& result, int sign, char c, const IRCMessage& msg, size_t& i)
 {
+    const bool adding = sign == '+';
+
     int modeFlag = 0;
     if (c == 'o')
         modeFlag = MODE_OP;
@@ -186,19 +189,37 @@ void        IRCChannel::SetChannelMode(std::vector<ModeChange>& ret, int sign, c
         modeFlag = MODE_SECRET;
     else if (c == 'n')
         modeFlag = MODE_OUTSIDE;
-    if (sign == '+')
+    if (c == 'o') // 매개변수가 있어야 하는 플래그
     {
-        if (_flags & modeFlag)
-            return ;
-        _flags |= modeFlag;
+        if (msg.SizeParam() < i)
+            return;
+        const std::string& nick = msg.GetParam(i++);
+        IRCSession* session = server->FindByNick(nick);
+        if (session == NULL)
+        {
+            req.SendMessage(IRCNumericMessage(ERR_NOSUCHNICK, nick, "No such nick/channel"));
+            return;
+        }
+        if (!ChangeParticipantFlag(*session, adding, modeFlag))
+            return;
+        result.arguments.push_back(nick);
     }
     else
     {
-        if ((_flags & modeFlag) == 0)
-            return ;
-        _flags &= ~modeFlag;
+        if (adding)
+        {
+            if (HasFlag(modeFlag))
+                return ;
+            _flags |= modeFlag;
+        }
+        else
+        {
+            if ((_flags & modeFlag) == 0)
+                return ;
+            _flags &= ~modeFlag;
+        }
     }
-    ret.push_back(ModeChange(sign, c));
+    result.changedFlags.push_back(ModeChange(sign, c));
 }
 
 bool    IRCChannel::IsListShownTo(const IRCSession& session) const
@@ -211,4 +232,21 @@ bool    IRCChannel::IsListShownTo(const IRCSession& session) const
 bool    IRCChannel::IsJoined(const IRCSession& session) const
 {
     return session.IsJoinedChannel(GetChannelName());
+}
+
+bool    IRCChannel::ChangeParticipantFlag(IRCSession& session, bool adding, ModeFlag flag)
+{
+    if (adding)
+    {
+        if (HasParticipantFlag(session, flag))
+            return false;
+        _participants[&session] |= flag;
+    }
+    else
+    {
+        if (!HasParticipantFlag(session, flag))
+            return false;
+        _participants[&session] &= ~flag;
+    }
+    return true;
 }

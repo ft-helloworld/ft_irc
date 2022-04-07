@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircsession.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 16:35:47 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/07 17:44:58 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ IRCSession::IRCSession(IRCServer* server, Channel* channel, int socketfd, int so
     : Session(channel, socketfd, socketId, addr)
     , _nickname()
     , _username()
-	, _operflag(0)
+	, _flag(0)
     , _password()
     , _closeReason()
     , _channels()
@@ -112,8 +112,30 @@ void IRCSession::Process(const std::string& line)
 void	IRCSession::SetNickname(const std::string& nickname) { _nickname = nickname; }
 void	IRCSession::SetUsername(const std::string& username) { _username = username; }
 void	IRCSession::SetPassword(const std::string& password) { _password = password; }
-void	IRCSession::SetFlag(int flag) { _flag = flag; }
-int		IRCSession::GetFlag() const { return _flag; }
+
+void    IRCSession::ChangeFlag(ModeResult& ret, int sign, int c)
+{
+    const bool adding = sign == '+';
+
+    int modeFlag = 0;
+    if (c == 'o')
+        modeFlag = FLAG_OP;
+    else if (c == 'i')
+        modeFlag = FLAG_INVISIBLE;
+    if (adding)
+    {
+        if (HasFlag(modeFlag))
+            return;
+        _flag |= modeFlag;
+    }
+    else
+    {
+        if (!HasFlag(modeFlag))
+            return;
+        _flag &= ~modeFlag;
+    }
+    ret.changedFlags.push_back(ModeChange(sign, c));
+}
 const std::string&  IRCSession::GetNickname() const { return _nickname; }
 const std::string&  IRCSession::GetUsername() const { return _username; }
 const std::string&  IRCSession::GetPassword() const { return _password; }
@@ -208,6 +230,13 @@ void    IRCSession::RegisterStep(int flag)
         SendMessage(IRCNumericMessage(RPL_MYINFO, HOSTNAME, "ft_irc(smun,seungyel,yejsong)-C++98-macOS", "o", ""));
         SendMessage(IRCNumericMessage(RPL_ISUPPORT, "PREFIX=(ov)@+", "CHANTYPES=#&", "CASEMAPPING=strict-rfc1459", "are supported by this server"));
         _server->OnMOTD(*this);
+
+        if (GetRemoteAddress() == "127.0.0.1")
+        {
+            SendMessage(IRCMessage(HOSTNAME, "NOTICE", GetNickname(), "127.0.0.1 에서 접속되었습니다. 서버 관리자 모드를 활성화합니다."));
+            SendMessage(IRCMessage(HOSTNAME, "MODE", GetNickname(), "+o"));
+            _flag |= FLAG_OP;
+        }
 	}
 }
 
@@ -319,6 +348,7 @@ void    IRCSession::OnPong(const IRCMessage& msg)
         return;
     if (msg.GetParam(0) != _lastPingWord)
     {
+        // ERR_WRONGPONG  reply?
         Log::Vp("IRCSession::OnPong", "수신 받은 값과, 클라이언트로 전송한 팡 값이 달라 퐁을 거절합니다. (서버:%s, 클라:%s)", _lastPingWord.c_str(), msg.GetParam(0).c_str());
         return;
     }
@@ -330,5 +360,6 @@ void    IRCSession::UpdateActive()
 {
     _lastPingTime = std::time(NULL);
     _pingState = PingState_Active;
+    _lastPingWord.clear();
     Log::Vp("IRCSession::UpdateActive", "마지막 패킷 수신 시각을 갱신합니다."); // 세션 유지를 위해.
 }

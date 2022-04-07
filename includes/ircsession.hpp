@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircsession.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:44:02 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 16:35:34 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/07 17:39:56 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define IRCSESSION_HPP
 
 #include "irccomparer.hpp"
+#include "moderesult.hpp"
 #include <string>
 #include <set>
 #include <ctime>
@@ -55,7 +56,7 @@ protected:
     int         _registerFlag;
 
 public:
-    enum { FLAG_NICKNAME = 1 << 0, FLAG_USERNAME = 1 << 1 };
+    enum { FLAG_NICKNAME = 1 << 0, FLAG_USERNAME = 1 << 1, FLAG_OP = 1 << 2, FLAG_INVISIBLE = 1 << 3 };
 
     IRCSession(IRCServer* server, Channel* channel, int socketfd, int socketId, const std::string& addr);
     virtual ~IRCSession();
@@ -71,8 +72,8 @@ public:
     const std::string&  GetUsername() const;
     void                SetPassword(const std::string& password);
     const std::string&  GetPassword() const;
-	void                SetFlag(int flag);
-    int  				GetFlag() const;
+    inline bool         HasFlag(int flag) const { return (_flag & flag) == flag; }
+    void                ChangeFlag(ModeResult& ret, int sign, int c);
     const std::string   GetMask() const;
     const std::string   GetEmail() const;
     const std::string&  GetCloseReason() const;

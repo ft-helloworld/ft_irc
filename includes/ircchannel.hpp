@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircchannel.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 12:37:36 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 16:32:54 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/07 17:12:56 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@
 #include <vector>
 #include <map>
 #include <set>
+#include "moderesult.hpp"
 
 class IRCSession;
 class IRCMessage;
+class IRCServer;
 
 class IRCChannel
 {
@@ -28,13 +30,6 @@ public:
     typedef std::map<IRCSession*, ModeFlag> ParticipantMap;
 
     enum { MODE_OP = 1 << 0, MODE_PRIV = 1 << 1, MODE_SECRET = 1 << 2, MODE_OUTSIDE = 1 << 5 };
-    struct ModeChange
-    {
-        int sign;
-        int ch;
-        ModeChange(int sign, int ch)
-            : sign(sign), ch(ch) {}
-    };
 
 private:
     const std::string               _name;
@@ -98,9 +93,10 @@ public:
     void    SetChannelTopic(const std::string& topic, const time_t time, const std::string& mask);
     void    MakeChannelModeString(std::string& ret, bool val);
     std::string&    RetrunChannelModeString(IRCSession& session, std::string& tmp, std::string& res);
-    void    SetChannelMode(std::vector<ModeChange>& ret, int sign, char c);
+    void    SetChannelMode(IRCServer* server, IRCSession& req, ModeResult& result, int sign, char c, const IRCMessage& msg, size_t& i);
     bool    IsListShownTo(const IRCSession& session) const;
     bool    IsJoined(const IRCSession& session) const;
+    bool    ChangeParticipantFlag(IRCSession& session, bool adding, ModeFlag flag);
 
     // 여기는 안해도 될 지도..
     void    SendTopic(IRCSession& session);
@@ -108,7 +104,7 @@ public:
     void    Kick(IRCSession& session, const std::string& target);
 
     inline bool HasFlag(int flags) const { return (_flags & flags) == flags; }
-	
+
     inline const std::string& GetChannelName() const { return _name; }
     inline const std::string& GetChannelTopic() const { return _topic; }
     inline const time_t& GetSetTopicTime() const { return _set_topic; }
@@ -116,7 +112,7 @@ public:
     inline const time_t& GetCreatedTime() const { return _created; }
     inline ParticipantMap& GetParticipants() { return _participants; }
     inline int GetChannelFlag() const { return _flags; }
-    inline int GetParticipantFlag(IRCSession& session) { return _participants[&session]; }
+    inline bool HasParticipantFlag(IRCSession& session, ModeFlag flag) { return (_participants[&session] & flag) == flag; }
     inline bool IsEmpty() const { return _participants.size() == 0; }
 };
 

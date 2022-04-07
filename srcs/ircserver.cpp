@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserver.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/07 16:35:44 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/07 17:49:29 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -471,11 +471,13 @@ void    IRCServer::OnChannelMode(IRCSession& session, IRCMessage& msg)
     }
     else
     {
-        if (!(chan->GetParticipantFlag(session) & IRCChannel::MODE_OP))
-            throw irc_exception(ERR_CHANOPRIVSNEEDED, chanName, "You are not a channel founder");
-        const std::string& wantFlag = msg.GetParams(1);
-        std::vector<IRCChannel::ModeChange> ret;
+        if (!chan->HasParticipantFlag(session, IRCChannel::MODE_OP))
+            throw irc_exception(ERR_CHANOPRIVSNEEDED, chanName, "You are not a channel operator");
+        const std::string& wantFlag = msg.GetParam(1);
+
+        ModeResult ret;
         int sign = '+';
+        size_t i = 2;
         for (std::string::const_iterator it = wantFlag.begin(); it != wantFlag.end(); ++it)
         {
             if (*it == '+' || *it == '-')
@@ -483,34 +485,29 @@ void    IRCServer::OnChannelMode(IRCSession& session, IRCMessage& msg)
             else if (*it != 'o' && *it != 'p' && *it != 's' && *it != 'n')
                 session.SendMessage(IRCNumericMessage(ERR_UNKNOWNMODE, std::string(1, *it), "is unknown mode char to me"));
             else
-                chan->SetChannelMode(ret, sign, *it);
+                chan->SetChannelMode(this, session, ret, sign, *it, msg, i);
         }
-		
-		if () //채널 유저 플래그에서 o 있는지 확인
-		{
-			if (sign == '+')
-				throw irc_exception(ERR_CHANOPRIVSNEEDED, "You must have channel op access or above to set channel mode o");
-			else 
-				throw irc_exception(ERR_CHANOPRIVSNEEDED, "You must have channel op access or above to unset channel mode o");
-		}
-		
-		
+
 		std::string finale;
         int neg = 0;
-        for (std::vector<IRCChannel::ModeChange>::const_iterator it = ret.begin(); it != ret.end(); ++it)
+        for (std::vector<ModeChange>::const_iterator it = ret.changedFlags.begin(); it != ret.changedFlags.end(); ++it)
         {
             if (neg != it->sign)
                 finale += static_cast<char>(neg = it->sign);
             finale += static_cast<char>(it->ch);
         }
-        chan->Send(IRCMessage(session.GetMask(), "MODE", chan->GetChannelName(), finale));
+        IRCMessage msg(session.GetMask(), "MODE", chan->GetChannelName(), finale);
+        for (std::vector<const std::string>::const_iterator it = ret.arguments.begin(); it != ret.arguments.end(); ++it)
+            msg.AddParam(*it);
+        if (!ret.changedFlags.empty())
+            chan->Send(msg);
     }
 }
 
 void    IRCServer::OnUserMode(IRCSession& session, IRCMessage& msg)
 {
     // MODE 뒤에 user가 아닌 경우.
-	if (msg.SizeParam() < 1)
+	if (msg.SizeParam() < 2)
 	{
 		throw irc_exception(ERR_NEEDMOREPARAMS, ":Not enough parameters.");
 		throw irc_exception(RPL_TEXT, "SYNTAX MODE <target> <modes> {<mode-parameters>}");
@@ -520,27 +517,49 @@ void    IRCServer::OnUserMode(IRCSession& session, IRCMessage& msg)
 	if (target == NULL)
 		throw irc_exception(ERR_NOSUCHNICK, "No such nick/channel");
 
-	int operatorFlag = session.HasOperatorFlag(msg.GetParam(1));
-	// +o일때
-	if (operatorFlag == 1)
-	{
-		session.SetFlag(operatorFlag);
-		throw irc_exception(ERR_NOPRIVILEGES, "Permission Denied - Only operators may set user mode o");
-	}
-	// -o일때
-	else if (operatorFlag == -1)
-	{
-		session.SetFlag(operatorFlag);
-		throw irc_exception(ERR_NOPRIVILEGES, "Permission Denied - Only operators may set user mode o");
-	}
-	else
-		throw irc_exception(ERR_NOTEXTTOSEND, "Unknown command");
+    if (!session.HasFlag(IRCSession::FLAG_OP) && &session != target)
+		throw irc_exception(ERR_NOPRIVILEGES, "Permission Denied. You can only change flag yourself.");
+
+    const std::string& wantFlag = msg.GetParam(1);
+    int sign = '+';
+    ModeResult ret;
+    for (std::string::const_iterator it = wantFlag.begin(); it != wantFlag.end(); ++it)
+    {
+        if (*it == '+' || *it == '-')
+            sign = *it;
+        else if (*it != 'o' && *it != 'i')
+            session.SendMessage(IRCNumericMessage(ERR_UNKNOWNMODE, std::string(1, *it), "is unknown mode char to me"));
+        else
+        {
+            if (*it == 'o' && !session.HasFlag(IRCSession::FLAG_OP))
+            {
+                session.SendMessage(IRCNumericMessage(ERR_NOPRIVILEGES, "Permission Denied - Only operators may set user mode o"));
+                continue;
+            }
+            target->ChangeFlag(ret, sign, *it);
+        }
+    }
+    std::string finale;
+    int neg = 0;
+    for (std::vector<ModeChange>::const_iterator it = ret.changedFlags.begin(); it != ret.changedFlags.end(); ++it)
+    {
+        if (neg != it->sign)
+            finale += static_cast<char>(neg = it->sign);
+        finale += static_cast<char>(it->ch);
+    }
+    if (!ret.changedFlags.empty())
+    {
+        session.SendMessage(IRCMessage(session.GetMask(), "MODE", target->GetNickname(), finale));
+        if (&session != target)
+            target->SendMessage(IRCMessage(session.GetMask(), "MODE", target->GetNickname(), finale));
+    }
 }
 
 //지금은 아무나 들어올 수 있음. session에서 운영자 일때만 사용 가능하도록 바꿔야함.
 void    IRCServer::OnKill(IRCSession& session, IRCMessage& msg)
 {
-	(void)session;
+    if (!session.HasFlag(IRCSession::FLAG_OP))
+		throw irc_exception(ERR_NOPRIVILEGES, "Permission Denied");
 	if (msg.SizeParam() < 2 || msg.GetParam(0).empty() || msg.GetParam(1).empty())
 		throw irc_exception(ERR_NOSUCHNICK, "No such nick/comment");
 	else //잘 들어오는 경우.
