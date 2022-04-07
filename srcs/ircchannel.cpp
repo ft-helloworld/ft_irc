@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 16:00:52 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 16:05:12 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 16:13:27 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,16 +140,22 @@ void    IRCChannel::SetChannelTopic(const std::string& topic, const time_t time,
     _mask_topic = mask;
 }
 
-void     IRCChannel::MakeChannelModeString(std::string& ret)
+void     IRCChannel::MakeChannelModeString(std::string& ret, bool val)
 {
+    if (val == true)
+        ret = "[+";
+    else
+        ret = "+";
     if (_flags & MODE_OP)
-        ret = ret + "o";
+        ret += "o";
     if (_flags & MODE_PRIV)
-        ret = ret + "p";
+        ret += "p";
     if (_flags & MODE_SECRET)
-        ret = ret + "s";
+        ret += "s";
     if (_flags & MODE_OUTSIDE)
-        ret = ret + "n";
+        ret += "n";
+    if (val == true)
+        ret += "]";
 }
 
 std::string&    IRCChannel::RetrunChannelModeString(IRCSession& session, std::string& tmp, std::string& res)
@@ -197,7 +203,7 @@ void        IRCChannel::SetChannelMode(std::vector<ModeChange>& ret, int sign, c
 
 bool    IRCChannel::IsListShownTo(const IRCSession& session) const
 {
-    if(_flags & MODE_SECRET)
+    if((_flags & MODE_SECRET) || (_flags & MODE_PRIV))
         return IsJoined(session);
     return true;
 }

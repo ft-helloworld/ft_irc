@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/07 16:10:06 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 16:13:30 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -415,7 +415,7 @@ void    IRCServer::OnList(IRCSession& session, IRCMessage& msg)
 {
     ChannelMap::iterator chanIt = _channels.begin();
     IRCChannel* chan;
-    std::string mode = "+";
+    std::string mode;
 
     session.SendMessage(IRCNumericMessage(RPL_LISTSTART, "Channel", "Users Name"));
     if (msg.SizeParam() < 1 || msg.GetParam(0) == "*")
@@ -424,8 +424,9 @@ void    IRCServer::OnList(IRCSession& session, IRCMessage& msg)
         {
             // :scarlet.irc.ozinger.org 322 nick #KPDS 1 :[+] topic;
             chan = chanIt->second.Load();
+            chan->MakeChannelModeString(mode, true);
             if (chan->IsListShownTo(session))
-                session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), String::ItoString(chan->GetParticipants().size()), chan->GetChannelTopic()));
+                session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), String::ItoString(chan->GetParticipants().size()), mode, chan->GetChannelTopic()));
         }
     }
     else
@@ -434,8 +435,9 @@ void    IRCServer::OnList(IRCSession& session, IRCMessage& msg)
         if (_channels.find(chanName) != _channels.end())
         {
             chan = chanIt->second.Load();
+            chan->MakeChannelModeString(mode, true);
             if (chan->IsListShownTo(session))
-                session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), String::ItoString(chan->GetParticipants().size()), chan->GetChannelTopic()));
+                session.SendMessage(IRCNumericMessage(RPL_LIST, chan->GetChannelName(), String::ItoString(chan->GetParticipants().size()), mode, chan->GetChannelTopic()));
         }
 
     }
@@ -462,8 +464,8 @@ void    IRCServer::OnChannelMode(IRCSession& session, IRCMessage& msg)
     IRCChannel* chan = chanIt->second.Load();
     if (msg.SizeParam() < 2)
     {
-        std::string c_mode = "+";
-        chan->MakeChannelModeString(c_mode);
+        std::string c_mode;
+        chan->MakeChannelModeString(c_mode, false);
         session.SendMessage(IRCNumericMessage(RPL_CHANNELMODEIS, chanName, c_mode));
         session.SendMessage(IRCNumericMessage(RPL_CREATIONTIME, chanName, String::ItoString(chan->GetCreatedTime())));
     }
