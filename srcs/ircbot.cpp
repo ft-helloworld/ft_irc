@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:44:33 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 19:42:47 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 14:32:41 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,12 +125,14 @@ void    IRCBot::OnMessage(const std::string& fromNick, const std::string& comman
 
     try
     {
-        if (args[0] == "hello")
+        if (args[0] == "?")
             OnHelp(fromNick, args);
         else if (args[0] == "join")
             OnJoin(fromNick, args);
         else if (args[0] == "msg")
             OnMsg(fromNick, args);
+        else
+            SendTo(fromNick, true, "Unknown command... 도움말을 보려면 /msg "BOTNAME" ? 를 입력하십시오.");
     }
     catch (const bot_exception& err)
     {
@@ -144,14 +146,23 @@ void    IRCBot::OnMessage(const std::string& fromNick, const std::string& comman
 
 void    IRCBot::OnHelp(const std::string& fromNick, ArgsVector& args)
 {
-    (void)args;
-    SendTo(fromNick, true, "안녕하세요 " + fromNick + "! 행복한 하루 되세요 :)");
+    if (args.size() < 2)
+    {
+        SendTo(fromNick, true, "안녕하세요 " + fromNick + "! 행복한 하루 되세요 :)");
+        SendTo(fromNick, true, "ft_irc에서 사용 가능한 명령어 일람은 아래와 같습니다. 각 명령의 자세한 도움말은 /msg "BOTNAME" ? <명령어> 를 입력하세요.");
+        SendTo(fromNick, true, "?, msg, join");
+    }
+    else
+    {
+        if (args[1] == "?")
+            SendTo(fromNick, true, "도움말 명령어 입니다.");
+    }
 }
 
 void    IRCBot::OnJoin(const std::string& fromNick, ArgsVector& args)
 {
     if (args.size() < 2)
-        throw bot_exception("[SYNTAX] /join <channel>");
+        throw bot_exception("[SYNTAX] /msg "BOTNAME" join <channel>");
     if (IsJoinedChannel(args[1]))
         throw bot_exception("해당 채널 '" + args[1] + "'에 이미 봇이 입장하고 있습니다.");
     _server->JoinChannel(*this, args[1]);
@@ -162,7 +173,7 @@ void    IRCBot::OnMsg(const std::string& fromNick, ArgsVector& args)
 {
     (void)fromNick;
     if (args.size() < 3)
-        throw bot_exception("[SYNTAX] /msg <channel> <msg>");
+        throw bot_exception("[SYNTAX] /msg "BOTNAME" msg <channel> <msg>");
     IRCChannel* channel = _server->FindChannel(args[1]);
     if (channel == NULL)
         throw bot_exception("Not exists channel '" + args[1] + "'.");

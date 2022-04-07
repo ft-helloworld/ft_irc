@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircchannel.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 12:37:36 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 21:56:17 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/07 15:00:04 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ public:
     inline size_t GetParticipantsNum() { return _participants.size(); }
     inline int GetParticipantFlag(IRCSession& session) {return _participants[&session]; }
     inline bool IsEmpty() const { return _participants.size() == 0; }
+    inline bool IsJoined(const IRCSession& session) const { session.IsJoinedChannel(GetChannelName()); }
 };
 
 #endif

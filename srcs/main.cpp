@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
         if (port < 1 || port > 65535)
             throw std::runtime_error("Not valid port range");
 
-        IRCBot bot(&server, "$$", "$$");
+        IRCBot bot(&server, BOTNAME, BOTNAME);
         server.RegisterBot(bot);
 
         Channel channel(port, &sessionFactory);

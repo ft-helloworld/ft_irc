@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircsession.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:44:02 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 19:54:07 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/07 14:59:45 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ public:
 
     bool    AddChannel(const std::string& name);
     bool    RemoveChannel(const std::string& name);
-    bool    IsJoinedChannel(const std::string& name);
+    bool    IsJoinedChannel(const std::string& name) const;
     size_t  GetJoinedChannelNum() const;
 
     virtual void    CheckActive();

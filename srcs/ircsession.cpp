@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircsession.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 19:53:05 by seungyel         ###   ########.fr       */
+/*   Updated: 2022/04/07 14:59:52 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ bool    IRCSession::RemoveChannel(const std::string& name)
     return _channels.erase(name) > 0;
 }
 
-bool    IRCSession::IsJoinedChannel(const std::string& name)
+bool    IRCSession::IsJoinedChannel(const std::string& name) const
 {
     return _channels.find(name) != _channels.end();
 }
@@ -215,11 +215,11 @@ void    IRCSession::RegisterStep(int flag)
 
         Log::Vp("IRCSession::RegisterStep", "패스워드가 일치합니다. 세션이 인증되었습니다. 환영 메시지를 전송합니다.");
         SendMOTD();
-	}	
+	}
 }
 
 int    IRCSession::HasOperatorFlag(std::string str)
-{ 
+{
 	if (str.find("+o") != std::string::npos)
 		return(1);
 	if (str.find("-o") != std::string::npos)
