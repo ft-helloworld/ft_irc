@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircserver.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/07 15:39:18 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/07 16:34:32 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -477,7 +477,17 @@ void    IRCServer::OnChannelMode(IRCSession& session, IRCMessage& msg)
             else
                 chan->SetChannelMode(ret, sign, *it);
         }
-        std::string finale;
+		
+		if () //채널 유저 플래그에서 o 있는지 확인
+		{
+			if (sign == '+')
+				throw irc_exception(ERR_CHANOPRIVSNEEDED, "You must have channel op access or above to set channel mode o");
+			else 
+				throw irc_exception(ERR_CHANOPRIVSNEEDED, "You must have channel op access or above to unset channel mode o");
+		}
+		
+		
+		std::string finale;
         int neg = 0;
         for (std::vector<IRCChannel::ModeChange>::const_iterator it = ret.begin(); it != ret.end(); ++it)
         {
@@ -506,13 +516,13 @@ void    IRCServer::OnUserMode(IRCSession& session, IRCMessage& msg)
 	// +o일때
 	if (operatorFlag == 1)
 	{
-		session.SetOperFlag(operatorFlag);
+		session.SetFlag(operatorFlag);
 		throw irc_exception(ERR_NOPRIVILEGES, "Permission Denied - Only operators may set user mode o");
 	}
 	// -o일때
 	else if (operatorFlag == -1)
 	{
-		session.SetOperFlag(operatorFlag);
+		session.SetFlag(operatorFlag);
 		throw irc_exception(ERR_NOPRIVILEGES, "Permission Denied - Only operators may set user mode o");
 	}
 	else

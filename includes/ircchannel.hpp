@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircchannel.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 12:37:36 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 15:36:48 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/07 16:32:54 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ public:
     void    Kick(IRCSession& session, const std::string& target);
 
     inline bool HasFlag(int flags) const { return (_flags & flags) == flags; }
+	
     inline const std::string& GetChannelName() const { return _name; }
     inline const std::string& GetChannelTopic() const { return _topic; }
     inline const time_t& GetSetTopicTime() const { return _set_topic; }

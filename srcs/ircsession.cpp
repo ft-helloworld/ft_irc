@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircsession.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 14:59:52 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 16:31:37 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,8 @@ void IRCSession::Process(const std::string& line)
 void	IRCSession::SetNickname(const std::string& nickname) { _nickname = nickname; }
 void	IRCSession::SetUsername(const std::string& username) { _username = username; }
 void	IRCSession::SetPassword(const std::string& password) { _password = password; }
-void	IRCSession::SetOperFlag(int operflag) { _operflag = operflag; }
-int		IRCSession::GetOperFlag() const { return _operflag; }
+void	IRCSession::SetFlag(int flag) { _flag = flag; }
+int		IRCSession::GetFlag() const { return _flag; }
 const std::string&  IRCSession::GetNickname() const { return _nickname; }
 const std::string&  IRCSession::GetUsername() const { return _username; }
 const std::string&  IRCSession::GetPassword() const { return _password; }

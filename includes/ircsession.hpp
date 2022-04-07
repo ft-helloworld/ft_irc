@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircsession.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seungyel <seungyel@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:44:02 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 15:03:33 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 16:31:56 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ private:
 
     std::string _nickname;
     std::string _username;
-	int			_operflag;
+	int			_flag;
     std::string _password;
     std::string _closeReason;
 
@@ -72,8 +72,8 @@ public:
     const std::string&  GetUsername() const;
     void                SetPassword(const std::string& password);
     const std::string&  GetPassword() const;
-	void                SetOperFlag(int operflag);
-    int  				GetOperFlag() const;
+	void                SetFlag(int flag);
+    int  				GetFlag() const;
     const std::string   GetMask() const;
     const std::string   GetEmail() const;
     const std::string&  GetCloseReason() const;
