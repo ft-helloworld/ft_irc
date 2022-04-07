@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:03:56 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 17:55:12 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 19:04:10 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,8 @@ void    IRCSession::RegisterStep(int flag)
             SendMessage(IRCMessage(HOSTNAME, "MODE", GetNickname(), "+o"));
             _flag |= FLAG_OP;
         }
+
+        SendMessage(IRCMessage(BOTNAME"!"BOTNAME"@"HOSTNAME, "NOTICE", GetNickname(), "봇 명령어를 보시려면  /msg "BOTNAME" !help  명령을 입력하세요."));
 	}
 }
 

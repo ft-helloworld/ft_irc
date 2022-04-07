@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:44:33 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 18:40:29 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 19:02:41 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,26 +134,24 @@ void    IRCBot::OnMessage(const std::string& fromNick, const std::string& channe
         std::string cmd = args[0];
         std::transform(cmd.begin(), cmd.end(), cmd.begin(), toLower);
 
-        if (args[0] == "?")
+        if (args[0] == "!help")
             OnHelp(fromNick, args);
-        else if (args[0] == "join")
+        else if (args[0] == "!join")
         {
             if (!channel.empty())
                 throw bot_exception("해당 명령은 개인 메시지로만 사용 가능한 메시지입니다. /msg "BOTNAME" " + args[0] + " 으로 사용하세요.");
             OnJoin(fromNick, args);
         }
-        else if (args[0] == "msg")
+        else if (args[0] == "!msg")
         {
             if (!channel.empty())
                 throw bot_exception("해당 명령은 개인 메시지로만 사용 가능한 메시지입니다. /msg "BOTNAME" " + args[0] + " 으로 사용하세요.");
             OnMsg(fromNick, args);
         }
-        else if (args[0] == "rsp")
+        else if (args[0] == "!rsp")
             OnRockScissorPaper(fromNick, channel, args);
-        else if (args[0] == "dice")
+        else if (args[0] == "!dice")
             OnDice(fromNick, channel);
-        else
-            SendTo(fromNick, true, "Unknown command... 도움말을 보려면 /msg "BOTNAME" ? 를 입력하십시오.");
     }
     catch (const bot_exception& err)
     {
@@ -170,8 +168,8 @@ void    IRCBot::OnHelp(const std::string& fromNick, ArgsVector& args)
     if (args.size() < 2)
     {
         SendTo(fromNick, true, "안녕하세요 " + fromNick + "! 행복한 하루 되세요 :)");
-        SendTo(fromNick, true, "ft_irc에서 사용 가능한 명령어 일람은 아래와 같습니다. 각 명령의 자세한 도움말은 /msg "BOTNAME" ? <명령어> 를 입력하세요.");
-        SendTo(fromNick, true, "?, msg, join, rsp, dice");
+        SendTo(fromNick, true, "ft_irc에서 사용 가능한 명령어 일람은 아래와 같습니다.");
+        SendTo(fromNick, true, "!help, !msg, !join, !rsp, !dice");
     }
     else
     {
@@ -183,7 +181,7 @@ void    IRCBot::OnHelp(const std::string& fromNick, ArgsVector& args)
 void    IRCBot::OnJoin(const std::string& fromNick, ArgsVector& args)
 {
     if (args.size() < 2)
-        throw bot_exception("[SYNTAX] /msg "BOTNAME" join <channel>");
+        throw bot_exception("[SYNTAX] /msg "BOTNAME" !join <channel>");
     if (IsJoinedChannel(args[1]))
         throw bot_exception("해당 채널 '" + args[1] + "'에 이미 봇이 입장하고 있습니다.");
     _server->JoinChannel(*this, args[1]);
@@ -194,7 +192,7 @@ void    IRCBot::OnMsg(const std::string& fromNick, ArgsVector& args)
 {
     (void)fromNick;
     if (args.size() < 3)
-        throw bot_exception("[SYNTAX] /msg "BOTNAME" msg <channel> <msg>");
+        throw bot_exception("[SYNTAX] /msg "BOTNAME" !msg <channel> <msg>");
     IRCChannel* channel = _server->FindChannel(args[1]);
     if (channel == NULL)
         throw bot_exception("Not exists channel '" + args[1] + "'.");
@@ -209,19 +207,23 @@ void    IRCBot::OnRockScissorPaper(const std::string& fromNick, const std::strin
 
     if (args.size() < 2)
     {
-        SendToChannelOrUser(fromNick, channel, "[SYNTAX] rsp <rock(바위)/scissor(가위)/paper(보))>");
+        SendToChannelOrUser(fromNick, channel, "[SYNTAX] !rsp <rock(바위)/scissor(가위)/paper(보))>");
         return;
     }
 
-    IRCComparer comp;
     int user = 0;
     int bot = std::rand() % 3;
-    if (comp(args[1], "scissor") || args[1] == "가위")
+    if (args[1] == "scissor" || args[1] == "가위")
         user = 0;
-    else if (comp(args[1], "rock") || args[1] == "바위")
+    else if (args[1] == "rock" || args[1] == "바위")
         user = 1;
-    else if (comp(args[1], "paper") || args[1] == "보")
+    else if (args[1] == "paper" || args[1] == "보")
         user = 2;
+    else
+    {
+        SendToChannelOrUser(fromNick, channel, "[SYNTAX] !rsp <rock(바위)/scissor(가위)/paper(보))>");
+        return;
+    }
     if ((bot + 1) % 3 == user) // 유저 승리
         SendToChannelOrUser(fromNick, channel, "👏👏👏 가위 바위 보에서 이겼습니다! [당신:" + NAME[user] + "] [봇:" + NAME[bot] + "] 👏👏👏");
     else if ((user + 1) % 3 == bot) // 봇 승리
