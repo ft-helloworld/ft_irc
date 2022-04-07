@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 22:01:16 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 20:41:54 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 20:43:16 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,5 @@
 #define ERR_BADCHANMASK      476
 #define ERR_NOPRIVILEGES     481
 #define ERR_CHANOPRIVSNEEDED 482
-
 
 #endif
