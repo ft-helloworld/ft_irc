@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircchannel.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 16:00:52 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 14:52:21 by yejsong          ###   ########.fr       */
+/*   Updated: 2022/04/07 15:04:27 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,16 +189,12 @@ void        IRCChannel::SetChannelMode(std::vector<ModeChange>& ret, int sign, c
             return ;
         _flags &= ~modeFlag;
     }
-    ret.push_back(ModeChange(sign, c));   
+    ret.push_back(ModeChange(sign, c));
 }
 
-bool IRCChannel::IsListShownTo(IRCSession& session) const
+bool IRCChannel::IsListShownTo(const IRCSession& session) const
 {
     if(_flags & MODE_SECRET)
-    {
-        if (_participants.find(&session) != _participants.end())
-            return true;
-        return false;
-    }
+        return IsJoined(session);
     return true;
 }
