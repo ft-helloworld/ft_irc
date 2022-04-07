@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:40:50 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 21:41:38 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 22:22:02 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,16 @@ public:
 
 private:
 
+    struct ModeTarget
+    {
+        bool isChannel;
+        IRCChannel* channel;
+        IRCSession* session;
+
+        inline ModeTarget(bool isChannel)
+            : isChannel(isChannel) {}
+    };
+
     const std::string _password;
 
     ClientMap   _clients;
@@ -44,6 +54,7 @@ private:
     IRCServer& operator= (const IRCServer&);
 
     void    CheckChannelExpire(IRCChannel* channel);
+    void    ProcessModeChange(IRCSession& session, ModeTarget target, ModeList& modeList);
 
 public:
     IRCServer(const std::string& password);

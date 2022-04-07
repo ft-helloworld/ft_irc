@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 12:37:36 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 21:43:10 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 22:27:00 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,7 @@ public:
     bool    IsJoined(const IRCSession& session) const;
     bool    ChangeParticipantFlag(IRCSession& session, bool adding, ModeFlag flag);
 
-    // 여기는 안해도 될 지도..
-    void    SendTopic(IRCSession& session);
-    void    Mode(IRCSession& session, bool add, int flags, const std::string& target = "");
-    void    Kick(IRCSession& session, const std::string& target);
+    void    SendMode(IRCSession& session);
 
     inline bool HasFlag(int flags) const { return (_flags & flags) == flags; }
 

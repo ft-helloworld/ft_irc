@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 16:00:52 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 21:44:40 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 22:26:39 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,14 @@ void    IRCChannel::Part(IRCSession& session, const std::string& cmd)
     if (cmd == "PART")
         Send(IRCMessage(session.GetMask(), cmd, GetChannelName()));
     _participants.erase(&session);
+}
+
+void    IRCChannel::SendMode(IRCSession& session)
+{
+    std::string c_mode;
+    MakeChannelModeString(c_mode, false);
+    session.SendMessage(IRCNumericMessage(RPL_CHANNELMODEIS, GetChannelName(), c_mode));
+    session.SendMessage(IRCNumericMessage(RPL_CREATIONTIME, GetChannelName(), String::ItoString(GetCreatedTime())));
 }
 
 void    IRCChannel::Send(const IRCMessage& msg, IRCSession* except) const
