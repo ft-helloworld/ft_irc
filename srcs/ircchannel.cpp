@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 16:00:52 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 15:16:32 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 16:05:12 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ void    IRCChannel::SendNames(IRCSession& session, bool sendEndReply) const
     // 366     RPL_ENDOFNAMES
     //                 "<channel> :End of /NAMES list"
 
+    std::ostringstream oss;
+
     // 참여자가 있을 경우
     if (!_participants.empty())
     {
-        std::ostringstream oss;
         std::vector<const std::string> names;
 
         ParticipantMap::const_iterator  it;
@@ -64,14 +65,16 @@ void    IRCChannel::SendNames(IRCSession& session, bool sendEndReply) const
 
         // 아래 플래그 출력은 RFC1459 문서에는 기재되어 있지 않으나,
         // LimeChat 클라이언트가 RFC2812 표준의 NAMES 명령어 처리를 하므로, 이에 대응.
-        char chanFlag = '=';
-        if (HasFlag(MODE_PRIV))
-            chanFlag = '*';
-        else if (HasFlag(MODE_SECRET))
-            chanFlag = '@';
-
-        session.SendMessage(IRCNumericMessage(RPL_NAMREPLY, std::string(&chanFlag, 1), _name, oss.str()));
     }
+
+    char chanFlag = '=';
+    if (HasFlag(MODE_PRIV))
+        chanFlag = '*';
+    else if (HasFlag(MODE_SECRET))
+        chanFlag = '@';
+
+    if (oss.tellp() != std::streampos(0))
+        session.SendMessage(IRCNumericMessage(RPL_NAMREPLY, std::string(1, chanFlag), _name, oss.str()));
 
     // 종료 응답 전송
     if (sendEndReply)

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/07 15:03:05 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 16:10:06 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,18 @@ void    IRCServer::OnNickname(IRCSession& session, IRCMessage& msg)
     if (msg.SizeParam() == 0)
         throw irc_exception(ERR_NONICKNAMEGIVEN, "NICK", "No nickname given");
 
-    const std::string& nick = msg.GetParam(0);
+    const std::string& nick = msg.GetParams(0);
 
     // 닉네임이 유효한 문자열 조합이 아니라면 에러
     if (!IRCString::IsValidNick(nick))
-        throw irc_exception(ERR_ERRONEUSNICKNAME, nick, "Erroneous nickname");
+        throw irc_exception(ERR_ERRONEUSNICKNAME, nick + " Erroneous nickname");
 
     if (nick == session.GetNickname())
         return;
 
     // 서버에 이미 등록된 닉네임이라면 에러
     if (_clients.find(nick) != _clients.end())
-        throw irc_exception(ERR_NICKNAMEINUSE, nick, "Nickname is already in use", nick);
+        throw irc_exception(ERR_NICKNAMEINUSE, nick + " Nickname is already in use " + nick);
 
     // 닉네임 변경 알림을 같은 채널에 입장한 사람들 및 자기 자신에게 전송
     if (session.IsFullyRegistered())
@@ -259,16 +259,16 @@ void    IRCServer::OnNames(IRCSession& session, IRCMessage& msg)
     // 1. 조건에 맞으면 채널의 이름들 전송.
     // 따로 오류 응답은 없음.
 
-    if (msg.SizeParam() == 0 || msg.GetParam(0) == "*")
+    if (msg.SizeParam() == 0/* || msg.GetParam(0) == "*"*/)
     {
-        ChannelMap::const_iterator it;
+        /*ChannelMap::const_iterator it;
         for (it = _channels.begin(); it != _channels.end(); ++it)
         {
             const IRCChannel* chan = it->second.Load();
             if (chan->HasFlag(IRCChannel::MODE_PRIV) || chan->HasFlag(IRCChannel::MODE_SECRET))
                 continue;
             chan->SendNames(session, false);
-        }
+        }*/
         session.SendMessage(IRCNumericMessage(RPL_ENDOFNAMES, "*", "End of /NAMES list"));
     }
     else
@@ -281,9 +281,17 @@ void    IRCServer::OnNames(IRCSession& session, IRCMessage& msg)
         {
             ChannelMap::const_iterator it = _channels.find(*sit);
             if (it == _channels.end())
+            {
                 session.SendMessage(IRCNumericMessage(ERR_NOSUCHNICK, *sit, "No such nick/channel"));
-            else
-                it->second.Load()->SendNames(session);
+                continue;
+            }
+            const IRCChannel* chan = it->second.Load();
+            if (chan->HasFlag(IRCChannel::MODE_SECRET) && !session.IsJoinedChannel(*sit))
+            {
+                session.SendMessage(IRCNumericMessage(ERR_NOSUCHNICK, *sit, "No such nick/channel"));
+                continue;
+            }
+            it->second.Load()->SendNames(session);
         }
     }
 }
