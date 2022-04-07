@@ -2,6 +2,7 @@
 #include "ircserver.hpp"
 #include "ircsessionfactory.hpp"
 #include "ircbot.hpp"
+#include <cstdlib>
 #include <stdexcept>
 #include <signal.h>
 
@@ -17,7 +18,7 @@ int main(int argc, char* argv[])
 
     try
     {
-        // TODO IRC서버 클래스 만들고, 세션에서 사용하게 하기?
+        std::srand(0);
 
         IRCServer   server(argv[2]);
         IRCSessionFactory sessionFactory(&server);

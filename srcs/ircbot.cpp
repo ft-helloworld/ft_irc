@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:44:33 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 14:32:41 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 18:40:29 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@
 #include "ircmessage.hpp"
 #include "ircstring.hpp"
 #include "irc_exception.hpp"
+#include "irccomparer.hpp"
 #include <string>
 #include <sstream>
 #include <vector>
 #include <algorithm>
+#include <cstdlib>
 
 IRCBot::IRCBot(IRCServer* server, const std::string& nickname, const std::string& username)
     : IRCSession(server, NULL, -1, -1, HOSTNAME)
@@ -80,15 +82,25 @@ void    IRCBot::Send(const void* buf, size_t len)
         if (msg.IsEmpty())
             return;
         const std::string& cmd = msg.GetCommand();
-        if (cmd != "PRIVMSG" || msg.SizeParam() < 2 || msg.GetParam(0) != GetNickname())
+        if (cmd != "PRIVMSG" || msg.SizeParam() < 2 || msg.GetPrefix() == GetMask())
             return;
         const std::string& prefix = msg.GetPrefix();
-        OnMessage(prefix.substr(0, prefix.find('!')), msg.GetParams(1));
+        bool isChannel = msg.GetParam(0) != GetNickname();
+        const std::string channel = (isChannel ? msg.GetParam(0) : "");
+        OnMessage(prefix.substr(0, prefix.find('!')), channel, msg.GetParams(1));
     }
     catch (const std::exception& ex)
     {
         Log::Ep("IRCBot::Process", "봇 메시지 처리 중 오류가 발생했습니다. (%s)", ex.what());
     }
+}
+
+void      IRCBot::SendToChannelOrUser(const std::string& fromNick, const std::string& channel, const std::string& msg)
+{
+    if (channel.empty())
+        SendTo(fromNick, false, msg);
+    else
+        SendTo(channel, false, msg);
 }
 
 void    IRCBot::Close()
@@ -107,30 +119,39 @@ static int toLower(int ch)
     return std::tolower(ch);
 }
 
-void    IRCBot::OnMessage(const std::string& fromNick, const std::string& commandline)
+void    IRCBot::OnMessage(const std::string& fromNick, const std::string& channel, const std::string& commandline)
 {
     std::istringstream iss(commandline);
     std::string line;
     std::vector<std::string> args;
 
-    while (std::getline(iss, line, ' '))
-        args.push_back(line);
-    if (args.empty())
-    {
-        SendTo(fromNick, true, "Not typed command... 명령이 기입되지 않았습니다. 명령을 기입해주세요.");
-        return;
-    }
-    std::string cmd = args[0];
-    std::transform(cmd.begin(), cmd.end(), cmd.begin(), toLower);
-
     try
     {
+        while (std::getline(iss, line, ' '))
+            args.push_back(line);
+        if (args.empty())
+            throw bot_exception("Not typed command... 명령이 기입되지 않았습니다. 명령을 기입해주세요.");
+        std::string cmd = args[0];
+        std::transform(cmd.begin(), cmd.end(), cmd.begin(), toLower);
+
         if (args[0] == "?")
             OnHelp(fromNick, args);
         else if (args[0] == "join")
+        {
+            if (!channel.empty())
+                throw bot_exception("해당 명령은 개인 메시지로만 사용 가능한 메시지입니다. /msg "BOTNAME" " + args[0] + " 으로 사용하세요.");
             OnJoin(fromNick, args);
+        }
         else if (args[0] == "msg")
+        {
+            if (!channel.empty())
+                throw bot_exception("해당 명령은 개인 메시지로만 사용 가능한 메시지입니다. /msg "BOTNAME" " + args[0] + " 으로 사용하세요.");
             OnMsg(fromNick, args);
+        }
+        else if (args[0] == "rsp")
+            OnRockScissorPaper(fromNick, channel, args);
+        else if (args[0] == "dice")
+            OnDice(fromNick, channel);
         else
             SendTo(fromNick, true, "Unknown command... 도움말을 보려면 /msg "BOTNAME" ? 를 입력하십시오.");
     }
@@ -150,7 +171,7 @@ void    IRCBot::OnHelp(const std::string& fromNick, ArgsVector& args)
     {
         SendTo(fromNick, true, "안녕하세요 " + fromNick + "! 행복한 하루 되세요 :)");
         SendTo(fromNick, true, "ft_irc에서 사용 가능한 명령어 일람은 아래와 같습니다. 각 명령의 자세한 도움말은 /msg "BOTNAME" ? <명령어> 를 입력하세요.");
-        SendTo(fromNick, true, "?, msg, join");
+        SendTo(fromNick, true, "?, msg, join, rsp, dice");
     }
     else
     {
@@ -180,4 +201,36 @@ void    IRCBot::OnMsg(const std::string& fromNick, ArgsVector& args)
     if (!IsJoinedChannel(args[1]))
         throw bot_exception("This bot is not joined that channel '" + args[1] + "'.");
     channel->Send(IRCMessage(GetMask(), "PRIVMSG", args[1], String::Join(args.begin() + 2, args.end(), " ")));
+}
+
+void    IRCBot::OnRockScissorPaper(const std::string& fromNick, const std::string& channel, ArgsVector& args)
+{
+    static const std::string NAME[] = {"✌️", "✊", "✋"};
+
+    if (args.size() < 2)
+    {
+        SendToChannelOrUser(fromNick, channel, "[SYNTAX] rsp <rock(바위)/scissor(가위)/paper(보))>");
+        return;
+    }
+
+    IRCComparer comp;
+    int user = 0;
+    int bot = std::rand() % 3;
+    if (comp(args[1], "scissor") || args[1] == "가위")
+        user = 0;
+    else if (comp(args[1], "rock") || args[1] == "바위")
+        user = 1;
+    else if (comp(args[1], "paper") || args[1] == "보")
+        user = 2;
+    if ((bot + 1) % 3 == user) // 유저 승리
+        SendToChannelOrUser(fromNick, channel, "👏👏👏 가위 바위 보에서 이겼습니다! [당신:" + NAME[user] + "] [봇:" + NAME[bot] + "] 👏👏👏");
+    else if ((user + 1) % 3 == bot) // 봇 승리
+        SendToChannelOrUser(fromNick, channel, "😢😢😢 가위 바위 보에서 졌습니다! [당신:" + NAME[user] + "] [봇:" + NAME[bot] + "] 😢😢😢");
+    else // 무승부
+        SendToChannelOrUser(fromNick, channel, "🔮🔮🔮 무승부입니다! [당신:" + NAME[user] + "] [봇:" + NAME[bot] + "] 🔮🔮🔮");
+}
+
+void    IRCBot::OnDice(const std::string& fromNick, const std::string& channel)
+{
+    SendToChannelOrUser(fromNick, channel, "주사위 결과 = " + String::ItoString(std::rand() % 100));
 }

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:35:55 by smun              #+#    #+#             */
-/*   Updated: 2022/04/06 19:42:49 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 18:36:09 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,15 @@ private:
     void    OnHelp(const std::string& fromNick, ArgsVector& args);
     void    OnJoin(const std::string& fromNick, ArgsVector& args);
     void    OnMsg(const std::string& fromNick, ArgsVector& args);
+    void    OnRockScissorPaper(const std::string& fromNick, const std::string& channel, ArgsVector& args);
+    void    OnDice(const std::string& fromNick, const std::string& channel);
 
 protected:
-    virtual void    OnMessage(const std::string& fromNick, const std::string& commandline);
+    virtual void    OnMessage(const std::string& fromNick, const std::string& channel, const std::string& commandline);
     virtual void    Send(const void* buf, size_t len);
 
     size_t    SendTo(const std::string& param, bool notice, const std::string& msg);
+    void      SendToChannelOrUser(const std::string& fromNick, const std::string& channel, const std::string& msg);
 
 public:
     IRCBot(IRCServer* server, const std::string& nickname, const std::string& username);
