@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircchannel.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 16:00:52 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 15:16:32 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 15:37:36 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,16 +137,22 @@ void    IRCChannel::SetChannelTopic(const std::string& topic, const time_t time,
     _mask_topic = mask;
 }
 
-void     IRCChannel::MakeChannelModeString(std::string& ret)
+void     IRCChannel::MakeChannelModeString(std::string& ret, bool val)
 {
+    if (val == true)
+        ret = "[+";
+    else
+        ret = "+";
     if (_flags & MODE_OP)
-        ret = ret + "o";
+        ret += "o";
     if (_flags & MODE_PRIV)
-        ret = ret + "p";
+        ret += "p";
     if (_flags & MODE_SECRET)
-        ret = ret + "s";
+        ret += "s";
     if (_flags & MODE_OUTSIDE)
-        ret = ret + "n";
+        ret += "n";
+    if (val == true)
+        ret += "]";
 }
 
 std::string&    IRCChannel::RetrunChannelModeString(IRCSession& session, std::string& tmp, std::string& res)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ircchannel.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: yejsong <yejsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 12:37:36 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 15:15:53 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 15:36:48 by yejsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ public:
      */
     void    GatherParticipants(std::set<IRCSession*>& targets, IRCSession* except = NULL);
     void    SetChannelTopic(const std::string& topic, const time_t time, const std::string& mask);
-    void    MakeChannelModeString(std::string& ret);
+    void    MakeChannelModeString(std::string& ret, bool val);
     std::string&    RetrunChannelModeString(IRCSession& session, std::string& tmp, std::string& res);
     void    SetChannelMode(std::vector<ModeChange>& ret, int sign, char c);
     bool    IsListShownTo(const IRCSession& session) const;
