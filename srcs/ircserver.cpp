@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/07 16:13:30 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/07 16:17:06 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -542,6 +542,15 @@ void    IRCServer::OnKill(IRCSession& session, IRCMessage& msg)
         target->Close("Killed: " + msg.GetParams(1));
         Log::Vp("IRCServer::UnregisterNickname", "닉네임 '%s' 가 서버에서 '%s'이유로 삭제되었습니다.", msg.GetParam(0).c_str(), msg.GetParam(1).c_str());
 	}
+}
+
+void    IRCServer::OnMOTD(IRCSession& session)
+{
+    session.SendMessage(IRCNumericMessage(RPL_MOTDSTART, "- "HOSTNAME" Message of day - "));
+    session.SendMessage(IRCNumericMessage(RPL_MOTD, "[Hello, World!] IRC 서버에 오신 것을 환영합니다."));
+    session.SendMessage(IRCNumericMessage(RPL_MOTD, "서버 호스트 이름은 "HOSTNAME" 입니다."));
+    session.SendMessage(IRCNumericMessage(RPL_MOTD, "현재 서버는 [smun, seungyel, yejsong]의 ft_irc 에서 실행되고 있습니다."));
+    session.SendMessage(IRCNumericMessage(RPL_ENDOFMOTD, "End of /MOTD command"));
 }
 
 void    IRCServer::OnTimer()
