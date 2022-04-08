@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/07 22:26:55 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/08 14:09:11 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,10 @@ void    IRCServer::OnPart(IRCSession& session, IRCMessage& msg)
     if (msg.SizeParam() < 1 || msg.GetParam(0).empty())
         throw irc_exception(ERR_NEEDMOREPARAMS, "PART", "Not enough parameters");
 
+    std::string message;
+    if (msg.SizeParam() >= 2)
+        message = msg.GetParams(1);
+
     IRCString::TargetSet targets;
     IRCString::TargetSet::const_iterator sit;
 
@@ -230,11 +234,11 @@ void    IRCServer::OnPart(IRCSession& session, IRCMessage& msg)
             session.SendMessage(IRCNumericMessage(ERR_NOSUCHCHANNEL, chanName, "No such channel"));
             continue;
         }
-        LeaveChannel(session, chanName, "PART");
+        LeaveChannel(session, chanName, "PART", message);
     }
 }
 
-void    IRCServer::LeaveChannel(IRCSession& session, const std::string& chanName, const std::string& cmd)
+void    IRCServer::LeaveChannel(IRCSession& session, const std::string& chanName, const std::string& cmd, const std::string& message)
 {
     ChannelMap::iterator chanIt = _channels.find(chanName);
     if (chanIt == _channels.end())
