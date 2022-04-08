@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:34:57 by yejsong           #+#    #+#             */
-/*   Updated: 2022/04/08 14:09:11 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/08 14:10:27 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,7 +249,7 @@ void    IRCServer::LeaveChannel(IRCSession& session, const std::string& chanName
         throw irc_exception(ERR_NOTONCHANNEL, chanName, "You're not on that channel");
 
     // 1. 채널이 있으면 거기서 퇴장
-    chanIt->second.Load()->Part(session, cmd);
+    chanIt->second.Load()->Part(session, cmd, message);
     Log::Vp("IRCServer::LeaveChannel", "유저 <%s> 가 채널 '%s'에서 %s 명령으로 퇴장합니다.", session.GetEmail().c_str(), chanName.c_str(), cmd.c_str());
 
     CheckChannelExpire(chanIt->second.Load());

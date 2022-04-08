@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 12:37:36 by smun              #+#    #+#             */
-/*   Updated: 2022/04/07 22:27:00 by smun             ###   ########.fr       */
+/*   Updated: 2022/04/08 14:10:52 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ public:
      *
      * @param session 퇴장시킬 세션
      * @param cmd 퇴장에 사용한 명령
+     * @param message 퇴장시에 퇴장 메시지가 있다면, 보내줄 메시지.
      */
-    void    Part(IRCSession& session, const std::string& cmd);
+    void    Part(IRCSession& session, const std::string& cmd, const std::string& message);
 
     /**
      * @brief 현재 채널에 참여중인 참가자들에게 메시지를 모두 전송합니다.
